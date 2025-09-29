@@ -1,12 +1,31 @@
 import React, { useState , useEffect} from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { updateOrderStatus } from '../../../../store/slices/orderSlice';
 import { ChevronLeft, Loader2, Package, User, MapPin, CreditCard, FileText, Mail, Printer, Download,ChevronDown, Check,X } from 'lucide-react';
 
-const OrderDetails = ({ order, onClose, onUpdateStatus, statusUpdateLoading}) => {
+const OrderDetails = ({ order, onClose }) => {
+  const dispatch = useDispatch();
+  const { loading: statusUpdateLoading } = useSelector(state => state.orders);
+  
   const getOrderStatus = (ord) => ord?.orderStatus || 'processing';
   const getOrderTotal = (ord) => ord?.total || 0;
 
   const [selectedStatus, setSelectedStatus] = useState(getOrderStatus(order));
   const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
+
+  // Import the updateOrderStatus action
+  const { updateOrderStatus } = require('../../../../store/slices/orderSlice');
+
+  const handleUpdateStatus = async (orderId, newStatus) => {
+    try {
+      await dispatch(updateOrderStatus({ id: orderId, status: newStatus })).unwrap();
+      setSelectedStatus(newStatus);
+    } catch (error) {
+      console.error('Failed to update order status:', error);
+      // Reset the selected status on error
+      setSelectedStatus(getOrderStatus(order));
+    }
+  };
 
   // Get frontend URL from environment variables
   const frontendUrl = import.meta.env.VITE_FRONTEND_URL ;
@@ -129,7 +148,7 @@ const OrderDetails = ({ order, onClose, onUpdateStatus, statusUpdateLoading}) =>
     const newStatus = e.target.value;
     setSelectedStatus(newStatus);
     if (newStatus !== getOrderStatus(order)) {
-      onUpdateStatus(order._id, newStatus);
+      handleUpdateStatus(order._id, newStatus);
     }
   };
 
@@ -474,7 +493,7 @@ const OrderDetails = ({ order, onClose, onUpdateStatus, statusUpdateLoading}) =>
 
   const handleCancelOrder = () => {
     if (window.confirm('Are you sure you want to cancel this order?')) {
-      onUpdateStatus(order._id, 'cancelled');
+      handleUpdateStatus(order._id, 'cancelled');
     }
   };
 
@@ -663,7 +682,7 @@ const OrderDetails = ({ order, onClose, onUpdateStatus, statusUpdateLoading}) =>
               setSelectedStatus(status);
               setStatusDropdownOpen(false);
               if (status !== getOrderStatus(order)) {
-                onUpdateStatus(order._id, status);
+                handleUpdateStatus(order._id, status);
               }
             }}
             className="w-full px-3 sm:px-4 py-2 sm:py-3 text-left hover:bg-[#C87941]/10 transition-colors duration-150 flex items-center justify-between group text-sm sm:text-base"
