@@ -1,6 +1,6 @@
 import React from 'react';
 import { useToast } from '../../contexts/ToastContext';
-import { CheckCircle, AlertCircle, Info, AlertTriangle, X } from 'lucide-react';
+import { CircleCheck as CheckCircle, CircleAlert as AlertCircle, Info, TriangleAlert as AlertTriangle, X } from 'lucide-react';
 
 const ToastContainer = () => {
   const { toasts, removeToast } = useToast();

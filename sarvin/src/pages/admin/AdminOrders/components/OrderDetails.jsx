@@ -1,27 +1,47 @@
 import React, { useState , useEffect} from 'react';
-import { ChevronLeft, Loader2, Package, User, MapPin, CreditCard, FileText, Mail, Printer, Download,ChevronDown, Check,X } from 'lucide-react';
+import { ChevronLeft, Loader as Loader2, Package, User, MapPin, CreditCard, FileText, Mail, Printer, Download, ChevronDown, Check, X } from 'lucide-react'ter, Download,ChevronDown, Check,X } from 'lucide-react';
+import { updateOrderStatus } from '../../../../store/slices/orderSlice';
+import { useToast } from '../../../../contexts/ToastContext';
 
-const OrderDetails = ({ order, onClose, onUpdateStatus, statusUpdateLoading }) => {
+const OrderDetails = ({ order, onClose }) => {
   const dispatch = useDispatch();
-  con\st orders = useSelector(state => state.orders);
+  const { loading } = useSelector(state => state.orders);
+  const { showSuccess, showError } = useToast();
   
   const getOrderStatus = (ord) => ord?.orderStatus || 'processing';
   const getOrderTotal = (ord) => ord?.total || 0;
 
   const [selectedStatus, setSelectedStatus] = useState(getOrderStatus(order));
   const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
+  const [statusUpdateLoading, setStatusUpdateLoading] = useState(false);
 
-  // Import the updateOrderStatus action
-  const { updateOrderStatus } = require('../../../../store/slices/orderSlice');
+  // Update selected status when order prop changes
+  useEffect(() => {
+    setSelectedStatus(getOrderStatus(order));
+  }, [order]);
 
   const handleUpdateStatus = async (orderId, newStatus) => {
+    if (statusUpdateLoading) return;
+    
+    setStatusUpdateLoading(true);
     try {
-      await dispatch(updateOrderStatus({ id: orderId, status: newStatus })).unwrap();
+      const result = await dispatch(updateOrderStatus({ id: orderId, status: newStatus })).unwrap();
       setSelectedStatus(newStatus);
+      
+      // Show success message with notification status
+      if (result.notificationSent) {
+        showSuccess(`Order status updated to ${newStatus}. Customer has been notified via email.`);
+      } else {
+        showSuccess(`Order status updated to ${newStatus}. Note: Email notification failed.`);
+      }
+      
     } catch (error) {
       console.error('Failed to update order status:', error);
+      showError(error.message || 'Failed to update order status');
       // Reset the selected status on error
       setSelectedStatus(getOrderStatus(order));
+    } finally {
+      setStatusUpdateLoading(false);
     }
   };
 
@@ -680,7 +700,7 @@ const OrderDetails = ({ order, onClose, onUpdateStatus, statusUpdateLoading }) =
               setSelectedStatus(status);
               setStatusDropdownOpen(false);
               if (status !== getOrderStatus(order)) {
-                handleUpdateStatus(order._id, status);
+                onUpdateStatus(order._id, status);
               }
             }}
             className="w-full px-3 sm:px-4 py-2 sm:py-3 text-left hover:bg-[#C87941]/10 transition-colors duration-150 flex items-center justify-between group text-sm sm:text-base"

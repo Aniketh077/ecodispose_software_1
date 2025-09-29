@@ -1,5 +1,5 @@
 import React from "react";
-import { Calendar, CheckCircle, Clock, Truck, Package, XCircle, Mail } from "lucide-react";
+import { Calendar, CircleCheck as CheckCircle, Clock, Truck, Package, Circle as XCircle, Mail } from "lucide-react";
 
 const OrderTimeline = ({ order }) => {
   const formatDate = (dateString) => {

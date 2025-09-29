@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { Package, ChevronRight, Truck, AlertCircle, Loader2 } from 'lucide-react';
+import { Package, ChevronRight, Truck, CircleAlert as AlertCircle, Loader as Loader2 } from 'lucide-react';
 import Button from '../components/ui/Button';
 import { useNavigate } from 'react-router-dom';
 import { fetchMyOrders } from '../store/slices/orderSlice';
