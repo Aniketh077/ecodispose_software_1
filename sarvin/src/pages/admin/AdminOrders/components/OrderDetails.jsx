@@ -7,7 +7,6 @@ import Button from '../../../../components/ui/Button';
 
 const OrderDetails = ({ order, onClose }) => {
   const dispatch = useDispatch();
-  const { loading } = useSelector(state => state.orders);
   const { showSuccess, showError } = useToast();
   
   const [selectedStatus, setSelectedStatus] = useState(order?.orderStatus || 'processing');
