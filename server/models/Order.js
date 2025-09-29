@@ -59,7 +59,30 @@ statusHistory: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
   }
+  notificationSent: {
+    type: Boolean,
+    default: false
+  },
+  customerNotified: {
+    type: Boolean,
+    default: false
+  }
 }],
+  lastStatusUpdate: {
+    type: Date,
+    default: Date.now
+  },
+  statusNotifications: [{
+    status: String,
+    sentAt: Date,
+    method: {
+      type: String,
+      enum: ['email', 'sms', 'push'],
+      default: 'email'
+    },
+    success: Boolean,
+    errorMessage: String
+  }],
   createdAt: { type: Date, default: Date.now }
 });
 
@@ -112,10 +135,16 @@ orderSchema.pre('save', async function(next) {
 
 orderSchema.pre('save', function(next) {
   if (this.isModified('orderStatus') && !this.isNew) {
+    // Update last status update timestamp
+    this.lastStatusUpdate = new Date();
+    
+    // Add to status history
     this.statusHistory.push({
       status: this.orderStatus,
       timestamp: new Date(),
-      updatedBy: this.lastUpdatedBy 
+      updatedBy: this.lastUpdatedBy,
+      notificationSent: false,
+      customerNotified: false
     });
   }
   next();
