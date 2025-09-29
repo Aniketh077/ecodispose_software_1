@@ -47,6 +47,9 @@ const productSchema = new mongoose.Schema({
   featured: { type: Boolean, default: false },
   newArrival: { type: Boolean, default: false },
   createdAt: { type: Date, default: Date.now }
+}, {
+  // Suppress the collection warning since we're using it intentionally
+  suppressReservedKeysWarning: true
 });
 
 productSchema.pre('save', function(next) {
