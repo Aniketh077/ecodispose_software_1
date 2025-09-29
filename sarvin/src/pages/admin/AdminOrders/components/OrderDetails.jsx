@@ -1,5 +1,9 @@
 import React, { useState , useEffect} from 'react';
-import { ChevronLeft, Loader2, Package, User, MapPin, CreditCard, FileText, Mail, Printer, Download,ChevronDown, Check,X } from 'import { ChevronLeft, Loader as Loader2, Package, User, MapPin, CreditCard, FileText, Mail, Printer, Download, ChevronDown, Check, X } from \'lucide-react'eSelector(state => state.orders);
+import { ChevronLeft, Loader2, Package, User, MapPin, CreditCard, FileText, Mail, Printer, Download,ChevronDown, Check,X } from 'lucide-react';
+
+const OrderDetails = ({ order, onClose, onUpdateStatus, statusUpdateLoading }) => {
+  const dispatch = useDispatch();
+  con\st orders = useSelector(state => state.orders);
   
   const getOrderStatus = (ord) => ord?.orderStatus || 'processing';
   const getOrderTotal = (ord) => ord?.total || 0;
