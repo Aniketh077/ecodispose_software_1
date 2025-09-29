@@ -487,7 +487,7 @@ import { ChevronLeft, Loader2, Package, User, MapPin, CreditCard, FileText, Mail
 
   const handleCancelOrder = () => {
     if (window.confirm('Are you sure you want to cancel this order?')) {
-      onUpdateStatus(order._id, 'cancelled');
+      handleUpdateStatus(order._id, 'cancelled');
     }
   };
 
@@ -676,7 +676,7 @@ import { ChevronLeft, Loader2, Package, User, MapPin, CreditCard, FileText, Mail
               setSelectedStatus(status);
               setStatusDropdownOpen(false);
               if (status !== getOrderStatus(order)) {
-                onUpdateStatus(order._id, status);
+                handleUpdateStatus(order._id, status);
               }
             }}
             className="w-full px-3 sm:px-4 py-2 sm:py-3 text-left hover:bg-[#C87941]/10 transition-colors duration-150 flex items-center justify-between group text-sm sm:text-base"
