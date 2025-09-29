@@ -1,5 +1,6 @@
 import React, { useState , useEffect} from 'react';
-import { ChevronLeft, Loader as Loader2, Package, User, MapPin, CreditCard, FileText, Mail, Printer, Download, ChevronDown, Check, X } from 'lucide-react'ter, Download,ChevronDown, Check,X } from 'lucide-react';
+import { ChevronLeft, Loader as Loader2, Package, User, MapPin, CreditCard, FileText, Mail, Printer, Download, ChevronDown, Check, X, Save, Bell, BellOff } from 'lucide-react';
+import { useDispatch, useSelector } from 'react-redux';
 import { updateOrderStatus } from '../../../../store/slices/orderSlice';
 import { useToast } from '../../../../contexts/ToastContext';
 
@@ -14,32 +15,70 @@ const OrderDetails = ({ order, onClose }) => {
   const [selectedStatus, setSelectedStatus] = useState(getOrderStatus(order));
   const [statusDropdownOpen, setStatusDropdownOpen] = useState(false);
   const [statusUpdateLoading, setStatusUpdateLoading] = useState(false);
+  const [adminNotes, setAdminNotes] = useState('');
+  const [hasUnsavedChanges, setHasUnsavedChanges] = useState(false);
 
   // Update selected status when order prop changes
   useEffect(() => {
     setSelectedStatus(getOrderStatus(order));
+    setAdminNotes(order.adminNotes || '');
+    setHasUnsavedChanges(false);
   }, [order]);
 
-  const handleUpdateStatus = async (orderId, newStatus) => {
+  const handleStatusChange = (newStatus) => {
+    setSelectedStatus(newStatus);
+    setStatusDropdownOpen(false);
+    
+    // Check if there are unsaved changes
+    const hasStatusChange = newStatus !== getOrderStatus(order);
+    const hasNotesChange = adminNotes !== (order.adminNotes || '');
+    setHasUnsavedChanges(hasStatusChange || hasNotesChange);
+  };
+
+  const handleNotesChange = (e) => {
+    setAdminNotes(e.target.value);
+    const hasStatusChange = selectedStatus !== getOrderStatus(order);
+    const hasNotesChange = e.target.value !== (order.adminNotes || '');
+    setHasUnsavedChanges(hasStatusChange || hasNotesChange);
+  };
+
+  const handleSaveChanges = async () => {
     if (statusUpdateLoading) return;
     
     setStatusUpdateLoading(true);
     try {
-      const result = await dispatch(updateOrderStatus({ id: orderId, status: newStatus })).unwrap();
-      setSelectedStatus(newStatus);
+      const updateData = {
+        id: order._id,
+        status: selectedStatus,
+        adminNotes: adminNotes
+      };
       
-      // Show success message with notification status
-      if (result.notificationSent) {
-        showSuccess(`Order status updated to ${newStatus}. Customer has been notified via email.`);
+      console.log('Saving order changes:', updateData);
+      
+      const result = await dispatch(updateOrderStatus(updateData)).unwrap();
+      
+      console.log('Update result:', result);
+      
+      // Show success message based on notification status
+      if (result.message) {
+        showSuccess(result.message);
+      } else if (result.notificationSent) {
+        showSuccess(`Order status updated to ${selectedStatus}. Customer has been notified via email.`);
+      } else if (result.notificationError) {
+        showSuccess(`Order status updated to ${selectedStatus}. Note: Email notification failed - ${result.notificationError}`);
       } else {
-        showSuccess(`Order status updated to ${newStatus}. Note: Email notification failed.`);
+        showSuccess(`Order status updated to ${selectedStatus}.`);
       }
+      
+      setHasUnsavedChanges(false);
       
     } catch (error) {
       console.error('Failed to update order status:', error);
       showError(error.message || 'Failed to update order status');
       // Reset the selected status on error
       setSelectedStatus(getOrderStatus(order));
+      setAdminNotes(order.adminNotes || '');
+      setHasUnsavedChanges(false);
     } finally {
       setStatusUpdateLoading(false);
     }
@@ -511,7 +550,8 @@ const OrderDetails = ({ order, onClose }) => {
 
   const handleCancelOrder = () => {
     if (window.confirm('Are you sure you want to cancel this order?')) {
-      onUpdateStatus(order._id, 'cancelled');
+      setSelectedStatus('cancelled');
+      setHasUnsavedChanges(true);
     }
   };
 
@@ -651,6 +691,9 @@ const OrderDetails = ({ order, onClose }) => {
                 <div className="flex items-center mb-3 sm:mb-4">
                   <CreditCard className="h-5 w-5 sm:h-6 sm:w-6 mr-2 text-[#C87941]" />
                   <h2 className="text-base sm:text-lg font-semibold text-[#C87941]">Update Status</h2>
+                  {hasUnsavedChanges && (
+                    <div className="ml-2 w-2 h-2 bg-orange-500 rounded-full animate-pulse" title="Unsaved changes"></div>
+                  )}
                 </div>
                 <div className="space-y-3 sm:space-y-4 flex-grow">
                   <div>
@@ -661,6 +704,7 @@ const OrderDetails = ({ order, onClose }) => {
                       {getOrderStatus(order).charAt(0).toUpperCase() + getOrderStatus(order).slice(1)}
                     </span>
                   </div>
+                  
                   <div>
                     <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
                       Change Status
@@ -699,9 +743,7 @@ const OrderDetails = ({ order, onClose }) => {
             onClick={() => {
               setSelectedStatus(status);
               setStatusDropdownOpen(false);
-              if (status !== getOrderStatus(order)) {
-                onUpdateStatus(order._id, status);
-              }
+              handleStatusChange(status);
             }}
             className="w-full px-3 sm:px-4 py-2 sm:py-3 text-left hover:bg-[#C87941]/10 transition-colors duration-150 flex items-center justify-between group text-sm sm:text-base"
           >
@@ -718,12 +760,65 @@ const OrderDetails = ({ order, onClose }) => {
   )}
 </div>
                   </div>
+                  
+                  <div>
+                    <label className="block text-xs sm:text-sm font-medium text-gray-700 mb-2">
+                      Admin Notes
+                    </label>
+                    <textarea
+                      value={adminNotes}
+                      onChange={handleNotesChange}
+                      placeholder="Add notes about this status change..."
+                      className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#C87941] focus:border-[#C87941] text-sm resize-none"
+                      rows="3"
+                      disabled={statusUpdateLoading}
+                    />
+                  </div>
+                  
+                  <div className="pt-2">
+                    <Button
+                      onClick={handleSaveChanges}
+                      disabled={!hasUnsavedChanges || statusUpdateLoading}
+                      variant={hasUnsavedChanges ? "primary" : "outline"}
+                      size="sm"
+                      fullWidth
+                      leftIcon={statusUpdateLoading ? <Loader2 className="h-4 w-4 animate-spin" /> : <Save className="h-4 w-4" />}
+                      className={`transition-all duration-200 ${
+                        hasUnsavedChanges 
+                          ? 'bg-[#C87941] hover:bg-[#B86931] text-white' 
+                          : 'opacity-50 cursor-not-allowed'
+                      }`}
+                    >
+                      {statusUpdateLoading ? 'Saving...' : hasUnsavedChanges ? 'Save Changes' : 'No Changes'}
+                    </Button>
+                  </div>
+                  
                   {statusUpdateLoading && (
                     <div className="flex items-center text-xs sm:text-sm text-[#C87941]">
                       <Loader2 className="h-4 w-4 animate-spin mr-2" />
-                      Updating status...
+                      Updating status and notifying customer...
                     </div>
                   )}
+                  
+                  {/* Notification Status Indicator */}
+                  <div className="pt-2 border-t border-gray-200">
+                    <div className="flex items-center justify-between text-xs">
+                      <span className="text-gray-500">Customer Notifications:</span>
+                      <div className="flex items-center">
+                        {order.statusHistory?.some(h => h.customerNotified) ? (
+                          <div className="flex items-center text-green-600">
+                            <Bell className="h-3 w-3 mr-1" />
+                            <span>Enabled</span>
+                          </div>
+                        ) : (
+                          <div className="flex items-center text-gray-400">
+                            <BellOff className="h-3 w-3 mr-1" />
+                            <span>None sent</span>
+                          </div>
+                        )}
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

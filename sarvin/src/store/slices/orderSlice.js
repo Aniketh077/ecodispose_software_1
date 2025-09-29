@@ -62,13 +62,18 @@ export const fetchAllOrders = createAsyncThunk(
     }
   }
 );
+
 export const updateOrderStatus = createAsyncThunk(
   'orders/updateStatus',
-  async ({ id, status }, { getState, rejectWithValue }) => {
+  async ({ id, status, adminNotes }, { getState, rejectWithValue }) => {
     try {
       const { auth } = getState();
-      return await orderAPI.updateOrderStatus(id, status, auth.user.token);
+      console.log('Redux: Updating order status', { id, status, adminNotes });
+      const result = await orderAPI.updateOrderStatus(id, status, auth.user.token, adminNotes);
+      console.log('Redux: Update result', result);
+      return result;
     } catch (error) {
+      console.error('Redux: Update error', error);
       return rejectWithValue(error.response.data);
     }
   }

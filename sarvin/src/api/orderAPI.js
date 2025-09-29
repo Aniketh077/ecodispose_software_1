@@ -82,13 +82,17 @@ const getOrders = async (token, { page = 1, limit = 5, search, status }) => {
 
 
 // Update order status (Admin)
-const updateOrderStatus = async (id, status, token) => {
+const updateOrderStatus = async (id, status, token, adminNotes) => {
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
     }
   };
-  const response = await axios.put(`${API_URL}/${id}`, { status }, config);
+  const payload = { status };
+  if (adminNotes) {
+    payload.adminNotes = adminNotes;
+  }
+  const response = await axios.put(`${API_URL}/${id}`, payload, config);
   return response.data;
 };
 

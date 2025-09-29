@@ -66,6 +66,10 @@ statusHistory: [{
   customerNotified: {
     type: Boolean,
     default: false
+  },
+  notes: {
+    type: String,
+    default: ''
   }
 }],
   lastStatusUpdate: {
@@ -83,6 +87,14 @@ statusHistory: [{
     success: Boolean,
     errorMessage: String
   }],
+  adminNotes: {
+    type: String,
+    default: ''
+  },
+  lastUpdatedBy: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
   createdAt: { type: Date, default: Date.now }
 });
 

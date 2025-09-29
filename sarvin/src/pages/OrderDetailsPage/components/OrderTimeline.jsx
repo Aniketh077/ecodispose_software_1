@@ -70,6 +70,11 @@ const OrderTimeline = ({ order }) => {
               <p className="text-sm text-gray-600 mt-1">
                 {formatDate(order.createdAt)}
               </p>
+              {statusItem.notes && (
+                <p className="text-xs text-gray-600 mt-1 italic">
+                  Note: {statusItem.notes}
+                </p>
+              )}
             </div>
           </div>
 
@@ -118,6 +123,12 @@ const OrderTimeline = ({ order }) => {
                     <p className="text-xs text-gray-500 mt-1">
                       Updated by: {statusItem.updatedBy.name || 'Admin'}
                     </p>
+                  )}
+                  {!statusItem.customerNotified && statusItem.notificationSent === false && (
+                    <span className="text-xs text-red-600 bg-red-50 px-2 py-1 rounded-full flex items-center">
+                      <Mail className="h-3 w-3 mr-1" />
+                      Failed
+                    </span>
                   )}
                 </div>
               </div>

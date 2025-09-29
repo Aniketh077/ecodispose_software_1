@@ -478,6 +478,11 @@ const getOrders = async (req, res) => {
 // @route   PUT /api/orders/:id
 const updateOrderStatus = async (req, res) => {
   try {
+    console.log('=== Updating Order Status ===');
+    console.log('Order ID:', req.params.id);
+    console.log('Request body:', req.body);
+    console.log('Admin user:', req.user._id);
+
     let order;
     if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {
       order = await Order.findById(req.params.id);
@@ -490,16 +495,115 @@ const updateOrderStatus = async (req, res) => {
       return res.status(404).json({ message: 'Order not found' });
     }
     
+    // Store the old status for comparison and email notification
+    const oldStatus = order.orderStatus;
+    const newStatus = req.body.status;
+    
+    console.log('Status change:', oldStatus, '->', newStatus);
+    
+    // Update order fields
     order.lastUpdatedBy = req.user._id;
-    order.orderStatus = req.body.status;
+    order.orderStatus = newStatus;
+    order.lastStatusUpdate = new Date();
+    
+    // Add admin notes if provided
+    if (req.body.adminNotes) {
+      order.adminNotes = req.body.adminNotes;
+    }
+    
+    // Add to status history with notification tracking
+    order.statusHistory.push({
+      status: newStatus,
+      timestamp: new Date(),
+      updatedBy: req.user._id,
+      notificationSent: false,
+      customerNotified: false,
+      notes: req.body.adminNotes || ''
+    });
     
     const updatedOrder = await order.save();
+    console.log('Order saved successfully');
     
+    // Populate the order for response and email
     const populatedOrder = await Order.findById(updatedOrder._id)
       .populate('statusHistory.updatedBy', 'name email')
-      .populate('user', 'name email');
+      .populate('user', 'name email')
+      .populate('items.product', 'name image price');
     
-    res.json(populatedOrder);
+    console.log('Order populated successfully');
+    
+    // Send email notification to customer if status actually changed
+    let notificationSent = false;
+    let notificationError = null;
+    
+    if (oldStatus !== newStatus && populatedOrder.user) {
+      try {
+        console.log('Sending status update email to customer:', populatedOrder.user.email);
+        await emailService.sendOrderStatusUpdateEmail(
+          populatedOrder, 
+          populatedOrder.user, 
+          newStatus, 
+          oldStatus
+        );
+        notificationSent = true;
+        console.log('Status update email sent successfully');
+        
+        // Update the latest status history entry to mark notification as sent
+        const latestStatusEntry = populatedOrder.statusHistory[populatedOrder.statusHistory.length - 1];
+        latestStatusEntry.notificationSent = true;
+        latestStatusEntry.customerNotified = true;
+        
+        // Add to status notifications log
+        populatedOrder.statusNotifications.push({
+          status: newStatus,
+          sentAt: new Date(),
+          method: 'email',
+          success: true
+        });
+        
+        await populatedOrder.save();
+        console.log('Notification status updated in database');
+        
+      } catch (emailError) {
+        console.error('Failed to send status update email:', emailError);
+        notificationError = emailError.message;
+        
+        // Update the latest status history entry to mark notification as failed
+        const latestStatusEntry = populatedOrder.statusHistory[populatedOrder.statusHistory.length - 1];
+        latestStatusEntry.notificationSent = false;
+        latestStatusEntry.customerNotified = false;
+        
+        // Add to status notifications log
+        populatedOrder.statusNotifications.push({
+          status: newStatus,
+          sentAt: new Date(),
+          method: 'email',
+          success: false,
+          errorMessage: emailError.message
+        });
+        
+        await populatedOrder.save();
+      }
+    }
+    
+    // Re-populate after notification updates
+    const finalOrder = await Order.findById(updatedOrder._id)
+      .populate('statusHistory.updatedBy', 'name email')
+      .populate('user', 'name email')
+      .populate('items.product', 'name image price');
+    
+    console.log('=== Order Status Update Complete ===');
+    
+    res.json({
+      order: finalOrder,
+      notificationSent,
+      notificationError,
+      message: notificationSent 
+        ? `Order status updated to ${newStatus}. Customer has been notified via email.`
+        : notificationError 
+          ? `Order status updated to ${newStatus}. Email notification failed: ${notificationError}`
+          : `Order status updated to ${newStatus}.`
+    });
   } catch (error) {
     console.error('Update order status error:', error);
     res.status(500).json({ message: 'Server error', error: error.message });

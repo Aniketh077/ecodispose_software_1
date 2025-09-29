@@ -25,7 +25,7 @@ const OrdersPage = () => {
     
     const refreshInterval = setInterval(() => {
       dispatch(fetchMyOrders());
-    }, 120000); // Refresh every 2 minutes
+    }, 60000); // Refresh every 1 minute for better real-time updates
     
     return () => clearInterval(refreshInterval);
   }, [dispatch, user]);
