@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Loader2 } from 'lucide-react';
+import { Loader as Loader2 } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 import { fetchAllOrders } from '../../../store/slices/orderSlice';
 import OrdersStatistics from './components/OrdersStatistics';

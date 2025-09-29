@@ -1,11 +1,5 @@
 import React, { useState , useEffect} from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateOrderStatus } from '../../../../store/slices/orderSlice';
-import { ChevronLeft, Loader2, Package, User, MapPin, CreditCard, FileText, Mail, Printer, Download,ChevronDown, Check,X } from 'lucide-react';
-
-const OrderDetails = ({ order, onClose }) => {
-  const dispatch = useDispatch();
-  const { loading: statusUpdateLoading } = useSelector(state => state.orders);
+import { ChevronLeft, Loader2, Package, User, MapPin, CreditCard, FileText, Mail, Printer, Download,ChevronDown, Check,X } from 'import { ChevronLeft, Loader as Loader2, Package, User, MapPin, CreditCard, FileText, Mail, Printer, Download, ChevronDown, Check, X } from 'lucide-react'eSelector(state => state.orders);
   
   const getOrderStatus = (ord) => ord?.orderStatus || 'processing';
   const getOrderTotal = (ord) => ord?.total || 0;
@@ -148,7 +142,7 @@ const OrderDetails = ({ order, onClose }) => {
     const newStatus = e.target.value;
     setSelectedStatus(newStatus);
     if (newStatus !== getOrderStatus(order)) {
-      handleUpdateStatus(order._id, newStatus);
+      onUpdateStatus(order._id, newStatus);
     }
   };
 
@@ -493,7 +487,7 @@ const OrderDetails = ({ order, onClose }) => {
 
   const handleCancelOrder = () => {
     if (window.confirm('Are you sure you want to cancel this order?')) {
-      handleUpdateStatus(order._id, 'cancelled');
+      onUpdateStatus(order._id, 'cancelled');
     }
   };
 
@@ -682,7 +676,7 @@ const OrderDetails = ({ order, onClose }) => {
               setSelectedStatus(status);
               setStatusDropdownOpen(false);
               if (status !== getOrderStatus(order)) {
-                handleUpdateStatus(order._id, status);
+                onUpdateStatus(order._id, status);
               }
             }}
             className="w-full px-3 sm:px-4 py-2 sm:py-3 text-left hover:bg-[#C87941]/10 transition-colors duration-150 flex items-center justify-between group text-sm sm:text-base"
