@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { ChevronLeft, Save, Loader2, Bell, BellOff, AlertCircle, CheckCircle, Package, User, MapPin, CreditCard, Calendar, Clock, Truck, XCircle } from 'lucide-react';
+import { ChevronLeft, Save, Loader as Loader2, Bell, BellOff, CircleAlert as AlertCircle, CircleCheck as CheckCircle, Package, User, MapPin, CreditCard, Calendar, Clock, Truck, Circle as XCircle } from 'lucide-react';
 import { updateOrderStatus } from '../../../../store/slices/orderSlice';
 import { useToast } from '../../../../contexts/ToastContext';
 import Button from '../../../../components/ui/Button';
