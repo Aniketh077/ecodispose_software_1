@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { ChevronLeft, Save, Loader as Loader2, Bell, BellOff, CircleAlert as AlertCircle, CircleCheck as CheckCircle, Package, User, MapPin, CreditCard, Calendar, Clock, Truck, Circle as XCircle } from 'lucide-react';
 import { updateOrderStatus } from '../../../../store/slices/orderSlice';
 import { useToast } from '../../../../contexts/ToastContext';
@@ -33,7 +33,7 @@ const OrderDetails = ({ order, onClose }) => {
     }
   }, [order]);
 
-  const handleStatusChange = (e) => {
+  const handleStatusDropdownChange = (e) => {
     const newStatus = e.target.value;
     setSelectedStatus(newStatus);
   };
@@ -436,7 +436,7 @@ const OrderDetails = ({ order, onClose }) => {
                 </label>
                 <select
                   value={selectedStatus}
-                  onChange={handleStatusChange}
+                  onChange={handleStatusDropdownChange}
                   disabled={statusUpdateLoading}
                   className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-[#2A4365] focus:outline-none focus:ring-1 focus:ring-[#2A4365] disabled:opacity-50"
                 >
