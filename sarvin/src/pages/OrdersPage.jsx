@@ -19,6 +19,16 @@ const OrdersPage = () => {
     }
   }, [dispatch, user]);
 
+  // Auto-refresh orders every 2 minutes to show real-time status updates
+  useEffect(() => {
+    if (!user) return;
+    
+    const refreshInterval = setInterval(() => {
+      dispatch(fetchMyOrders());
+    }, 120000); // Refresh every 2 minutes
+    
+    return () => clearInterval(refreshInterval);
+  }, [dispatch, user]);
   const getStatusColor = (status) => {
     switch (status) {
       case 'delivered':

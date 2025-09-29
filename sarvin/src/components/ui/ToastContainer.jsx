@@ -65,7 +65,7 @@ const ToastContainer = () => {
                 className={`h-5 w-5 mr-3 flex-shrink-0 mt-0.5 ${styles.iconColor}`} 
               />
               <div className="flex-1">
-                <p className="text-sm font-medium">{toast.message}</p>
+                <p className="text-sm font-medium leading-relaxed">{toast.message}</p>
               </div>
               <button
                 onClick={() => removeToast(toast.id)}

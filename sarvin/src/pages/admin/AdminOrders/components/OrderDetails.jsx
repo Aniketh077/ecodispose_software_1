@@ -680,7 +680,7 @@ const OrderDetails = ({ order, onClose, onUpdateStatus, statusUpdateLoading }) =
               setSelectedStatus(status);
               setStatusDropdownOpen(false);
               if (status !== getOrderStatus(order)) {
-                onUpdateStatus(order._id, status);
+                handleUpdateStatus(order._id, status);
               }
             }}
             className="w-full px-3 sm:px-4 py-2 sm:py-3 text-left hover:bg-[#C87941]/10 transition-colors duration-150 flex items-center justify-between group text-sm sm:text-base"

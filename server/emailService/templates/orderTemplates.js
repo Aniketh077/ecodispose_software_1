@@ -883,7 +883,224 @@ function orderAdminNotificationTemplate(order, user) {
   `;
 }
 
+function orderStatusUpdateTemplate(order, user, newStatus, oldStatus) {
+  const getStatusMessage = (status) => {
+    switch (status.toLowerCase()) {
+      case 'processing':
+        return {
+          title: 'Order is Being Processed',
+          message: 'Your order is currently being prepared for shipment.',
+          color: '#f59e0b',
+          icon: '⏳'
+        };
+      case 'shipped':
+        return {
+          title: 'Order Has Been Shipped',
+          message: 'Your order is on its way! You should receive it within 3-5 business days.',
+          color: '#3b82f6',
+          icon: '🚚'
+        };
+      case 'delivered':
+        return {
+          title: 'Order Delivered Successfully',
+          message: 'Your order has been delivered! We hope you enjoy your new products.',
+          color: '#10b981',
+          icon: '✅'
+        };
+      case 'cancelled':
+        return {
+          title: 'Order Has Been Cancelled',
+          message: 'Your order has been cancelled. If you have any questions, please contact our support team.',
+          color: '#ef4444',
+          icon: '❌'
+        };
+      default:
+        return {
+          title: 'Order Status Updated',
+          message: 'Your order status has been updated.',
+          color: '#6b7280',
+          icon: '📦'
+        };
+    }
+  };
+
+  const statusInfo = getStatusMessage(newStatus);
+  const orderItemsHTML = order.items.map(item => {
+    return `
+      <tr>
+        <td style="padding: 15px; border-bottom: 1px solid #e5e7eb;">
+          <div style="display: flex; align-items: center; gap: 15px;">
+            <img src="${item.product.image}" alt="${item.product.name}" 
+                 style="width: 60px; height: 60px; object-fit: cover; border-radius: 8px; border: 1px solid #e5e7eb;">
+            <div>
+              <h4 style="margin: 0 0 5px 0; color: #111827; font-size: 14px; font-weight: 600;">${item.product.name}</h4>
+              <p style="margin: 0; color: #6b7280; font-size: 12px;">Quantity: ${item.quantity}</p>
+            </div>
+          </div>
+        </td>
+        <td style="padding: 15px; border-bottom: 1px solid #e5e7eb; text-align: right;">
+          <span style="font-weight: 600; color: #111827;">₹${(item.price * item.quantity).toFixed(2)}</span>
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  return `
+    <!DOCTYPE html>
+    <html>
+    <head>
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <style>
+        .container {
+          font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+          max-width: 600px;
+          margin: 0 auto;
+          background-color: #ffffff;
+          color: #333;
+        }
+        
+        @media only screen and (max-width: 768px) {
+          .container { 
+            max-width: 100% !important; 
+            margin: 0 !important;
+          }
+          .header { 
+            padding: 20px 15px !important; 
+          }
+          .content { 
+            padding: 20px 15px !important; 
+          }
+          .status-banner {
+            padding: 20px 15px !important;
+          }
+        }
+      </style>
+    </head>
+    <body>
+    <div class="container">
+      
+      <!-- Header -->
+      <div class="header" style="background-color: #094275; color: white; padding: 30px; text-align: center;">
+        <h1 style="margin: 0; font-size: 24px; font-weight: 600;">ORDER STATUS UPDATE</h1>
+        <p style="margin: 10px 0 0 0; font-size: 14px; opacity: 0.9;">Order #${order.orderId}</p>
+      </div>
+
+      <!-- Status Banner -->
+      <div class="status-banner" style="background-color: ${statusInfo.color}; color: white; padding: 25px; text-align: center;">
+        <div style="font-size: 32px; margin-bottom: 10px;">${statusInfo.icon}</div>
+        <h2 style="margin: 0 0 8px 0; font-size: 20px; font-weight: 600;">${statusInfo.title}</h2>
+        <p style="margin: 0; font-size: 16px; opacity: 0.95;">${statusInfo.message}</p>
+      </div>
+
+      <!-- Main Content -->
+      <div class="content" style="padding: 30px;">
+        
+        <!-- Greeting -->
+        <div style="margin-bottom: 30px;">
+          <h3 style="color: #111827; margin: 0 0 15px 0; font-size: 18px;">Hello ${user.name},</h3>
+          <p style="color: #6b7280; font-size: 14px; line-height: 1.6; margin: 0;">
+            We wanted to update you on the status of your recent order. Here are the current details:
+          </p>
+        </div>
+
+        <!-- Order Summary -->
+        <div style="background-color: #f9fafb; border: 1px solid #e5e7eb; border-radius: 8px; padding: 20px; margin-bottom: 25px;">
+          <h4 style="color: #094275; margin: 0 0 15px 0; font-size: 16px; font-weight: 600;">Order Summary</h4>
+          <table style="width: 100%; border-collapse: collapse;">
+            <tr>
+              <td style="padding: 8px 0; color: #6b7280; font-size: 14px;">Order ID:</td>
+              <td style="padding: 8px 0; color: #111827; font-weight: 600; font-size: 14px;">#${order.orderId}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #6b7280; font-size: 14px;">Order Date:</td>
+              <td style="padding: 8px 0; color: #111827; font-weight: 600; font-size: 14px;">${new Date(order.createdAt).toLocaleDateString('en-IN', { 
+                year: 'numeric', 
+                month: 'long', 
+                day: 'numeric' 
+              })}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #6b7280; font-size: 14px;">Previous Status:</td>
+              <td style="padding: 8px 0; color: #6b7280; font-size: 14px; text-transform: capitalize;">${oldStatus}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #6b7280; font-size: 14px;">Current Status:</td>
+              <td style="padding: 8px 0; color: ${statusInfo.color}; font-weight: 600; font-size: 14px; text-transform: capitalize;">${newStatus}</td>
+            </tr>
+            <tr>
+              <td style="padding: 8px 0; color: #6b7280; font-size: 14px;">Total Amount:</td>
+              <td style="padding: 8px 0; color: #111827; font-weight: 600; font-size: 14px;">₹${order.total.toFixed(2)}</td>
+            </tr>
+          </table>
+        </div>
+
+        <!-- Order Items -->
+        <div style="margin-bottom: 25px;">
+          <h4 style="color: #094275; margin: 0 0 15px 0; font-size: 16px; font-weight: 600;">Items in Your Order</h4>
+          <table style="width: 100%; border-collapse: collapse; border: 1px solid #e5e7eb; border-radius: 8px; overflow: hidden;">
+            <thead>
+              <tr style="background-color: #f3f4f6;">
+                <th style="padding: 15px; text-align: left; font-weight: 600; color: #374151; font-size: 12px; text-transform: uppercase;">Product</th>
+                <th style="padding: 15px; text-align: right; font-weight: 600; color: #374151; font-size: 12px; text-transform: uppercase;">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${orderItemsHTML}
+            </tbody>
+          </table>
+        </div>
+
+        <!-- Next Steps -->
+        ${newStatus === 'shipped' ? `
+        <div style="background-color: #dbeafe; border: 1px solid #3b82f6; border-radius: 8px; padding: 20px; margin-bottom: 25px;">
+          <h4 style="color: #1e40af; margin: 0 0 10px 0; font-size: 16px; font-weight: 600;">Tracking Information</h4>
+          <p style="color: #1e40af; font-size: 14px; margin: 0;">
+            Your order is now on its way! You can track your order status in your account dashboard.
+          </p>
+        </div>
+        ` : ''}
+
+        ${newStatus === 'delivered' ? `
+        <div style="background-color: #d1fae5; border: 1px solid #10b981; border-radius: 8px; padding: 20px; margin-bottom: 25px;">
+          <h4 style="color: #047857; margin: 0 0 10px 0; font-size: 16px; font-weight: 600;">Thank You!</h4>
+          <p style="color: #047857; font-size: 14px; margin: 0;">
+            We hope you're satisfied with your purchase. Please consider leaving a review for the products you received.
+          </p>
+        </div>
+        ` : ''}
+
+        <!-- Action Buttons -->
+        <div style="text-align: center; margin: 30px 0;">
+          <a href="${process.env.FRONTEND_URL}/orders/${order._id}" 
+             style="background-color: #094275; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: 600; margin-right: 10px;">
+            View Order Details
+          </a>
+          <a href="${process.env.FRONTEND_URL}/contact" 
+             style="background-color: #6b7280; color: white; padding: 12px 24px; text-decoration: none; border-radius: 6px; display: inline-block; font-weight: 600;">
+            Contact Support
+          </a>
+        </div>
+
+      </div>
+
+      <!-- Footer -->
+      <div style="background-color: #094275; color: white; padding: 25px; text-align: center;">
+        <p style="margin: 0 0 8px 0; font-size: 14px; font-weight: 500;">
+          Thank you for shopping with ${process.env.APP_NAME}!
+        </p>
+        <p style="margin: 0; font-size: 12px; opacity: 0.8;">
+          © ${new Date().getFullYear()} ${process.env.APP_NAME}. All rights reserved.
+        </p>
+      </div>
+    </div>
+    </body>
+    </html>
+  `;
+}
+
 module.exports = {
   orderConfirmationTemplate,
-  orderAdminNotificationTemplate
+  orderAdminNotificationTemplate,
+  orderStatusUpdateTemplate
 };

@@ -34,6 +34,19 @@ const OrderDetailsPage = () => {
     };
   }, [dispatch, orderId, user]);
 
+  // Poll for order updates every 30 seconds if order is not delivered/cancelled
+  useEffect(() => {
+    if (!order || !user) return;
+    
+    const shouldPoll = order.orderStatus !== 'delivered' && order.orderStatus !== 'cancelled';
+    if (!shouldPoll) return;
+    
+    const pollInterval = setInterval(() => {
+      dispatch(fetchOrderDetails(orderId));
+    }, 30000); // Poll every 30 seconds
+    
+    return () => clearInterval(pollInterval);
+  }, [dispatch, orderId, order?.orderStatus, user]);
   const handleRateProduct = async (productId, ratingData) => {
     try {
       await dispatch(

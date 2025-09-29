@@ -1,5 +1,5 @@
 import React from "react";
-import { Calendar, CheckCircle, Clock, Truck } from "lucide-react";
+import { Calendar, CheckCircle, Clock, Truck, Package, XCircle, Mail } from "lucide-react";
 
 const OrderTimeline = ({ order }) => {
   const formatDate = (dateString) => {
@@ -12,9 +12,39 @@ const OrderTimeline = ({ order }) => {
     });
   };
 
-  const getStatusTimestamp = (status) => {
+  const getStatusInfo = (status) => {
     const historyItem = order.statusHistory?.find(item => item.status === status);
-    return historyItem ? historyItem.timestamp : null;
+    return historyItem || null;
+  };
+
+  const getStatusIcon = (status) => {
+    switch (status) {
+      case 'processing':
+        return <Clock className="h-4 w-4 text-yellow-600" />;
+      case 'shipped':
+        return <Truck className="h-4 w-4 text-blue-600" />;
+      case 'delivered':
+        return <CheckCircle className="h-4 w-4 text-green-600" />;
+      case 'cancelled':
+        return <XCircle className="h-4 w-4 text-red-600" />;
+      default:
+        return <Package className="h-4 w-4 text-gray-600" />;
+    }
+  };
+
+  const getStatusColor = (status) => {
+    switch (status) {
+      case 'processing':
+        return 'bg-yellow-100';
+      case 'shipped':
+        return 'bg-blue-100';
+      case 'delivered':
+        return 'bg-green-100';
+      case 'cancelled':
+        return 'bg-red-100';
+      default:
+        return 'bg-gray-100';
+    }
   };
 
   return (
@@ -26,66 +56,73 @@ const OrderTimeline = ({ order }) => {
         </h2>
       </div>
       <div className="p-6">
-        <div className="space-y-4">
-          <div className="flex items-start">
-            <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-              <CheckCircle className="h-4 w-4 text-green-600" />
+        <div className="space-y-6">
+          {/* Order Placed - Always shown */}
+          <div className="flex items-start relative">
+            <div className="flex-shrink-0 w-10 h-10 bg-green-100 rounded-full flex items-center justify-center border-2 border-green-200">
+              <CheckCircle className="h-5 w-5 text-green-600" />
             </div>
-            <div className="ml-4">
-              <p className="text-sm font-medium text-gray-900">Order Placed</p>
-              <p className="text-sm text-gray-600">
+            <div className="ml-4 flex-1">
+              <div className="flex items-center justify-between">
+                <p className="text-sm font-semibold text-gray-900">Order Placed</p>
+                <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">Completed</span>
+              </div>
+              <p className="text-sm text-gray-600 mt-1">
                 {formatDate(order.createdAt)}
               </p>
             </div>
           </div>
 
-          {getStatusTimestamp('processing') && (
-            <div className="flex items-start">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                <Clock className="h-4 w-4 text-blue-600" />
+          {/* Dynamic status timeline based on status history */}
+          {order.statusHistory?.slice(1).map((statusItem, index) => {
+            const isCompleted = true; // All items in history are completed
+            const isLast = index === order.statusHistory.length - 2;
+            
+            return (
+              <div key={statusItem._id || index} className="flex items-start relative">
+                {/* Connecting line */}
+                {!isLast && (
+                  <div className="absolute left-5 top-10 w-0.5 h-6 bg-gray-200"></div>
+                )}
+                
+                <div className={`flex-shrink-0 w-10 h-10 ${getStatusColor(statusItem.status)} rounded-full flex items-center justify-center border-2 ${
+                  isCompleted ? 'border-gray-300' : 'border-gray-200'
+                }`}>
+                  {getStatusIcon(statusItem.status)}
+                </div>
+                <div className="ml-4 flex-1">
+                  <div className="flex items-center justify-between">
+                    <p className="text-sm font-semibold text-gray-900 capitalize">
+                      {statusItem.status === 'processing' ? 'Order Processing' : 
+                       statusItem.status === 'shipped' ? 'Order Shipped' :
+                       statusItem.status === 'delivered' ? 'Order Delivered' :
+                       statusItem.status === 'cancelled' ? 'Order Cancelled' :
+                       statusItem.status}
+                    </p>
+                    <div className="flex items-center space-x-2">
+                      {statusItem.customerNotified && (
+                        <span className="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded-full flex items-center">
+                          <Mail className="h-3 w-3 mr-1" />
+                          Notified
+                        </span>
+                      )}
+                      <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                        {isCompleted ? 'Completed' : 'In Progress'}
+                      </span>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-600 mt-1">
+                    {formatDate(statusItem.timestamp)}
+                  </p>
+                  {statusItem.updatedBy && (
+                    <p className="text-xs text-gray-500 mt-1">
+                      Updated by: {statusItem.updatedBy.name || 'Admin'}
+                    </p>
+                  )}
+                </div>
               </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-900">
-                  Order Processing
-                </p>
-                <p className="text-sm text-gray-600">
-                  {formatDate(getStatusTimestamp('processing'))}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {getStatusTimestamp('shipped') && (
-            <div className="flex items-start">
-              <div className="flex-shrink-0 w-8 h-8 bg-blue-100 rounded-full flex items-center justify-center">
-                <Truck className="h-4 w-4 text-blue-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-900">
-                  Order Shipped
-                </p>
-                <p className="text-sm text-gray-600">
-                  {formatDate(getStatusTimestamp('shipped'))}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {getStatusTimestamp('delivered') && (
-            <div className="flex items-start">
-              <div className="flex-shrink-0 w-8 h-8 bg-green-100 rounded-full flex items-center justify-center">
-                <CheckCircle className="h-4 w-4 text-green-600" />
-              </div>
-              <div className="ml-4">
-                <p className="text-sm font-medium text-gray-900">
-                  Order Delivered
-                </p>
-                <p className="text-sm text-gray-600">
-                  {formatDate(getStatusTimestamp('delivered'))}
-                </p>
-              </div>
-            </div>
-          )}
+            );
+          })}
         </div>
       </div>
     </div>

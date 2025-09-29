@@ -243,6 +243,33 @@ const customerMailOptions = {
       throw error;
     }
   }
+
+  async sendOrderStatusUpdateEmail(order, user, newStatus, oldStatus) {
+    try {
+      const transporter = await this.createTransporter();
+      
+      const statusTitles = {
+        processing: 'Order is Being Processed',
+        shipped: 'Order Has Been Shipped',
+        delivered: 'Order Delivered Successfully',
+        cancelled: 'Order Has Been Cancelled'
+      };
+      
+      const mailOptions = {
+        from: `"${process.env.APP_NAME}" <${process.env.GMAIL_USER}>`,
+        to: user.email,
+        subject: `${statusTitles[newStatus] || 'Order Status Update'} - #${order.orderId}`,
+        html: orderStatusUpdateTemplate(order, user, newStatus, oldStatus)
+      };
+
+      const result = await transporter.sendMail(mailOptions);
+      console.log('Order status update email sent to customer:', result.messageId);
+      return result;
+    } catch (error) {
+      console.error('Error sending order status update email:', error);
+      throw error;
+    }
+  }
 }
 
 module.exports = new EmailService();

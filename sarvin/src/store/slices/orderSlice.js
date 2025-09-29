@@ -177,12 +177,13 @@ const orderSlice = createSlice({
       })
       .addCase(updateOrderStatus.fulfilled, (state, action) => {
         state.loading = false;
-        const index = state.orders.findIndex(order => order._id === action.payload._id);
+        const updatedOrder = action.payload.order || action.payload;
+        const index = state.orders.findIndex(order => order._id === updatedOrder._id);
         if (index !== -1) {
-          state.orders[index] = action.payload;
+          state.orders[index] = updatedOrder;
         }
-        if (state.order?._id === action.payload._id) {
-          state.order = action.payload;
+        if (state.order?._id === updatedOrder._id) {
+          state.order = updatedOrder;
         }
       })
       .addCase(updateOrderStatus.rejected, (state, action) => {

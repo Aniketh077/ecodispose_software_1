@@ -339,12 +339,14 @@ const getOrderById = async (req, res) => {
 if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {
   order = await Order.findById(req.params.id)
     .populate('user', 'name email')
-    .populate('items.product', 'name image price');
+    .populate('items.product', 'name image price')
+    .populate('statusHistory.updatedBy', 'name email');
 }
 if (!order) {
   order = await Order.findOne({ orderId: req.params.id })
     .populate('user', 'name email')
-    .populate('items.product', 'name image price');
+    .populate('items.product', 'name image price')
+    .populate('statusHistory.updatedBy', 'name email');
 }
 
 if (!order) {
