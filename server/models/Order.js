@@ -58,7 +58,7 @@ statusHistory: [{
   updatedBy: {
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User'
-  }
+  },
   notificationSent: {
     type: Boolean,
     default: false
