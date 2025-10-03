@@ -5,26 +5,25 @@ import { ChevronRight } from "lucide-react";
 const CollectionCards = () => {
   const collections = [
     {
-      title: "Small Appliances",
+      title: "Smartphones",
       bgColor: "bg-[#2A4365]",
-      imageUrl: "/assets/Small_Appliances.jpg",
-      exploreUrl: "/products/small-appliances",
+      imageUrl: "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg",
+      exploreUrl: "/products/smartphones",
       types: [
-        { name: "Hand Blenders", link: "/products?type=Hand+Blender" },
-        { name: "Mixer Grinders", link: "/products?type=Mixer+Grinder" },
+        { name: "iPhone", link: "/products?type=iPhone" },
+        { name: "Samsung Galaxy", link: "/products?type=Samsung+Galaxy" },
+        { name: "OnePlus", link: "/products?type=OnePlus" },
       ],
     },
     {
-      title: "Cooking Appliances",
+      title: "Laptops",
       bgColor: "bg-[#C87941]",
-      imageUrl: "/assets/Cooking_Appliances.png",
-      exploreUrl: "/products/cooking-appliances",
+      imageUrl: "https://images.pexels.com/photos/18105/pexels-photo.jpg",
+      exploreUrl: "/products/laptops",
       types: [
-        { name: "Glass Gas Stove", link: "/products?type=Glass+Gas+Stove" },
-        {
-          name: "Stainless Steel Gas Stoves",
-          link: "/products?type=Stainless+Steel+Gas+Stove",
-        },
+        { name: "MacBook", link: "/products?type=MacBook" },
+        { name: "ThinkPad", link: "/products?type=ThinkPad" },
+        { name: "Dell Laptops", link: "/products?type=Dell+Laptop" },
       ],
     },
   ];

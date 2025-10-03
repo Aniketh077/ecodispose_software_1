@@ -15,8 +15,19 @@ const productSchema = new mongoose.Schema({
   collection: {
     type: String,
     required: true,
-    enum: ['Cooking Appliances', 'Small Appliances'],
+    enum: ['Smartphones', 'Laptops', 'Tablets', 'Audio Devices', 'Gaming Consoles', 'Smart Watches'],
   },
+  condition: {
+    type: String,
+    enum: ['Like New', 'Excellent', 'Good', 'Fair'],
+    required: true,
+    default: 'Good'
+  },
+  refurbishmentDetails: { 
+    type: String,
+    default: 'Professionally refurbished and quality tested'
+  },
+  originalPrice: { type: Number }, // Original retail price for comparison
   warranty: { type: String, required: true }, 
   bestSeller: { type: Boolean, default: false }, 
   type: { type: mongoose.Schema.Types.ObjectId, ref: 'Type', required: true },
@@ -25,16 +36,6 @@ const productSchema = new mongoose.Schema({
   features: [String],
   specifications: { type: Map, of: String },
   stock: { type: Number, default: 0 },
-  burners: {
-    type: Number,
-    enum: [2, 3, 4],
-    required: function() { return this.collection === 'Cooking Appliances'; }
-  },
-  ignitionType: {
-    type: String,
-    enum: ['Auto Ignition', 'Manual Ignition'],
-    required: function() { return this.collection === 'Cooking Appliances'; }
-  },
   reviews:
    [{user: {type: mongoose.Schema.Types.ObjectId,ref: 'User',required: true},
    rating: {type: Number,required: true,min: 1,max: 5},

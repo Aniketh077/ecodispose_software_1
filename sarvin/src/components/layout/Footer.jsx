@@ -25,20 +25,20 @@ const Footer = () => {
             <div className="lg:col-span-2">
               <Link to="/" className="flex items-center mb-4">
                 <img
-                  src="/sarvinindia.jpeg"
-                  alt="Sarvin"
+                  src="/logo_light.png"
+                  alt="Cashify"
                   className="h-10 w-auto object-contain"
                   style={{ maxWidth: '120px' }}
                 />
               </Link>
               <p className="text-gray-300 mb-6">
-                Sarvin brings you the best in home appliances with premium quality, innovative technology,
-                and exceptional customer service. Transform your home with our wide range of products.
+                Cashify brings you the best in refurbished electronics with premium quality, thorough testing,
+                and exceptional customer service. Get sustainable tech solutions with our wide range of certified pre-owned devices.
               </p>
               <div className="space-y-3">
                 <div className="flex items-start">
                   <Mail className="h-5 w-5 text-[#C87941] mt-1 mr-3" />
-                  <span className="text-gray-300">sarvinhomeappl@gmail.com</span>
+                  <span className="text-gray-300">support@cashify.com</span>
                 </div>
                 <div className="flex items-start">
                   <Phone className="h-5 w-5 text-[#C87941] mt-1 mr-3" />

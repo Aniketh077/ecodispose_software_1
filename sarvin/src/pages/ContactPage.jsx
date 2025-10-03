@@ -160,8 +160,8 @@ const ContactPage = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl font-bold mb-6">Get in Touch</h1>
             <p className="text-xl text-gray-200">
-              We're here to help you find the perfect appliances for your home. 
-              Reach out to our expert team for personalized assistance.
+              We're here to help you find the perfect refurbished device for your needs. 
+              Reach out to our expert team for personalized assistance and device recommendations.
             </p>
           </div>
         </div>
@@ -432,8 +432,8 @@ const ContactPage = () => {
               </div>
               <h2 className="text-3xl font-bold mb-4">Ready to Connect? We're Here to Help!</h2>
               <p className="text-xl text-gray-200 mb-8">
-                Get instant support through WhatsApp or call our dedicated team at +91 93109 79906 . 
-                Experience seamless service and expert guidance for all your appliance needs.
+                Get instant support through WhatsApp or call our dedicated team at +91 93109 79906. 
+                Experience seamless service and expert guidance for all your refurbished device needs.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 

@@ -61,9 +61,9 @@ const AboutPage = () => {
       <section className="py-20 bg-gradient-to-r from-[#2A4365] to-[#1A365D] text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">About Sarvin</h1>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">About Cashify</h1>
             <p className="text-xl md:text-2xl text-gray-200 mb-8">
-              Transforming homes across India with premium appliances and exceptional service
+              Transforming India's electronics ecosystem with quality refurbished devices and sustainable solutions
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/products">
@@ -101,10 +101,10 @@ const AboutPage = () => {
           <div className="max-w-6xl mx-auto">
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
               <div>
-                <h2 className="text-4xl font-bold mb-6">About Us</h2>
+                <h2 className="text-4xl font-bold mb-6">Our Story</h2>
                 <div className="space-y-4 text-gray-600 text-lg">
                   <p>
-                    SARVIN is an inspiration from the needs of the discerning buyers of modern home appliances. Acknowledging the fact that quality & service are the only two parameters for acceptance of a type in the market, Sarvin is the answer to market dynamics. Renowned for its high-quality, high-performance kitchen/home/gas appliances, Sarvin clearly is the No. 1 choice of homes across India.
+                    Cashify was born from the vision of making quality electronics accessible to everyone while promoting sustainability. We believe that refurbished doesn't mean compromised. Every device goes through rigorous testing and certification to ensure it meets our high standards. By choosing refurbished, you're not just saving money - you're helping reduce electronic waste and contributing to a greener planet.
                   </p>
                 </div>
               </div>
@@ -130,8 +130,8 @@ const AboutPage = () => {
               </div>
               <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
               <p className="text-gray-600 text-lg">
-                To revolutionize the way Indians shop for home appliances by providing premium products, 
-                exceptional service, and unmatched value through innovative technology and customer-centric solutions.
+                To revolutionize the way Indians buy and sell electronics by providing quality refurbished devices, 
+                exceptional service, and sustainable solutions that benefit both customers and the environment.
               </p>
             </div>
             <div>
@@ -140,8 +140,8 @@ const AboutPage = () => {
               </div>
               <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
               <p className="text-gray-600 text-lg">
-                To become India's most trusted and preferred destination for home appliances, 
-                empowering every household to live better through smart, efficient, and sustainable technology.
+                To become India's most trusted marketplace for refurbished electronics, 
+                empowering everyone to access premium technology while building a sustainable future.
               </p>
             </div>
           </div>
@@ -154,7 +154,7 @@ const AboutPage = () => {
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Our Values</h2>
             <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-              The principles that guide everything we do
+              The principles that guide our commitment to quality and sustainability
             </p>
           </div>
           
@@ -206,9 +206,9 @@ const AboutPage = () => {
       <section className="py-16 bg-[#2A4365] text-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Why Choose Sarvin?</h2>
+            <h2 className="text-4xl font-bold mb-4">Why Choose Cashify?</h2>
             <p className="text-gray-200 text-lg max-w-2xl mx-auto">
-              We're more than just an appliance store - we're your trusted partner in creating the perfect home
+              We're more than just a marketplace - we're your trusted partner in sustainable technology solutions
             </p>
           </div>
           
@@ -217,16 +217,16 @@ const AboutPage = () => {
               <div className="bg-white/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Truck className="h-8 w-8" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Free Installation</h3>
-              <p className="text-gray-200">Professional installation service included with every purchase</p>
+              <h3 className="text-lg font-semibold mb-2">Free Shipping</h3>
+              <p className="text-gray-200">Free shipping on all refurbished devices across India</p>
             </div>
             
             <div className="text-center">
               <div className="bg-white/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Shield className="h-8 w-8" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Extended Warranty</h3>
-              <p className="text-gray-200">Comprehensive warranty coverage for peace of mind</p>
+              <h3 className="text-lg font-semibold mb-2">Quality Assured</h3>
+              <p className="text-gray-200">Every device is thoroughly tested and certified before sale</p>
             </div>
             
             <div className="text-center">
@@ -241,8 +241,8 @@ const AboutPage = () => {
               <div className="bg-white/10 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-4">
                 <Award className="h-8 w-8" />
               </div>
-              <h3 className="text-lg font-semibold mb-2">Quality Assured</h3>
-              <p className="text-gray-200">Only genuine products from authorized dealers</p>
+              <h3 className="text-lg font-semibold mb-2">Eco-Friendly</h3>
+              <p className="text-gray-200">Reducing e-waste through sustainable refurbishment</p>
             </div>
           </div>
         </div>
@@ -252,9 +252,9 @@ const AboutPage = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-4">Ready to Transform Your Home?</h2>
+            <h2 className="text-4xl font-bold mb-4">Ready to Go Sustainable?</h2>
             <p className="text-gray-600 text-lg mb-8">
-              Join thousands of satisfied customers who have made Sarvin their trusted appliance partner
+              Join thousands of satisfied customers who have made Cashify their trusted refurbished electronics partner
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/products">

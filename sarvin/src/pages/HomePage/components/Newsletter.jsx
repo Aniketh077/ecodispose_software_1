@@ -29,9 +29,9 @@ const handleSubmit = async (e) => {
     <section className="py-16 bg-[#1A202C] text-white">
       <div className="container mx-auto px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-4xl font-bold mb-4">Stay in the Loop</h2>
+          <h2 className="text-4xl font-bold mb-4">Stay Updated</h2>
           <p className="text-xl text-gray-300 mb-8">
-            Subscribe to our newsletter for exclusive deals, new arrivals, and home improvement tips
+            Subscribe to our newsletter for exclusive deals on refurbished devices, new arrivals, and tech tips
           </p>
     
            <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row max-w-md mx-auto">

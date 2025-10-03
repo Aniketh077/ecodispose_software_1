@@ -156,12 +156,12 @@ const ProductInfo = ({
       <div className="space-y-3 mb-6 border-t border-gray-100 pt-4">
         <div className="flex items-center">
           <TruckIcon className="h-5 w-5 text-[#2A4365] mr-3" />
-          <span className="text-sm">Free shipping on orders across India.</span>
+          <span className="text-sm">Free shipping on refurbished devices across India.</span>
         </div>
         <div className="flex items-center">
           <ShieldCheck className="h-5 w-5 text-[#2A4365] mr-3" />
           <span className="text-sm">
-            {(product.warranty&& product.warranty) || '1 year'} warranty
+            {(product.warranty && product.warranty) || '6 months'} warranty on refurbished device
           </span>
         </div>
       </div>

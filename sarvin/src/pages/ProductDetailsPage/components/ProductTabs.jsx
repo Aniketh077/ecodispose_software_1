@@ -50,17 +50,18 @@ const ProductTabs = ({ product, activeTab, setActiveTab }) => {
         {activeTab === 'additionalInfo' && (
           <div className="prose prose-sm max-w-none">
             <p>
-              The {product.name} comes with a standard {(product.warranty && product.warranty) || '1 year'} warranty that covers manufacturing defects and malfunctions.
+              This refurbished {product.name} comes with a {(product.warranty && product.warranty) || '6 months'} warranty that covers hardware defects and functionality issues.
             </p>
             <p>
-              For installation assistance or technical support, please contact our customer service team at sarvinhomeappl@gmail.com or call us at +91 93109 79906.
+              For technical support or device assistance, please contact our customer service team at support@cashify.com or call us at +91 93109 79906.
             </p>
-            <h4>Care Instructions</h4>
+            <h4>Refurbished Device Care</h4>
             <ul>
-              <li>Always read the user manual before operating this appliance</li>
-              <li>Clean the exterior with a soft, damp cloth and mild detergent</li>
-              <li>Ensure proper ventilation around the appliance</li>
-              <li>Follow manufacturer's maintenance schedule for optimal performance</li>
+              <li>Handle with care as refurbished devices may show minor cosmetic wear</li>
+              <li>Clean the device with a soft, dry cloth and avoid harsh chemicals</li>
+              <li>Keep the device away from extreme temperatures and moisture</li>
+              <li>Follow manufacturer's guidelines for optimal battery performance</li>
+              <li>Contact us immediately if you notice any functionality issues</li>
             </ul>
           </div>
         )}

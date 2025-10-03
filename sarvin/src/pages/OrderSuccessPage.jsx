@@ -107,8 +107,8 @@ const OrderSuccessPage= () => {
             <div className="mt-8 pt-6 border-t border-gray-200">
               <p className="text-sm text-gray-500">
                 Need help? Contact our support team at{' '}
-                <a href="mailto:sarvinhomeappl@gmail.com" className="text-[#2A4365] hover:text-[#C87941]">
-                  sarvinhomeappl@gmail.com
+                <a href="mailto:support@cashify.com" className="text-[#2A4365] hover:text-[#C87941]">
+                  support@cashify.com
                 </a>{' '}
                 or call{' '}
                 <a href="tel:+919310979906" className="text-[#2A4365] hover:text-[#C87941]">

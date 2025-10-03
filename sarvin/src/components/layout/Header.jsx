@@ -115,52 +115,54 @@ const Header = () => {
   }, [isProfileMenuOpen, isScrolledNavOpen]);
 
   // Navigation menu data
-  const cookingAppliancesMenu = {
+  const smartphonesMenu = {
     types: [
       {
-        name: "Stainless Steel Gas Stove",
-        path: "/products?type=Stainless+Steel+Gas+Stove",
+        name: "iPhone",
+        path: "/products?type=iPhone",
       },
-      { name: "Glass Gas Stove", path: "/products?type=Glass+Gas+Stove" },
+      { name: "Samsung Galaxy", path: "/products?type=Samsung+Galaxy" },
+      { name: "OnePlus", path: "/products?type=OnePlus" },
     ],
-    burners: [
-      { name: "2 Burner", path: "/products?burners=2" },
-      { name: "3 Burner", path: "/products?burners=3" },
-      { name: "4 Burner", path: "/products?burners=4" },
+    conditions: [
+      { name: "Like New", path: "/products?condition=Like+New" },
+      { name: "Excellent", path: "/products?condition=Excellent" },
+      { name: "Good", path: "/products?condition=Good" },
     ],
     images: [
       {
-        name: "Glass Gas Stove",
-        path: "/products?type=Glass+Gas+Stove",
-        src: "/assets/Cooking_Appliances.png",
-        alt: "Glass cooktop stove",
+        name: "iPhone",
+        path: "/products?type=iPhone",
+        src: "https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg",
+        alt: "Refurbished iPhone",
       },
       {
-        name: "Stainless Steel",
-        path: "/products?type=Stainless+Steel",
-        src: "/assets/StainLessSteel.png",
-        alt: "Stainless steel gas stove",
+        name: "Samsung Galaxy",
+        path: "/products?type=Samsung+Galaxy",
+        src: "https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg",
+        alt: "Refurbished Samsung Galaxy",
       },
     ],
   };
 
-  const smallAppliancesMenu = {
+  const laptopsMenu = {
     types: [
-      { name: "Mixer Grinder", path: "/products?type=Mixer+Grinder" },
-      { name: "Hand Blender", path: "/products?type=Hand+Blender" },
+      { name: "MacBook", path: "/products?type=MacBook" },
+      { name: "ThinkPad", path: "/products?type=ThinkPad" },
+      { name: "Dell Laptop", path: "/products?type=Dell+Laptop" },
     ],
     images: [
       {
-        name: "Mixer Grinders",
-        path: "/products?type=Mixer+Grinder",
-        src: "/assets/Grinder.png",
-        alt: "A modern mixer grinder",
+        name: "MacBook",
+        path: "/products?type=MacBook",
+        src: "https://images.pexels.com/photos/18105/pexels-photo.jpg",
+        alt: "Refurbished MacBook",
       },
       {
-        name: "Hand Blenders",
-        path: "/products?type=Hand+Blender",
-        src: "/assets/Hand_Blender.png",
-        alt: "A centrifugal juicer",
+        name: "ThinkPad",
+        path: "/products?type=ThinkPad",
+        src: "https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg",
+        alt: "Refurbished ThinkPad",
       },
     ],
   };
@@ -178,32 +180,32 @@ const Header = () => {
         </Link>
       </li>
       <li className="relative group">
-        <Link to="/products/cooking-appliances" className="text-sm font-medium transition-colors hover:text-[#C87941] text-[#01364a] flex items-center">
-          Cooking Appliances
+        <Link to="/products/smartphones" className="text-sm font-medium transition-colors hover:text-[#C87941] text-[#01364a] flex items-center">
+          Smartphones
           <ChevronDown className="ml-1 h-3 w-3 relative top-[3px]" />
         </Link>
         <div className="absolute left-[-6rem] top-full mt-2 bg-white shadow-lg rounded-md p-6 z-50 transition-all duration-300 transform opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 translate-y-2" style={{ minWidth: "800px" }}>
           <div className="flex justify-between items-start space-x-8">
             <div className="flex space-x-12">
               <div>
-                <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Type</h4>
+                <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Brands</h4>
                 <ul className="space-y-1.5 mt-2">
-                  {cookingAppliancesMenu.types.map((item) => (
+                  {smartphonesMenu.types.map((item) => (
                     <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-[#C87941]">{item.name}</Link></li>
                   ))}
                 </ul>
               </div>
               <div>
-                <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Burner Type</h4>
+                <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Condition</h4>
                 <ul className="space-y-1.5 mt-2">
-                  {cookingAppliancesMenu.burners.map((item) => (
+                  {smartphonesMenu.conditions.map((item) => (
                     <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-[#C87941]">{item.name}</Link></li>
                   ))}
                 </ul>
               </div>
             </div>
             <div className="flex space-x-6 pl-8 border-l border-gray-200">
-              {cookingAppliancesMenu.images.map((image) => (
+              {smartphonesMenu.images.map((image) => (
                 <Link to={image.path} key={image.name} className="block text-center hover:opacity-90 transition-opacity">
                   <div className="w-44 h-44 flex items-center justify-center rounded-md overflow-hidden">
                     <img src={image.src} alt={image.alt} className="w-full h-full object-contain" />
@@ -216,21 +218,21 @@ const Header = () => {
         </div>
       </li>
       <li className="relative group">
-        <Link to="/products/small-appliances" className="text-sm font-medium transition-colors hover:text-[#C87941] text-[#01364a] flex items-center">
-          Small Appliances <ChevronDown className="ml-1 h-3 w-3 relative top-[3px]" />
+        <Link to="/products/laptops" className="text-sm font-medium transition-colors hover:text-[#C87941] text-[#01364a] flex items-center">
+          Laptops <ChevronDown className="ml-1 h-3 w-3 relative top-[3px]" />
         </Link>
         <div className="absolute left-[-6rem] top-full mt-2 bg-white shadow-lg rounded-md p-6 z-50 transition-all duration-300 transform opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 translate-y-2" style={{ minWidth: "600px" }}>
           <div className="flex justify-between items-start space-x-8">
             <div>
-              <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Types</h4>
+              <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Brands</h4>
               <ul className="space-y-1.5 mt-2">
-                {smallAppliancesMenu.types.map((item) => (
+                {laptopsMenu.types.map((item) => (
                   <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-[#C87941]">{item.name}</Link></li>
                 ))}
               </ul>
             </div>
             <div className="flex space-x-6 pl-8 border-l border-gray-200">
-              {smallAppliancesMenu.images.map((image) => (
+              {laptopsMenu.images.map((image) => (
                 <Link to={image.path} key={image.name} className="block text-center hover:opacity-90 transition-opacity">
                   <div className="w-44 h-44 flex items-center justify-center rounded-md overflow-hidden">
                     <img src={image.src} alt={image.alt} className="w-full h-full object-contain" />
@@ -264,7 +266,7 @@ const Header = () => {
              </button>
              {/* MOBILE LOGO MOVED HERE */}
              <Link to="/" className="lg:hidden flex items-center flex-shrink-0">
-                <img src="/sarvinindia.jpeg" alt="Sarvin" className="h-12 w-auto object-contain" style={{ maxWidth: "130px" }} />
+                <img src="/logo_light.png" alt="Cashify" className="h-12 w-auto object-contain" style={{ maxWidth: "130px" }} />
              </Link>
              {/* Desktop Left Content */}
              <div className="hidden lg:flex items-center space-x-4">
@@ -274,7 +276,7 @@ const Header = () => {
                     </button>
                 )}
                 <Link to="/" className="flex items-center flex-shrink-0">
-                    <img src="/sarvinindia.jpeg" alt="Sarvin" className="h-12 w-auto object-contain" style={{ maxWidth: "130px" }} />
+                    <img src="/logo_light.png" alt="Cashify" className="h-12 w-auto object-contain" style={{ maxWidth: "130px" }} />
                 </Link>
              </div>
           </div>
@@ -285,7 +287,7 @@ const Header = () => {
              <div className="w-full">
                 <form onSubmit={handleSearch} className="relative max-w-xl mx-auto">
                     <input
-                        type="text"
+                    <img src="/logo_light.png" alt="Cashify" className="h-12 w-auto object-contain" style={{ maxWidth: "130px" }} />
                         placeholder="What are you looking for?"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
@@ -408,27 +410,27 @@ const Header = () => {
                  <button
                    onClick={() =>
                      setActiveDropdown(
-                       activeDropdown === "cooking-mobile"
+                       activeDropdown === "smartphones-mobile"
                          ? null
-                         : "cooking-mobile"
+                         : "smartphones-mobile"
                      )
                    }
                    className="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-gray-900 hover:bg-gray-50"
                  >
-                   Cooking Appliances{" "}
+                   Smartphones{" "}
                    <ChevronDown
                      className={`h-4 w-4 transition-transform ${
-                       activeDropdown === "cooking-mobile" ? "rotate-180" : ""
+                       activeDropdown === "smartphones-mobile" ? "rotate-180" : ""
                      }`}
                    />
                  </button>
-                 {activeDropdown === "cooking-mobile" && (
+                 {activeDropdown === "smartphones-mobile" && (
                    <div className="bg-gray-50 px-4 py-2">
                      <h4 className="font-semibold text-xs mb-2 text-gray-700">
-                       Type
+                       Brands
                      </h4>
                      <ul className="space-y-1 mb-3">
-                       {cookingAppliancesMenu.types.map((item) => (
+                       {smartphonesMenu.types.map((item) => (
                          <li key={item.name}>
                            <Link
                              to={item.path}
@@ -440,10 +442,10 @@ const Header = () => {
                        ))}
                      </ul>
                      <h4 className="font-semibold text-xs mb-2 text-gray-700">
-                       Burner Type
+                       Condition
                      </h4>
                      <ul className="space-y-1">
-                       {cookingAppliancesMenu.burners.map((item) => (
+                       {smartphonesMenu.conditions.map((item) => (
                          <li key={item.name}>
                            <Link
                              to={item.path}
@@ -458,30 +460,30 @@ const Header = () => {
                  )}
                </li>
 
-               {/* Small Appliances Mobile Submenu */}
+               {/* Laptops Mobile Submenu */}
                <li className="relative">
                  <button
                    onClick={() =>
                      setActiveDropdown(
-                       activeDropdown === "small-mobile" ? null : "small-mobile"
+                       activeDropdown === "laptops-mobile" ? null : "laptops-mobile"
                      )
                    }
                    className="flex items-center justify-between w-full px-4 py-3 text-sm font-medium text-gray-900 hover:bg-gray-50"
                  >
-                   Small Appliances{" "}
+                   Laptops{" "}
                    <ChevronDown
                      className={`h-4 w-4 transition-transform ${
-                       activeDropdown === "small-mobile" ? "rotate-180" : ""
+                       activeDropdown === "laptops-mobile" ? "rotate-180" : ""
                      }`}
                    />
                  </button>
-                 {activeDropdown === "small-mobile" && (
+                 {activeDropdown === "laptops-mobile" && (
                    <div className="bg-gray-50 px-4 py-2">
                      <h4 className="font-semibold text-xs mb-2 text-gray-700">
-                       Types
+                       Brands
                      </h4>
                      <ul className="space-y-1">
-                       {smallAppliancesMenu.types.map((item) => (
+                       {laptopsMenu.types.map((item) => (
                          <li key={item.name}>
                            <Link
                              to={item.path}
