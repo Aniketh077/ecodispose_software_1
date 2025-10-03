@@ -1,5 +1,5 @@
 import React from 'react';
-import { Minus, Plus, Check, ShoppingCart, Star, TruckIcon, ShieldCheck, Heart } from 'lucide-react';
+import { Minus, Plus, Check, ShoppingCart, Star, Truck as TruckIcon, ShieldCheck, Heart } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 
 const ProductInfo = ({ 

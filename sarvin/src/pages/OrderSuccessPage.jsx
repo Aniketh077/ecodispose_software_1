@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useLocation, useNavigate, Link } from 'react-router-dom';
-import { CheckCircle, Package, ArrowRight, Home } from 'lucide-react';
+import { CircleCheck as CheckCircle, Package, ArrowRight, Hop as Home } from 'lucide-react';
 import Button from '../components/ui/Button';
 
 const OrderSuccessPage= () => {
