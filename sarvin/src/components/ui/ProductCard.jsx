@@ -63,10 +63,10 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
 
   if (viewMode === "list") {
     return (
-      <div className="group relative flex flex-col md:flex-row bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg hover:border-primary-300 transition-all">
+      <div className="group relative flex flex-col md:flex-row bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg hover:border-blue-300 transition-all">
         {/* Success/Error indicators */}
         {showSuccess && (
-          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-primary-600 text-white px-4 py-2 rounded-lg flex items-center">
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-[#C87941] text-white px-4 py-2 rounded-lg flex items-center">
             <CheckCircle size={16} className="mr-2" />
             Added to cart!
           </div>
@@ -80,7 +80,7 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
         )}
 
         {/* Badges */}
-        <div className="absolute left-2 top-2 z-10 bg-primary-600 px-2 py-1 rounded-md text-xs font-semibold text-white flex items-center gap-1 shadow-md">
+        <div className="absolute left-2 top-2 z-10 bg-gradient-to-r from-blue-600 to-blue-500 px-2 py-1 rounded-md text-xs font-semibold text-white flex items-center gap-1 shadow-md">
           <Shield size={12} />
           Certified
         </div>
@@ -122,14 +122,14 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
               {product.type?.name || product.collection?.name}
             </p>
             <Link to={`/product/${productId}`}>
-              <h3 className="text-lg font-medium mb-2 group-hover:text-primary-600">
+              <h3 className="text-lg font-medium mb-2 group-hover:text-[#2A4365]">
                 {product.name}
               </h3>
             </Link>
 
             <div className="flex items-center mb-3">
               <div className="flex items-center">
-                <Star className="mr-1 h-4 w-4 fill-orange-400 text-orange-400" />
+                <Star className="mr-1 h-4 w-4 fill-[#C87941] text-[#C87941]" />
                 <span className="text-sm font-medium">
                   {product.rating || 0}
                 </span>
@@ -222,9 +222,9 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
   const ConditionIcon = conditionBadge.icon;
 
   return (
-    <div className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg hover:border-primary-300">
+    <div className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg hover:border-blue-300">
       {/* Certified Refurbished Badge */}
-      <div className="absolute left-2 top-2 z-10 bg-primary-600 px-2 py-1 rounded-md text-xs font-semibold text-white flex items-center gap-1 shadow-md">
+      <div className="absolute left-2 top-2 z-10 bg-gradient-to-r from-blue-600 to-blue-500 px-2 py-1 rounded-md text-xs font-semibold text-white flex items-center gap-1 shadow-md">
         <Shield size={12} />
         Certified
       </div>
@@ -250,7 +250,7 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
 
       {/* Success/Error indicators */}
       {showSuccess && (
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-primary-600 text-white px-4 py-2 rounded-lg flex items-center">
+        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-[#C87941] text-white px-4 py-2 rounded-lg flex items-center">
           <CheckCircle size={16} className="mr-2" />
           Added to cart!
         </div>
@@ -276,7 +276,7 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
           <div className="mb-1 text-sm text-gray-500">
             {product.type?.name || product.type}
           </div>
-          <h3 className="mb-2 text-base font-medium line-clamp-2 group-hover:text-primary-600 transition-colors">
+          <h3 className="mb-2 text-base font-medium line-clamp-2 group-hover:text-blue-600 transition-colors">
             {truncateText(product.name, 50)}
           </h3>
 
@@ -302,7 +302,7 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
           <div className="flex items-center justify-between">
             <div>
               <div className="flex items-center gap-2">
-                <span className="text-lg font-bold text-primary-600">
+                <span className="text-lg font-bold text-blue-600">
                   ₹{currentPrice.toFixed(2)}
                 </span>
                 {product.originalPrice && product.originalPrice > currentPrice && (
@@ -325,7 +325,7 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
 
             <div className="flex flex-col items-end">
               {itemInCart ? (
-                <div className="text-xs text-primary-600 mb-1">
+                <div className="text-xs text-[#C87941] mb-1">
                   In cart ({quantity})
                 </div>
               ) : null}
