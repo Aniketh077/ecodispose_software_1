@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Package, ShoppingCart, Users, LogOut, Menu, X, ChevronRight, Mail, MessageSquare, BarChart3, Home, ChevronLeft, Calendar, User, DollarSign, Eye, Grid, Tag } from 'lucide-react';
+import { Package, ShoppingCart, Users, LogOut, Menu, X, ChevronRight, Mail, MessageSquare, ChartBar as BarChart3, Hop as Home, ChevronLeft, Calendar, User, DollarSign, Eye, Grid2x2 as Grid, Tag } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { fetchDashboardStats, fetchAllUsers } from '../../store/slices/adminSlice';
 import AdminProducts from './AdminProducts/AdminProducts';
