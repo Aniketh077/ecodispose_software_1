@@ -1,15 +1,7 @@
 import React, { useState } from "react";
 import { useCart } from "../../contexts/CartContext";
 import Button from "./Button";
-import {
-  ShoppingCart,
-  Heart,
-  Star,
-  CheckCircle,
-  AlertCircle,
-  Award,
-  Shield,
-} from "lucide-react";
+import { ShoppingCart, Heart, Star, CircleCheck as CheckCircle, CircleAlert as AlertCircle, Award, Shield } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const truncateText = (text, maxLength) => {

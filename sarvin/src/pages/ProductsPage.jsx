@@ -1,15 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  Filter,
-  Grid,
-  List,
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-  Check
-} from "lucide-react";
+import { ListFilter as Filter, Grid2x2 as Grid, List, ChevronLeft, ChevronRight, ChevronDown, Check } from "lucide-react";
 import {
   fetchProducts,
   fetchTypes,

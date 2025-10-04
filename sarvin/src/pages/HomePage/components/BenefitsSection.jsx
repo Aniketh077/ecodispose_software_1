@@ -1,5 +1,5 @@
 import React from 'react';
-import { Truck, Shield, CheckCircle, Leaf, Award, RefreshCw } from 'lucide-react';
+import { Truck, Shield, CircleCheck as CheckCircle, Leaf, Award, RefreshCw } from 'lucide-react';
 
 const BenefitsSection = () => {
   const benefits = [
