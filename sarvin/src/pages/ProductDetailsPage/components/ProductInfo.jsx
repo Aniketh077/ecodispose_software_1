@@ -13,7 +13,10 @@ const ProductInfo = ({
   setIsDescriptionExpanded, 
   collectionName
 }) => {
-  const typeName = product.type?.name || product.type || 'Unknown';
+  // Safely extract type name as string
+  const typeName = typeof product.type === 'string' ? product.type :
+                   (product.type && typeof product.type === 'object' && product.type.name) ?
+                   String(product.type.name) : 'Unknown';
 
   return (
     <div className="p-6 flex flex-col">

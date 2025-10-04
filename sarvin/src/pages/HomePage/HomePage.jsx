@@ -51,7 +51,7 @@ const HomePage = () => {
       <PromotionalBanner />
       <NewArrivals products={newArrivals || []} />
       <BestSellers />
-      {types && types.length > 0 && <BrandsSection types={types} />}
+      {Array.isArray(types) && types.length > 0 && <BrandsSection types={types} />}
       <BenefitsSection />
       <Newsletter />
     </div>

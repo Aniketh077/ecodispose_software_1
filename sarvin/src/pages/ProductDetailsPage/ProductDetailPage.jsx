@@ -99,7 +99,10 @@ const ProductDetailPage = () => {
     return <ErrorMessage error="Product not found" />;
   }
 
-  const collectionName = product.collection?.name || product.collection || 'Unknown';
+  // Safely extract collection name as string
+  const collectionName = typeof product.collection === 'string' ? product.collection :
+                         (product.collection && typeof product.collection === 'object' && product.collection.name) ?
+                         String(product.collection.name) : 'Unknown';
 
   return (
     <div className="min-h-screen pt-20 pb-16">

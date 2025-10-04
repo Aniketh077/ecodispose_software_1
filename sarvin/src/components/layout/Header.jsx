@@ -275,7 +275,7 @@ const Header = () => {
              </button>
              {/* MOBILE LOGO MOVED HERE */}
              <Link to="/" className="lg:hidden flex items-center flex-shrink-0">
-                <span className="text-2xl font-bold text-[#01364a]">Eco<span className="text-[#10B981]">Trade</span></span>
+                <span className="text-2xl font-bold text-[#01364a]">Eco<span className="text-green-600">Trade</span></span>
              </Link>
              {/* Desktop Left Content */}
              <div className="hidden lg:flex items-center space-x-4">
@@ -285,7 +285,7 @@ const Header = () => {
                     </button>
                 )}
                 <Link to="/" className="flex items-center flex-shrink-0">
-                    <span className="text-2xl font-bold text-[#01364a]">Eco<span className="text-[#10B981]">Trade</span></span>
+                    <span className="text-2xl font-bold text-[#01364a]">Eco<span className="text-green-600">Trade</span></span>
                 </Link>
              </div>
           </div>
