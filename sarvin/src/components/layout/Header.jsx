@@ -287,7 +287,7 @@ const Header = () => {
              <div className="w-full">
                 <form onSubmit={handleSearch} className="relative max-w-xl mx-auto">
                     <input
-                    <img src="/logo_light.png" alt="Cashify" className="h-12 w-auto object-contain" style={{ maxWidth: "130px" }} />
+                        type="text"
                         placeholder="What are you looking for?"
                         value={searchQuery}
                         onChange={(e) => setSearchQuery(e.target.value)}
