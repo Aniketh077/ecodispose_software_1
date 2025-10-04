@@ -112,7 +112,7 @@ const ProductTableRow = ({ product, onEdit, onDelete, onProductClick, isDesktop 
       </td>
      <td className="px-4 lg:px-6 py-4 whitespace-nowrap text-sm text-gray-500">
         <div className="max-w-24 lg:max-w-32 truncate">
-          {product.collection || 'N/A'} 
+          {typeof product.collection === 'object' ? product.collection?.name : product.collection || 'N/A'}
         </div>
       </td>
       <td className="px-4 lg:px-6 py-4 whitespace-nowrap">
@@ -211,7 +211,7 @@ const ProductCard = ({ product, onEdit, onDelete, onProductClick }) => {
             {typeof product.type === 'object' ? product.type?.name : product.type}
           </p>
           <p className="text-xs text-gray-500 truncate">
-            {product.collection || 'N/A'} 
+            {typeof product.collection === 'object' ? product.collection?.name : product.collection || 'N/A'}
           </p>
         </div>
       </div>
