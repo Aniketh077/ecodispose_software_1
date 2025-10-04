@@ -124,9 +124,9 @@ const EmailVerificationPage = () => {
 
             {isVerifying && (
               <div className="text-center mb-6">
-                <div className="inline-flex items-center px-4 py-2 bg-blue-50 rounded-md">
-                  <RefreshCw className="w-4 h-4 mr-2 animate-spin text-blue-600" />
-                  <span className="text-blue-600">Verifying...</span>
+                <div className="inline-flex items-center px-4 py-2 bg-green-50 rounded-md">
+                  <RefreshCw className="w-4 h-4 mr-2 animate-spin text-green-600" />
+                  <span className="text-green-600">Verifying...</span>
                 </div>
               </div>
             )}
@@ -193,7 +193,7 @@ const EmailVerificationPage = () => {
               )}
 
             <div className="mt-8 text-center text-sm">
-              <Link to="/login" className="text-[#2A4365] hover:text-[#C87941]">
+              <Link to="/login" className="text-green-700 hover:text-emerald-600">
                 Back to Login
               </Link>
             </div>

@@ -14,7 +14,7 @@ const FeaturedProducts = ({ products }) => {
             <h2 className="text-4xl font-bold mb-2">Featured Products</h2>
             <p className="text-gray-600 text-lg">Our best selling products recommended for you</p>
           </div>
-          <Link to="/products?filter=featured" className="hidden md:flex items-center text-[#2A4365] hover:text-[#C87941] font-medium">
+          <Link to="/products?filter=featured" className="hidden md:flex items-center text-green-700 hover:text-emerald-600 font-medium">
             View All <ArrowRight className="ml-2 h-5 w-5" />
           </Link>
         </div>

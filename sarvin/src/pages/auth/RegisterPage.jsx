@@ -250,15 +250,15 @@ const RegisterPage = () => {
                   type="checkbox"
                   checked={acceptTerms}
                   onChange={(e) => setAcceptTerms(e.target.checked)}
-                  className="h-4 w-4 text-[#2A4365] focus:ring-[#2A4365] border-gray-300 rounded mt-1"
+                  className="h-4 w-4 text-green-700 focus:ring-green-600 border-gray-300 rounded mt-1"
                 /> */}
                 {/* <label htmlFor="terms" className="ml-2 block text-sm text-gray-700">
                   I agree to the{' '}
-                  <Link to="/terms" className="text-[#2A4365] hover:text-[#C87941]">
+                  <Link to="/terms" className="text-green-700 hover:text-emerald-600">
                     Terms of Service
                   </Link>{' '}
                   and{' '}
-                  <Link to="/privacy" className="text-[#2A4365] hover:text-[#C87941]">
+                  <Link to="/privacy" className="text-green-700 hover:text-emerald-600">
                     Privacy Policy
                   </Link>
                 </label> */}
@@ -293,7 +293,7 @@ const RegisterPage = () => {
             </div>
 
             <div className="mt-6 text-center text-sm">
-              <Link to="/login" className="font-medium text-[#2A4365] hover:text-[#C87941]">
+              <Link to="/login" className="font-medium text-green-700 hover:text-emerald-600">
                 Sign in instead
               </Link>
             </div>

@@ -99,7 +99,7 @@ const AdminNewsletter = () => {
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
             <div className="bg-white border border-gray-200 rounded-lg p-4 sm:p-6 shadow-sm">
               <div className="flex items-center">
-                <div className="p-2 sm:p-3 bg-blue-50 rounded-lg mr-3 sm:mr-4">
+                <div className="p-2 sm:p-3 bg-green-50 rounded-lg mr-3 sm:mr-4">
                   <Users className="h-5 w-5 sm:h-6 sm:w-6" style={{color: '#2A4365'}} />
                 </div>
                 <div>

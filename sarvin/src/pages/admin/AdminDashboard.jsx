@@ -61,7 +61,7 @@ const AdminDashboard = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-gray-100">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-600 mx-auto"></div>
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
           <p className="mt-4 text-gray-600">Loading...</p>
         </div>
       </div>
@@ -153,7 +153,7 @@ return (
           {!sidebarOpen && (
   <button
     onClick={toggleSidebar}
-    className="fixed top-4 right-0  z-50 xl:hidden bg-[#2A4365]   text-white p-4  shadow-lg hover:bg-[#3D5980] transition-all duration-300 transform hover:scale-105"
+    className="fixed top-4 right-0  z-50 xl:hidden bg-green-600   text-white p-4  shadow-lg hover:bg-[#3D5980] transition-all duration-300 transform hover:scale-105"
   >
     <Menu size={22} />
   </button>
@@ -161,7 +161,7 @@ return (
 
       {/* Sidebar */}
       <aside
-        className={`fixed inset-y-0 left-0 z-40 bg-[#2A4365] text-white transition-all duration-300 ease-in-out ${
+        className={`fixed inset-y-0 left-0 z-40 bg-green-600 text-white transition-all duration-300 ease-in-out ${
           isMobile 
             ? `${sidebarOpen ? 'w-64 translate-x-0' : 'w-64 -translate-x-full'}`
             : `${sidebarOpen ? 'w-52' : 'w-16'} translate-x-0`
@@ -240,7 +240,7 @@ return (
           {/* User section */}
           <div className="border-t border-[#3D5980] p-4">
             <div className="flex items-center justify-center mb-3">
-              <div className="h-8 w-8 rounded-full bg-[#C87941] flex items-center justify-center flex-shrink-0">
+              <div className="h-8 w-8 rounded-full bg-emerald-500 flex items-center justify-center flex-shrink-0">
                 <span className="text-white text-sm font-semibold">
                   {user?.name?.charAt(0).toUpperCase()}
                 </span>
@@ -281,7 +281,7 @@ return (
       {!isMobile && (
         <button
           onClick={toggleSidebar}
-          className="fixed top-4 z-40 bg-[#2A4365] text-white p-2 rounded-r-md transform -translate-y-1/2 transition-all duration-300 "
+          className="fixed top-4 z-40 bg-green-600 text-white p-2 rounded-r-md transform -translate-y-1/2 transition-all duration-300 "
           style={{ left: sidebarOpen ? '12rem' : '3rem' }}
         >
           {sidebarOpen ? <ChevronLeft size={16} /> : <ChevronRight size={16} />}
@@ -339,7 +339,7 @@ const AdminDashboardContent = ({ onViewDetails }) => {
         {/* Header */}
         <div className="flex justify-between items-start mb-3">
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-semibold text-[#2A4365] truncate">
+            <h3 className="text-sm font-semibold text-green-700 truncate">
               #{order.orderId || order._id?.slice(-8)}
             </h3>
             <p className="text-xs text-gray-500 truncate">
@@ -381,7 +381,7 @@ const AdminDashboardContent = ({ onViewDetails }) => {
           </div>
           <button
             onClick={() => onViewDetails('orders', order._id)} // Pass orderId
-            className="text-[#2A4365] hover:text-[#C87941] text-xs font-medium flex items-center space-x-1"
+            className="text-green-700 hover:text-emerald-600 text-xs font-medium flex items-center space-x-1"
           >
             <Eye className="h-3 w-3" />
             <span>View</span>
@@ -413,8 +413,8 @@ const AdminDashboardContent = ({ onViewDetails }) => {
         <h1 className="text-lg lg:text-xl xl:text-2xl font-bold mb-3 lg:mb-4 xl:mb-6">Dashboard</h1>
         
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3 lg:gap-4 xl:gap-6">
-          <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-3 lg:p-4 xl:p-6 shadow-sm border border-blue-200">
-            <p className="text-xs lg:text-sm text-blue-600 font-medium">Total Products</p>
+          <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-3 lg:p-4 xl:p-6 shadow-sm border border-green-200">
+            <p className="text-xs lg:text-sm text-green-600 font-medium">Total Products</p>
             <p className="text-xl lg:text-2xl font-bold mt-1 lg:mt-2 text-blue-800">
               {stats.totalProducts}
             </p>
@@ -509,7 +509,7 @@ const AdminDashboardContent = ({ onViewDetails }) => {
                       >
                         <td className="px-3 lg:px-4 xl:px-6 py-3 lg:py-4">
                           <div className="flex flex-col space-y-1">
-                            <span className="text-sm font-semibold text-[#2A4365]">
+                            <span className="text-sm font-semibold text-green-700">
                               #{order.orderId || order._id.slice(-8)}
                             </span>
                             <span className="text-xs text-gray-500">
@@ -548,7 +548,7 @@ const AdminDashboardContent = ({ onViewDetails }) => {
                               e.stopPropagation();
                               onViewDetails('orders', order._id); // Pass orderId
                             }}
-                            className="text-[#2A4365] hover:text-[#C87941] inline-flex items-center text-sm font-medium transition-colors"
+                            className="text-green-700 hover:text-emerald-600 inline-flex items-center text-sm font-medium transition-colors"
                           >
                             <Eye className="h-4 w-4 mr-1" />
                             View
@@ -642,8 +642,8 @@ const AdminDashboardContent = ({ onViewDetails }) => {
         </div>
         
         {/* <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3 lg:gap-4 xl:gap-6">
-          <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-3 lg:p-4 xl:p-6 shadow-sm border border-blue-200">
-            <p className="text-xs lg:text-sm text-blue-600 font-medium">Total Customers</p>
+          <div className="bg-gradient-to-r from-blue-50 to-blue-100 rounded-lg p-3 lg:p-4 xl:p-6 shadow-sm border border-green-200">
+            <p className="text-xs lg:text-sm text-green-600 font-medium">Total Customers</p>
             <p className="text-xl lg:text-2xl font-bold mt-1 lg:mt-2 text-blue-800">
               {dashboardStats.totalCustomers}
             </p>

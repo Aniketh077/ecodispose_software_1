@@ -9,7 +9,7 @@ const RelatedProducts = ({ relatedProducts, collectionName }) => {
         <h2 className="text-2xl font-bold">Related Products</h2>
         <Link
           to={`/products/${collectionName.toLowerCase().replace(/\s+/g, '-')}`}
-          className="flex items-center text-[#2A4365] hover:text-[#C87941]"
+          className="flex items-center text-green-700 hover:text-emerald-600"
         >
           View All <ArrowRight className="ml-1 h-4 w-4" />
         </Link>
@@ -31,7 +31,7 @@ const RelatedProducts = ({ relatedProducts, collectionName }) => {
             </div>
             
             <div className="p-4">
-              <h3 className="font-medium line-clamp-2 group-hover:text-[#2A4365]">
+              <h3 className="font-medium line-clamp-2 group-hover:text-green-700">
                 {relatedProduct.name}
               </h3>
               

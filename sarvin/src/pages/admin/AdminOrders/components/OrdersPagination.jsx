@@ -86,7 +86,7 @@ const OrdersPagination = ({ currentPage, totalPages, onPageChange, totalItems, i
                 onClick={() => onPageChange(page)}
                 className={`inline-flex items-center px-2 py-1 border rounded-md text-xs font-medium transition-colors ${
                   currentPage === page
-                    ? 'bg-[#2A4365] text-white border-[#2A4365]'
+                    ? 'bg-green-600 text-white border-green-600'
                     : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
                 }`}
               >
@@ -108,7 +108,7 @@ const OrdersPagination = ({ currentPage, totalPages, onPageChange, totalItems, i
                   onClick={() => onPageChange(page)}
                   className={`inline-flex items-center px-3 py-2 border rounded-md text-sm font-medium transition-colors ${
                     currentPage === page
-                      ? 'bg-[#2A4365] text-white border-[#2A4365]'
+                      ? 'bg-green-600 text-white border-green-600'
                       : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
                   }`}
                 >

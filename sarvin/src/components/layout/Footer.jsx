@@ -83,7 +83,7 @@ const Footer = () => {
                   />
                   <button
                     type="submit"
-                    className="w-full bg-[#C87941] hover:bg-[#B86931] px-3 py-2 rounded-md flex items-center justify-center transition-colors text-sm"
+                    className="w-full bg-emerald-500 hover:bg-emerald-600 px-3 py-2 rounded-md flex items-center justify-center transition-colors text-sm"
                   >
                     Subscribe
                     <ArrowRight className="ml-2 h-4 w-4" />

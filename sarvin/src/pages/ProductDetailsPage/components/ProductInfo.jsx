@@ -32,7 +32,7 @@ const ProductInfo = ({
                   className="absolute top-0 left-0 overflow-hidden"
                   style={{ width: `${fillPercent}%` }}
                 >
-                  <Star className="w-5 h-5 text-[#C87941]" fill="#C87941" />
+                  <Star className="w-5 h-5 text-emerald-600" fill="#C87941" />
                 </div>
               </div>
             );
@@ -61,7 +61,7 @@ const ProductInfo = ({
         {product.description.length > 150 && (
           <button
             onClick={() => setIsDescriptionExpanded(!isDescriptionExpanded)}
-            className="text-[#2A4365] text-sm font-medium hover:text-[#C87941] mt-1"
+            className="text-green-700 text-sm font-medium hover:text-emerald-600 mt-1"
           >
             {isDescriptionExpanded ? 'Show less' : 'Read more'}
           </button>
@@ -75,7 +75,7 @@ const ProductInfo = ({
           <ul className="space-y-1">
             {product.features.map((feature, index) => (
               <li key={index} className="flex items-start">
-                <Check className="h-5 w-5 text-[#2A4365] mr-2 flex-shrink-0 mt-0.5" />
+                <Check className="h-5 w-5 text-green-700 mr-2 flex-shrink-0 mt-0.5" />
                 <span className="text-gray-700">{feature}</span>
               </li>
             ))}
@@ -106,7 +106,7 @@ const ProductInfo = ({
           <button
             onClick={decrementQuantity}
             disabled={quantity <= 1}
-            className="h-10 w-10 flex items-center justify-center text-gray-600 hover:text-[#2A4365] disabled:opacity-50"
+            className="h-10 w-10 flex items-center justify-center text-gray-600 hover:text-green-700 disabled:opacity-50"
           >
             <Minus className="h-4 w-4" />
           </button>
@@ -126,7 +126,7 @@ const ProductInfo = ({
           <button
             onClick={incrementQuantity}
             disabled={quantity >= product.stock}
-            className="h-10 w-10 flex items-center justify-center text-gray-600 hover:text-[#2A4365] disabled:opacity-50"
+            className="h-10 w-10 flex items-center justify-center text-gray-600 hover:text-green-700 disabled:opacity-50"
           >
             <Plus className="h-4 w-4" />
           </button>
@@ -155,11 +155,11 @@ const ProductInfo = ({
       {/* Benefits */}
       <div className="space-y-3 mb-6 border-t border-gray-100 pt-4">
         <div className="flex items-center">
-          <TruckIcon className="h-5 w-5 text-[#2A4365] mr-3" />
+          <TruckIcon className="h-5 w-5 text-green-700 mr-3" />
           <span className="text-sm">Free shipping on refurbished devices across India.</span>
         </div>
         <div className="flex items-center">
-          <ShieldCheck className="h-5 w-5 text-[#2A4365] mr-3" />
+          <ShieldCheck className="h-5 w-5 text-green-700 mr-3" />
           <span className="text-sm">
             {(product.warranty && product.warranty) || '6 months'} warranty on refurbished device
           </span>

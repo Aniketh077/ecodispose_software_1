@@ -163,7 +163,7 @@ const LoginPage = () => {
                     type="checkbox"
                     checked={rememberMe}
                     onChange={(e) => setRememberMe(e.target.checked)}
-                    className="h-4 w-4 text-[#2A4365] focus:ring-[#2A4365] border-gray-300 rounded"
+                    className="h-4 w-4 text-green-700 focus:ring-green-600 border-gray-300 rounded"
                   />
                   <label htmlFor="remember-me" className="ml-2 block text-sm text-gray-700">
                     Remember me
@@ -173,7 +173,7 @@ const LoginPage = () => {
                 <div className="text-sm">
                   <Link
                     to="/forgot-password"
-                    className="font-medium text-[#2A4365] hover:text-[#C87941]"
+                    className="font-medium text-green-700 hover:text-emerald-600"
                   >
                     Forgot password?
                   </Link>
@@ -208,7 +208,7 @@ const LoginPage = () => {
               <span className="text-gray-600">Don't have an account?</span>{' '}
               <Link
                 to="/register"
-                className="font-medium text-[#2A4365] hover:text-[#C87941]"
+                className="font-medium text-green-700 hover:text-emerald-600"
               >
                 Create an account
               </Link>
@@ -219,7 +219,7 @@ const LoginPage = () => {
                 Having trouble signing in?{' '}
                 <Link
                   to="/verify-email"
-                  className="text-[#2A4365] hover:text-[#C87941]"
+                  className="text-green-700 hover:text-emerald-600"
                 >
                   Verify your email
                 </Link>

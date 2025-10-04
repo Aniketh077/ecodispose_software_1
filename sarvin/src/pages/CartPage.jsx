@@ -106,7 +106,7 @@ const CartPage = () => {
                       <div>
                         <Link
                           to={`/product/${item.product.id || item.product._id}`}
-                          className="hover:text-[#2A4365]"
+                          className="hover:text-green-700"
                         >
                           <h3 className="font-medium mb-1">
                             {item.product.name}
@@ -126,7 +126,7 @@ const CartPage = () => {
                                 )
                               }
                               disabled={item.quantity <= 1}
-                              className="h-8 w-8 flex items-center justify-center text-gray-600 hover:text-[#2A4365] disabled:opacity-50"
+                              className="h-8 w-8 flex items-center justify-center text-gray-600 hover:text-green-700 disabled:opacity-50"
                             >
                               <Minus className="h-3 w-3" />
                             </button>
@@ -160,7 +160,7 @@ const CartPage = () => {
                               disabled={
                                 item.quantity >= (item.product.stock || 999)
                               }
-                              className="h-8 w-8 flex items-center justify-center text-gray-600 hover:text-[#2A4365] disabled:opacity-50"
+                              className="h-8 w-8 flex items-center justify-center text-gray-600 hover:text-green-700 disabled:opacity-50"
                             >
                               <Plus className="h-3 w-3" />
                             </button>
@@ -212,7 +212,7 @@ const CartPage = () => {
               <div className="p-6 border-t border-gray-100">
                 <Link
                   to="/products"
-                  className="flex items-center text-[#2A4365] hover:text-[#C87941] text-sm font-medium"
+                  className="flex items-center text-green-700 hover:text-emerald-600 text-sm font-medium"
                 >
                   <ArrowLeft className="h-4 w-4 mr-1" />
                   Continue Shopping

@@ -47,7 +47,7 @@ const getStatusClass = (status) => {
         {/* Header */}
         <div className="flex justify-between items-start mb-3">
           <div className="flex-1 min-w-0">
-            <h3 className="text-sm font-semibold text-[#2A4365] truncate">
+            <h3 className="text-sm font-semibold text-green-700 truncate">
               #{order.orderId || order._id.slice(-8)}
             </h3>
             <p className="text-xs text-gray-500 truncate">
@@ -90,7 +90,7 @@ const getStatusClass = (status) => {
               e.stopPropagation();
               onViewOrder(order._id);
             }}
-            className="text-[#2A4365] hover:text-[#C87941] text-xs font-medium flex items-center space-x-1"
+            className="text-green-700 hover:text-emerald-600 text-xs font-medium flex items-center space-x-1"
           >
             <Eye className="h-3 w-3" />
             <span>View</span>
@@ -133,7 +133,7 @@ const getStatusClass = (status) => {
                 return (
                   <tr key={order._id} className="hover:bg-gray-50 cursor-pointer" onClick={() => onViewOrder(order._id)}>
                     <td className="p-4">
-                      <div className="font-semibold text-[#2A4365]">#{order.orderId}</div>
+                      <div className="font-semibold text-green-700">#{order.orderId}</div>
                       <div className="text-xs text-gray-500">{formatDate(order.createdAt)}</div>
                     </td>
                     <td className="p-4">
@@ -156,7 +156,7 @@ const getStatusClass = (status) => {
                           e.stopPropagation();
                           onViewOrder(order._id);
                         }}
-                        className="text-[#2A4365] hover:text-[#C87941] inline-flex items-center text-sm font-medium transition-colors"
+                        className="text-green-700 hover:text-emerald-600 inline-flex items-center text-sm font-medium transition-colors"
                       >
                         <Eye className="h-4 w-4 mr-1" />
                         View

@@ -100,7 +100,7 @@ const OrderDetailsPage = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto">
             <div className="flex items-center justify-center py-16">
-              <Loader2 className="h-8 w-8 animate-spin text-[#2A4365]" />
+              <Loader2 className="h-8 w-8 animate-spin text-green-700" />
               <span className="ml-3 text-lg">Loading order details...</span>
             </div>
           </div>
@@ -167,7 +167,7 @@ const OrderDetailsPage = () => {
           <div className="mb-8">
             <Link
               to="/orders"
-              className="inline-flex items-center text-[#2A4365] hover:text-[#C87941] mb-4"
+              className="inline-flex items-center text-green-700 hover:text-emerald-600 mb-4"
             >
               <ChevronLeft className="h-4 w-4 mr-1" />
               Back to Orders

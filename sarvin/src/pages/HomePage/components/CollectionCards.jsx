@@ -16,8 +16,8 @@ const CollectionCards = () => {
   }, [dispatch]);
 
   const bgColors = [
-    "bg-[#2A4365]",
-    "bg-[#C87941]",
+    "bg-green-600",
+    "bg-emerald-500",
     "bg-[#2D5F5D]",
     "bg-[#7C3AED]",
     "bg-[#DC2626]",

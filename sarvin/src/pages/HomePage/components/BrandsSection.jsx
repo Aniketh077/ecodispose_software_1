@@ -31,20 +31,20 @@ const BrandsSection = ({ types }) => {
                         e.target.nextElementSibling.style.display = 'flex';
                       }}
                     />
-                    <div className="hidden w-16 h-16 bg-gray-100 rounded-full items-center justify-center group-hover:bg-[#EBF5FF] transition-colors">
-                      <span className="text-2xl font-bold text-[#2A4365]">
+                    <div className="hidden w-16 h-16 bg-gray-100 rounded-full items-center justify-center group-hover:bg-green-50 transition-colors">
+                      <span className="text-2xl font-bold text-green-700">
                         {type.name.charAt(0)}
                       </span>
                     </div>
                   </div>
                 ) : (
-                  <div className="w-16 h-16 mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center group-hover:bg-[#EBF5FF] transition-colors">
-                    <span className="text-2xl font-bold text-[#2A4365]">
+                  <div className="w-16 h-16 mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center group-hover:bg-green-50 transition-colors">
+                    <span className="text-2xl font-bold text-green-700">
                       {type.name.charAt(0)}
                     </span>
                   </div>
                 )}
-                <span className="text-sm font-medium text-gray-700 group-hover:text-[#2A4365] transition-colors block">
+                <span className="text-sm font-medium text-gray-700 group-hover:text-green-700 transition-colors block">
                   {type.name}
                 </span>
               </div>

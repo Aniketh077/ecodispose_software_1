@@ -58,7 +58,7 @@ const AboutPage = () => {
   return (
     <div className="min-h-screen pt-8 pb-16">
       {/* Hero Section */}
-      <section className="py-20 bg-gradient-to-r from-[#2A4365] to-[#1A365D] text-white">
+      <section className="py-20 bg-gradient-to-r from-green-600 to-green-700 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl md:text-6xl font-bold mb-6">About EcoTrade</h1>
@@ -70,7 +70,7 @@ const AboutPage = () => {
                 <Button variant="secondary" size="lg">Shop Now</Button>
               </Link>
               <Link to="/contact">
-                <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-[#2A4365]">
+                <Button variant="outline" size="lg" className="border-white text-white hover:bg-white hover:text-green-700">
                   Contact Us
                 </Button>
               </Link>
@@ -85,7 +85,7 @@ const AboutPage = () => {
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8">
             {stats.map((stat, index) => (
               <div key={index} className="text-center">
-                <div className="text-4xl md:text-5xl font-bold text-[#2A4365] mb-2">
+                <div className="text-4xl md:text-5xl font-bold text-green-700 mb-2">
                   {stat.number}
                 </div>
                 <div className="text-gray-600 font-medium">{stat.label}</div>
@@ -125,8 +125,8 @@ const AboutPage = () => {
         <div className="container mx-auto px-4">
           <div className="max-w-6xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-12 text-center">
             <div>
-              <div className="bg-[#EBF5FF] w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Target className="h-10 w-10 text-[#2A4365]" />
+              <div className="bg-green-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Target className="h-10 w-10 text-green-700" />
               </div>
               <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
               <p className="text-gray-600 text-lg">
@@ -134,8 +134,8 @@ const AboutPage = () => {
               </p>
             </div>
             <div>
-              <div className="bg-[#EBF5FF] w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
-                <Globe className="h-10 w-10 text-[#2A4365]" />
+              <div className="bg-green-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
+                <Globe className="h-10 w-10 text-green-700" />
               </div>
               <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
               <p className="text-gray-600 text-lg">
@@ -159,8 +159,8 @@ const AboutPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
             {values.map((value, index) => (
               <div key={index} className="bg-white p-8 rounded-lg shadow-sm text-center hover:shadow-md transition-shadow">
-                <div className="bg-[#EBF5FF] w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
-                  <value.icon className="h-8 w-8 text-[#2A4365]" />
+                <div className="bg-green-50 w-16 h-16 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <value.icon className="h-8 w-8 text-green-700" />
                 </div>
                 <h3 className="text-xl font-semibold mb-4">{value.title}</h3>
                 <p className="text-gray-600">{value.description}</p>
@@ -189,10 +189,10 @@ const AboutPage = () => {
                     alt={member.name}
                     className="w-48 h-48 rounded-full mx-auto object-cover"
                   />
-                  <div className="absolute inset-0 bg-[#2A4365]/20 rounded-full opacity-0 hover:opacity-100 transition-opacity"></div>
+                  <div className="absolute inset-0 bg-green-600/20 rounded-full opacity-0 hover:opacity-100 transition-opacity"></div>
                 </div>
                 <h3 className="text-xl font-semibold mb-2">{member.name}</h3>
-                <p className="text-[#C87941] font-medium mb-3">{member.role}</p>
+                <p className="text-emerald-600 font-medium mb-3">{member.role}</p>
                 <p className="text-gray-600">{member.description}</p>
               </div>
             ))}
@@ -201,7 +201,7 @@ const AboutPage = () => {
       </section> */}
 
       {/* Why Choose Us */}
-      <section className="py-16 bg-[#2A4365] text-white">
+      <section className="py-16 bg-green-600 text-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-bold mb-4">Why Choose EcoTrade?</h2>

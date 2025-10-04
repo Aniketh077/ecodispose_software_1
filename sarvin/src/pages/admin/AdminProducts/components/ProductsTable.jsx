@@ -148,7 +148,7 @@ const ProductTableRow = ({ product, onEdit, onDelete, onProductClick, isDesktop 
               e.stopPropagation();
               onProductClick(product._id || product.id);
             }}
-            className="text-blue-600 hover:text-blue-800 p-1"
+            className="text-green-600 hover:text-blue-800 p-1"
             title="View Product"
           >
             <ExternalLink className="h-4 w-4" />
@@ -158,7 +158,7 @@ const ProductTableRow = ({ product, onEdit, onDelete, onProductClick, isDesktop 
               e.stopPropagation();
               onEdit(product);
             }}
-            className="text-[#2A4365] hover:text-[#C87941] p-1"
+            className="text-green-700 hover:text-emerald-600 p-1"
             title="Edit Product"
           >
             <Edit className="h-4 w-4" />
@@ -257,7 +257,7 @@ const ProductCard = ({ product, onEdit, onDelete, onProductClick }) => {
               e.stopPropagation();
               onProductClick(product._id || product.id);
             }}
-            className="text-blue-600 hover:text-blue-800 p-1"
+            className="text-green-600 hover:text-blue-800 p-1"
             title="View Product"
           >
             <ExternalLink className="h-4 w-4" />
@@ -267,7 +267,7 @@ const ProductCard = ({ product, onEdit, onDelete, onProductClick }) => {
               e.stopPropagation();
               onEdit(product);
             }}
-            className="text-[#2A4365] hover:text-[#C87941] p-1"
+            className="text-green-700 hover:text-emerald-600 p-1"
             title="Edit Product"
           >
             <Edit className="h-4 w-4" />

@@ -151,7 +151,7 @@ const AccountPage = () => {
               <div className="bg-white rounded-lg shadow-sm p-4 lg:p-6">
                 {/* Profile Header */}
                 <div className="flex flex-col items-center text-center mb-6">
-                  <div className="h-20 w-20 rounded-full bg-gradient-to-br from-[#2A4365] to-[#324e76] flex items-center justify-center mb-3 shadow-lg">
+                  <div className="h-20 w-20 rounded-full bg-gradient-to-br from-green-600 to-[#324e76] flex items-center justify-center mb-3 shadow-lg">
                     <span className="text-white font-bold text-2xl">
                       {user?.name?.charAt(0)?.toUpperCase() || 'U'}
                     </span>
@@ -171,7 +171,7 @@ const AccountPage = () => {
                     onClick={() => setActiveTab('profile')}
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                       activeTab === 'profile' 
-                        ? 'text-[#2A4365] bg-blue-50 border-l-4 border-[#2A4365] shadow-sm' 
+                        ? 'text-green-700 bg-green-50 border-l-4 border-green-600 shadow-sm' 
                         : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                     }`}
                   >
@@ -182,7 +182,7 @@ const AccountPage = () => {
                     onClick={() => setActiveTab('security')}
                     className={`w-full flex items-center space-x-3 px-4 py-3 rounded-lg transition-all duration-200 ${
                       activeTab === 'security' 
-                        ? 'text-[#2A4365] bg-blue-50 border-l-4 border-[#2A4365] shadow-sm' 
+                        ? 'text-green-700 bg-green-50 border-l-4 border-green-600 shadow-sm' 
                         : 'text-gray-600 hover:bg-gray-50 hover:text-gray-900'
                     }`}
                   >

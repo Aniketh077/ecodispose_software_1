@@ -37,7 +37,7 @@ const ProductImages = ({ product, activeImage, setActiveImage }) => {
           </div>
         )}
         {product.newArrival && (
-          <div className="absolute right-4 top-4 z-10 bg-[#2A4365] px-3 py-1 text-sm font-semibold text-white">
+          <div className="absolute right-4 top-4 z-10 bg-green-600 px-3 py-1 text-sm font-semibold text-white">
             NEW
           </div>
         )}
@@ -50,7 +50,7 @@ const ProductImages = ({ product, activeImage, setActiveImage }) => {
               key={index}
               onClick={() => setActiveImage(index)}
               className={`flex-shrink-0 w-20 h-20 border-2 rounded-md overflow-hidden ${
-                activeImage === index ? 'border-[#2A4365]' : 'border-gray-200'
+                activeImage === index ? 'border-green-600' : 'border-gray-200'
               }`}
             >
               <img

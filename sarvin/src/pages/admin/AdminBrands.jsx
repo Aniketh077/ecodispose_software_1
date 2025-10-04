@@ -194,7 +194,7 @@ const AdminBrands = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
                       onClick={() => handleOpenModal(brand)}
-                      className="text-blue-600 hover:text-blue-900 mr-3"
+                      className="text-green-600 hover:text-blue-900 mr-3"
                       title="Edit"
                     >
                       <Edit2 size={18} />
@@ -255,7 +255,7 @@ const AdminBrands = () => {
                       className="mb-2"
                     />
                     {uploading['brandLogo'] && (
-                      <p className="text-sm text-blue-600">Uploading logo...</p>
+                      <p className="text-sm text-green-600">Uploading logo...</p>
                     )}
                     {formData.logo && (
                       <img

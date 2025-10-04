@@ -16,7 +16,7 @@ const FilterSection = ({ title, children, isOpen, onToggle }) => (
   <div className="border-b">
     <button
       onClick={onToggle}
-      className="w-full flex justify-between items-center py-4 text-left font-semibold text-gray-800 hover:text-[#2A4365]"
+      className="w-full flex justify-between items-center py-4 text-left font-semibold text-gray-800 hover:text-green-700"
     >
       <span>{title}</span>
       <ChevronDown
@@ -43,9 +43,9 @@ const FilterCheckbox = ({ label, value, checked, onChange, count }) => (
     <span
       className={`
         h-4 w-4 rounded border border-gray-400 flex items-center justify-center transition-colors
-        peer-checked:bg-[#C87941] peer-checked:border-[#C87941]
-        peer-focus-visible:ring-2 peer-focus-visible:ring-offset-1 peer-focus-visible:ring-[#C87941]
-        group-hover:border-[#C87941]
+        peer-checked:bg-emerald-500 peer-checked:border-emerald-500
+        peer-focus-visible:ring-2 peer-focus-visible:ring-offset-1 peer-focus-visible:ring-emerald-500
+        group-hover:border-emerald-500
       `}
     >
       {/* Checkmark icon appears when checked */}
@@ -97,7 +97,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           onClick={() => onPageChange(pageNum)}
           className={`px-3 py-2 rounded-md border ${
             pageNum === currentPage
-              ? "bg-[#2A4365] text-white border-[#2A4365]"
+              ? "bg-green-600 text-white border-green-600"
               : "border-gray-300 hover:bg-gray-50"
           }`}
         >
@@ -428,7 +428,7 @@ const ProductsPage = () => {
                 <Grid
                   size={18}
                   className={
-                    viewMode === "grid" ? "text-[#2A4365]" : "text-gray-500"
+                    viewMode === "grid" ? "text-green-700" : "text-gray-500"
                   }
                 />
               </button>
@@ -441,7 +441,7 @@ const ProductsPage = () => {
                 <List
                   size={18}
                   className={
-                    viewMode === "list" ? "text-[#2A4365]" : "text-gray-500"
+                    viewMode === "list" ? "text-green-700" : "text-gray-500"
                   }
                 />
               </button>
@@ -464,11 +464,11 @@ const ProductsPage = () => {
           >
             <div className="sticky top-24 bg-white rounded-md shadow-lg border p-5">
               <div className="flex justify-between items-center mb-4">
-                <h3 className="font-bold text-xl text-[#2A4365]">Filters</h3>
+                <h3 className="font-bold text-xl text-green-700">Filters</h3>
                 <button
                   onClick={clearFilters}
                   disabled={getActiveFiltersCount() === 0}
-                  className="text-sm text-[#C87941] hover:underline disabled:text-gray-400 disabled:no-underline"
+                  className="text-sm text-emerald-600 hover:underline disabled:text-gray-400 disabled:no-underline"
                 >
                   Clear All
                 </button>
@@ -570,7 +570,7 @@ const ProductsPage = () => {
           <div className="flex-1">
             {loading && currentPage === 1 ? (
               <div className="flex items-center justify-center p-12">
-                <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#2A4365]"></div>
+                <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600"></div>
               </div>
             ) : products.length === 0 && !loading ? (
               <div className="bg-white p-8 rounded-lg shadow-sm text-center">

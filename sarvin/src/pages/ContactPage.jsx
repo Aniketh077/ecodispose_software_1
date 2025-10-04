@@ -148,7 +148,7 @@ const ContactPage = () => {
   return (
     <div className="min-h-screen pt-20 pb-16">
       {/* Hero Section */}
-      <section className="py-16 bg-gradient-to-r from-[#2A4365] to-[#1A365D] text-white">
+      <section className="py-16 bg-gradient-to-r from-green-600 to-green-700 text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl font-bold mb-6">Get in Touch</h1>
@@ -165,8 +165,8 @@ const ContactPage = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
             {contactInfo.map((info, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-sm hover:shadow-md transition-shadow">
-                <div className="bg-[#EBF5FF] w-12 h-12 rounded-full flex items-center justify-center mb-4">
-                  <info.icon className="h-6 w-6 text-[#2A4365]" />
+                <div className="bg-green-50 w-12 h-12 rounded-full flex items-center justify-center mb-4">
+                  <info.icon className="h-6 w-6 text-green-700" />
                 </div>
                 <h3 className="text-lg font-semibold mb-3">{info.title}</h3>
                 <div className="space-y-1 mb-4">
@@ -176,7 +176,7 @@ const ContactPage = () => {
                 </div>
                 <button 
                   onClick={info.onClick}
-                  className="text-[#2A4365] hover:text-[#C87941] font-medium text-sm transition-colors"
+                  className="text-green-700 hover:text-emerald-600 font-medium text-sm transition-colors"
                 >
                   {info.action}
                 </button>
@@ -249,7 +249,7 @@ const ContactPage = () => {
                         value={formData.subject}
                         onChange={handleChange}
                         required
-                        className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-[#2A4365] focus:outline-none focus:ring-1 focus:ring-[#2A4365]"
+                        className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
                       >
                         <option value="">Select a subject</option>
                         {departments.map((dept) => (
@@ -271,7 +271,7 @@ const ContactPage = () => {
                       onChange={handleChange}
                       rows={6}
                       required
-                      className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-[#2A4365] focus:outline-none focus:ring-1 focus:ring-[#2A4365]"
+                      className="w-full rounded-md border border-gray-300 bg-white px-4 py-2 text-gray-900 focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
                       placeholder="Tell us how we can help you..."
                     ></textarea>
                   </div>
@@ -321,7 +321,7 @@ const ContactPage = () => {
               {/* Store Hours */}
               <div className="bg-white border border-gray-200 rounded-lg p-6 mb-6">
                 <h3 className="text-lg font-semibold mb-4 flex items-center">
-                  <Clock className="h-5 w-5 mr-2 text-[#2A4365]" />
+                  <Clock className="h-5 w-5 mr-2 text-green-700" />
                   Store Hours
                 </h3>
                 <div className="space-y-2">
@@ -341,7 +341,7 @@ const ContactPage = () => {
               </div>
 
               {/* Quick Contact */}
-              <div className="bg-[#2A4365] text-white rounded-lg p-6">
+              <div className="bg-green-600 text-white rounded-lg p-6">
                 <h3 className="text-lg font-semibold mb-4 flex items-center">
                   <Headphones className="h-5 w-5 mr-2" />
                   Need Immediate Help?
@@ -361,7 +361,7 @@ const ContactPage = () => {
                   <Button 
                     variant="outline" 
                     size="sm" 
-                    className="flex-1 border-white text-white hover:bg-white hover:text-[#2A4365]"
+                    className="flex-1 border-white text-white hover:bg-white hover:text-green-700"
                     onClick={handleLiveChat}
                   >
                     Live Chat
@@ -418,7 +418,7 @@ const ContactPage = () => {
       <section className="py-16">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <div className="bg-gradient-to-r from-[#2A4365] to-[#1A365D] text-white rounded-2xl p-12">
+            <div className="bg-gradient-to-r from-green-600 to-green-700 text-white rounded-2xl p-12">
               <div className="bg-white/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Users className="h-10 w-10" />
               </div>
@@ -439,7 +439,7 @@ const ContactPage = () => {
                 <Button 
                   variant="outline" 
                   size="lg" 
-                  className="border-white text-white hover:bg-white hover:text-[#2A4365]"
+                  className="border-white text-white hover:bg-white hover:text-green-700"
                   onClick={handleCallNow}
                   leftIcon={<Phone className="h-5 w-5" />}
                 >

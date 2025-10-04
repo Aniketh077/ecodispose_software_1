@@ -29,7 +29,7 @@ const BenefitsSection = () => {
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">Why Choose Refurbished?</h2>
+          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-green-600 to-green-500 bg-clip-text text-transparent">Why Choose Refurbished?</h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
             Premium quality electronics at unbeatable prices. Good for your wallet, great for the planet.
           </p>
@@ -38,8 +38,8 @@ const BenefitsSection = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {benefits.map((benefit, index) => (
             <div key={index} className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300">
-              <div className="bg-gradient-to-br from-blue-100 to-blue-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg group-hover:shadow-xl">
-                <benefit.icon className="h-10 w-10 text-blue-600" />
+              <div className="bg-gradient-to-br from-green-100 to-green-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg group-hover:shadow-xl">
+                <benefit.icon className="h-10 w-10 text-green-600" />
               </div>
               <h3 className="text-xl font-semibold mb-3 text-gray-800">{benefit.title}</h3>
               <p className="text-gray-600">{benefit.description}</p>

@@ -98,7 +98,7 @@ const OrderDetails = ({ order, onClose }) => {
   const getStatusColor = (status) => {
     switch (status?.toLowerCase()) {
       case 'delivered': return 'bg-green-100 text-green-800 border-green-200';
-      case 'shipped': return 'bg-blue-100 text-blue-800 border-blue-200';
+      case 'shipped': return 'bg-blue-100 text-blue-800 border-green-200';
       case 'processing': return 'bg-yellow-100 text-yellow-800 border-yellow-200';
       case 'cancelled': return 'bg-red-100 text-red-800 border-red-200';
       default: return 'bg-gray-100 text-gray-800 border-gray-200';
@@ -139,7 +139,7 @@ const OrderDetails = ({ order, onClose }) => {
         <div className="flex items-center">
           <button
             onClick={onClose}
-            className="mr-4 p-2 text-gray-600 hover:text-[#2A4365] hover:bg-gray-100 rounded-full transition-colors"
+            className="mr-4 p-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 rounded-full transition-colors"
           >
             <ChevronLeft className="h-5 w-5" />
           </button>
@@ -416,7 +416,7 @@ const OrderDetails = ({ order, onClose }) => {
               <h2 className="text-lg font-semibold flex items-center">
                 <Package className="h-5 w-5 mr-2" />
                 Update Status
-                {statusUpdateLoading && <Loader2 className="h-4 w-4 ml-2 animate-spin text-blue-600" />}
+                {statusUpdateLoading && <Loader2 className="h-4 w-4 ml-2 animate-spin text-green-600" />}
               </h2>
             </div>
             <div className="p-6 space-y-4">
@@ -438,7 +438,7 @@ const OrderDetails = ({ order, onClose }) => {
                   value={selectedStatus}
                   onChange={handleStatusDropdownChange}
                   disabled={statusUpdateLoading}
-                  className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-[#2A4365] focus:outline-none focus:ring-1 focus:ring-[#2A4365] disabled:opacity-50"
+                  className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600 disabled:opacity-50"
                 >
                   <option value="processing">Processing</option>
                   <option value="shipped">Shipped</option>
@@ -457,21 +457,21 @@ const OrderDetails = ({ order, onClose }) => {
                   onChange={handleNotesChange}
                   disabled={statusUpdateLoading}
                   rows={3}
-                  className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-[#2A4365] focus:outline-none focus:ring-1 focus:ring-[#2A4365] disabled:opacity-50"
+                  className="w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600 disabled:opacity-50"
                   placeholder="Add notes about this status change..."
                 />
               </div>
 
               {/* Status Change Preview */}
               {selectedStatus !== getOrderStatus(order) && (
-                <div className="bg-blue-50 border border-blue-200 rounded-md p-3">
+                <div className="bg-green-50 border border-green-200 rounded-md p-3">
                   <div className="flex items-center">
-                    <AlertCircle className="h-4 w-4 text-blue-600 mr-2" />
+                    <AlertCircle className="h-4 w-4 text-green-600 mr-2" />
                     <span className="text-sm text-blue-800">
                       Status will change from <strong>{getOrderStatus(order)}</strong> to <strong>{selectedStatus}</strong>
                     </span>
                   </div>
-                  <p className="text-xs text-blue-600 mt-1">
+                  <p className="text-xs text-green-600 mt-1">
                     Customer will be automatically notified via email when you save changes.
                   </p>
                 </div>

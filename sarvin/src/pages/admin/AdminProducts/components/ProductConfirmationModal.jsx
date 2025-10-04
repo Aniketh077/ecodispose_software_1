@@ -24,7 +24,7 @@ const ProductConfirmationModal = ({
         <div className="inline-block w-full max-w-md my-8 overflow-hidden text-left align-middle transition-all transform bg-white rounded-lg shadow-2xl">
           
           {/* Header */}
-          <div className="px-6 py-4 border-b border-[#E2E8F0] bg-[#2A4365]">
+          <div className="px-6 py-4 border-b border-[#E2E8F0] bg-green-600">
             <div className="flex items-center justify-between">
               <div className="flex items-center space-x-3">
                 <div className="flex items-center justify-center w-8 h-8 bg-white bg-opacity-20 rounded-full">
@@ -48,12 +48,12 @@ const ProductConfirmationModal = ({
           <div className="px-6 py-6">
             <div className="text-center">
               {/* Success Icon */}
-              <div className="mx-auto flex items-center justify-center w-16 h-16 mb-4 bg-[#2A4365] rounded-full">
+              <div className="mx-auto flex items-center justify-center w-16 h-16 mb-4 bg-green-600 rounded-full">
                 <Check className="h-8 w-8 text-white" />
               </div>
               
               {/* Message */}
-              <h4 className="text-lg font-semibold text-[#2A4365] mb-2">
+              <h4 className="text-lg font-semibold text-green-700 mb-2">
                 Product {isEditMode ? 'Updated' : 'Created'} Successfully!
               </h4>
               
@@ -69,7 +69,7 @@ const ProductConfirmationModal = ({
               <button
                 type="button"
                 onClick={onClose}
-                className="px-6 py-2.5 border border-[#2A4365] text-[#2A4365] rounded-md hover:bg-[#2A4365] hover:text-white transition-all duration-200 font-medium"
+                className="px-6 py-2.5 border border-green-600 text-green-700 rounded-md hover:bg-green-600 hover:text-white transition-all duration-200 font-medium"
               >
                 OK
               </button>

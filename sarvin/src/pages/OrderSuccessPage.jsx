@@ -42,7 +42,7 @@ const OrderSuccessPage= () => {
               <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-left">
                 <div>
                   <p className="text-sm text-gray-500">Order ID</p>
-                  <p className="font-semibold text-[#2A4365]">#{orderId}</p>
+                  <p className="font-semibold text-green-700">#{orderId}</p>
                 </div>
                 <div>
                   <p className="text-sm text-gray-500">Payment ID</p>
@@ -64,24 +64,24 @@ const OrderSuccessPage= () => {
             {/* What's Next */}
             <div className="text-left mb-8">
               <h2 className="text-xl font-semibold mb-4 flex items-center">
-                <Package className="h-6 w-6 text-[#2A4365] mr-2" />
+                <Package className="h-6 w-6 text-green-700 mr-2" />
                 What happens next?
               </h2>
               <div className="space-y-3 text-gray-600">
                 <div className="flex items-start">
-                  <div className="w-6 h-6 bg-[#2A4365] text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">
+                  <div className="w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">
                     1
                   </div>
                   <p>We'll send you an order confirmation email with tracking details</p>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-6 h-6 bg-[#2A4365] text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">
+                  <div className="w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">
                     2
                   </div>
                   <p>Your order will be processed and prepared for shipping</p>
                 </div>
                 <div className="flex items-start">
-                  <div className="w-6 h-6 bg-[#2A4365] text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">
+                  <div className="w-6 h-6 bg-green-600 text-white rounded-full flex items-center justify-center text-sm font-semibold mr-3 mt-0.5">
                     3
                   </div>
                   <p>You'll receive tracking information once your order ships</p>
@@ -107,11 +107,11 @@ const OrderSuccessPage= () => {
             <div className="mt-8 pt-6 border-t border-gray-200">
               <p className="text-sm text-gray-500">
                 Need help? Contact our support team at{' '}
-                <a href="mailto:support@cashify.com" className="text-[#2A4365] hover:text-[#C87941]">
+                <a href="mailto:support@cashify.com" className="text-green-700 hover:text-emerald-600">
                   support@cashify.com
                 </a>{' '}
                 or call{' '}
-                <a href="tel:+919310979906" className="text-[#2A4365] hover:text-[#C87941]">
+                <a href="tel:+919310979906" className="text-green-700 hover:text-emerald-600">
                   +91 93109 79906
                 </a>
               </p>

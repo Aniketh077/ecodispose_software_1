@@ -6,18 +6,18 @@ const ProductBreadcrumb = ({ product, collectionName }) => {
     <nav className="py-4">
       <ol className="flex text-sm overflow-x-auto whitespace-nowrap">
         <li className="flex items-center">
-          <Link to="/" className="text-gray-500 hover:text-[#2A4365]">Home</Link>
+          <Link to="/" className="text-gray-500 hover:text-green-700">Home</Link>
           <span className="mx-2 text-gray-400">/</span>
         </li>
         <li className="flex items-center">
-          <Link to="/products" className="text-gray-500 hover:text-[#2A4365]">Products</Link>
+          <Link to="/products" className="text-gray-500 hover:text-green-700">Products</Link>
           <span className="mx-2 text-gray-400">/</span>
         </li>
         {collectionName && collectionName !== 'Unknown' && (
           <li className="flex items-center">
             <Link
               to={`/products/${collectionName.toLowerCase().replace(/\s+/g, '-')}`}
-              className="text-gray-500 hover:text-[#2A4365]"
+              className="text-gray-500 hover:text-green-700"
             >
               {collectionName}
             </Link>

@@ -9,23 +9,23 @@ const ProductTabs = ({ product, activeTab, setActiveTab }) => {
           <button
             onClick={() => setActiveTab('specifications')}
             className={`py-4 mr-8 font-medium text-sm transition-colors relative whitespace-nowrap ${
-              activeTab === 'specifications' ? 'text-[#2A4365]' : 'text-gray-500 hover:text-gray-700'
+              activeTab === 'specifications' ? 'text-green-700' : 'text-gray-500 hover:text-gray-700'
             }`}
           >
             Specifications
             {activeTab === 'specifications' && (
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#2A4365]"></span>
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-green-600"></span>
             )}
           </button>
           <button
             onClick={() => setActiveTab('additionalInfo')}
             className={`py-4 mr-8 font-medium text-sm transition-colors relative whitespace-nowrap ${
-              activeTab === 'additionalInfo' ? 'text-[#2A4365]' : 'text-gray-500 hover:text-gray-700'
+              activeTab === 'additionalInfo' ? 'text-green-700' : 'text-gray-500 hover:text-gray-700'
             }`}
           >
             Additional Information
             {activeTab === 'additionalInfo' && (
-              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-[#2A4365]"></span>
+              <span className="absolute bottom-0 left-0 w-full h-0.5 bg-green-600"></span>
             )}
           </button>
         </div>

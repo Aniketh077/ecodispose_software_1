@@ -119,7 +119,7 @@ const AdminCustomers = () => {
     return (
       <div className="p-4 sm:p-6 flex items-center justify-center min-h-64">
         <div className="flex items-center space-x-3">
-          <Loader2 className="h-6 w-6 animate-spin text-[#2A4365]" />
+          <Loader2 className="h-6 w-6 animate-spin text-green-700" />
           <span className="text-gray-600 text-sm sm:text-base">Loading customers...</span>
         </div>
       </div>
@@ -169,7 +169,7 @@ const AdminCustomers = () => {
             </div>
             <div className="bg-white px-4 py-2 rounded-lg border border-gray-200 shadow-sm">
               <div className="text-xs text-gray-500">Total Customers</div>
-              <div className="text-lg font-semibold text-[#2A4365]">{filteredCustomers.length}</div>
+              <div className="text-lg font-semibold text-green-700">{filteredCustomers.length}</div>
             </div>
           </div>
           
@@ -182,7 +182,7 @@ const AdminCustomers = () => {
               onChange={handleSearch}
               leftIcon={<Search className="h-5 w-5 text-gray-400" />}
               fullWidth
-              className="bg-white border-gray-200 focus:border-[#2A4365] focus:ring-[#2A4365]"
+              className="bg-white border-gray-200 focus:border-green-600 focus:ring-green-600"
             />
           </div>
           
@@ -224,7 +224,7 @@ const AdminCustomers = () => {
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="h-10 w-10 flex-shrink-0">
-                              <div className="h-10 w-10 rounded-full bg-[#2A4365] flex items-center justify-center">
+                              <div className="h-10 w-10 rounded-full bg-green-600 flex items-center justify-center">
                                 <span className="text-white font-semibold text-sm">
                                   {customer.name.charAt(0).toUpperCase()}
                                 </span>
@@ -262,7 +262,7 @@ const AdminCustomers = () => {
                           <div className="text-xs text-gray-500">orders</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
-                          <div className="text-sm font-semibold text-[#2A4365]">₹{totalSpent.toFixed(2)}</div>
+                          <div className="text-sm font-semibold text-green-700">₹{totalSpent.toFixed(2)}</div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <span
@@ -276,7 +276,7 @@ const AdminCustomers = () => {
                         <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                           <button
                             onClick={() => handleViewCustomer(customer._id)}
-                            className="inline-flex items-center px-3 py-1.5 bg-[#2A4365] text-white text-xs font-medium rounded-md hover:bg-[#1a2f4a] transition-colors duration-150"
+                            className="inline-flex items-center px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-md hover:bg-[#1a2f4a] transition-colors duration-150"
                             title="View Details"
                           >
                             <Eye className="h-3 w-3 mr-1" />
@@ -298,7 +298,7 @@ const AdminCustomers = () => {
                           {searchQuery && (
                             <button
                               onClick={() => setSearchQuery('')}
-                              className="mt-2 text-sm text-[#2A4365] hover:text-[#C87941] font-medium"
+                              className="mt-2 text-sm text-green-700 hover:text-emerald-600 font-medium"
                             >
                               Clear search
                             </button>
@@ -324,7 +324,7 @@ const AdminCustomers = () => {
                 <div key={customer._id} className="bg-white rounded-lg border border-gray-200 shadow-sm p-4">
                   <div className="flex items-start justify-between mb-3">
                     <div className="flex items-center flex-1">
-                      <div className="h-12 w-12 flex-shrink-0 bg-[#2A4365] rounded-full flex items-center justify-center">
+                      <div className="h-12 w-12 flex-shrink-0 bg-green-600 rounded-full flex items-center justify-center">
                         <span className="text-white font-semibold">
                           {customer.name.charAt(0).toUpperCase()}
                         </span>
@@ -366,12 +366,12 @@ const AdminCustomers = () => {
                       </div>
                       <div>
                         <span className="text-gray-500">Spent:</span>
-                        <span className="font-semibold text-[#2A4365] ml-1">₹{totalSpent.toFixed(2)}</span>
+                        <span className="font-semibold text-green-700 ml-1">₹{totalSpent.toFixed(2)}</span>
                       </div>
                     </div>
                     <button
                       onClick={() => handleViewCustomer(customer._id)}
-                      className="inline-flex items-center px-3 py-1.5 bg-[#2A4365] text-white text-xs font-medium rounded-md hover:bg-[#1a2f4a] transition-colors duration-150"
+                      className="inline-flex items-center px-3 py-1.5 bg-green-600 text-white text-xs font-medium rounded-md hover:bg-[#1a2f4a] transition-colors duration-150"
                     >
                       <Eye className="h-3 w-3 mr-1" />
                       View
@@ -390,7 +390,7 @@ const AdminCustomers = () => {
                 {searchQuery && (
                   <button
                     onClick={() => setSearchQuery('')}
-                    className="text-sm text-[#2A4365] hover:text-[#C87941] font-medium"
+                    className="text-sm text-green-700 hover:text-emerald-600 font-medium"
                   >
                     Clear search
                   </button>
@@ -429,7 +429,7 @@ const AdminCustomers = () => {
                           onClick={() => handlePageChange(page)}
                           className={`inline-flex items-center px-3 py-2 border rounded-md text-sm font-medium transition-colors duration-150 ${
                             currentPage === page
-                              ? 'bg-[#2A4365] text-white border-[#2A4365]'
+                              ? 'bg-green-600 text-white border-green-600'
                               : 'border-gray-300 bg-white text-gray-700 hover:bg-gray-50'
                           }`}
                         >
@@ -464,7 +464,7 @@ const AdminCustomers = () => {
           <div className="flex items-center mb-6">
             <button
               onClick={handleCloseCustomerDetails}
-              className="mr-4 p-2 text-gray-600 hover:text-[#2A4365] hover:bg-gray-100 rounded-full transition-colors duration-150"
+              className="mr-4 p-2 text-gray-600 hover:text-green-700 hover:bg-gray-100 rounded-full transition-colors duration-150"
             >
               <ChevronLeft className="h-5 w-5" />
             </button>
@@ -482,7 +482,7 @@ const AdminCustomers = () => {
               </div>
               <div className="p-6">
                 <div className="flex items-center mb-6">
-                  <div className="h-16 w-16 rounded-full bg-[#2A4365] flex items-center justify-center">
+                  <div className="h-16 w-16 rounded-full bg-green-600 flex items-center justify-center">
                     <span className="text-2xl text-white font-semibold">
                       {customerDetails.name.charAt(0).toUpperCase()}
                     </span>
@@ -539,13 +539,13 @@ const AdminCustomers = () => {
               </div>
               <div className="p-6">
                 <div className="grid grid-cols-2 gap-4 mb-6">
-                  <div className="bg-[#2A4365] text-white p-4 rounded-lg text-center">
+                  <div className="bg-green-600 text-white p-4 rounded-lg text-center">
                     <div className="text-xs font-medium uppercase tracking-wider opacity-80">Total Orders</div>
                     <div className="text-2xl font-bold mt-1">
                       {customerOrders.length}
                     </div>
                   </div>
-                  <div className="bg-[#C87941] text-white p-4 rounded-lg text-center">
+                  <div className="bg-emerald-500 text-white p-4 rounded-lg text-center">
                     <div className="text-xs font-medium uppercase tracking-wider opacity-80">Total Spent</div>
                     <div className="text-2xl font-bold mt-1">
                       ₹{calculateTotalSpent(customerOrders).toFixed(2)}
@@ -558,7 +558,7 @@ const AdminCustomers = () => {
                     <div className="text-sm font-medium text-gray-700 mb-4">Recent Orders</div>
                     <div className="space-y-3 max-h-96 overflow-y-auto">
                       {customerOrders.reverse().slice(-5).map((order, index) => (
-                        <div key={order._id} className="border border-gray-200 rounded-lg p-4 hover:border-[#2A4365] transition-colors duration-150">
+                        <div key={order._id} className="border border-gray-200 rounded-lg p-4 hover:border-green-600 transition-colors duration-150">
                           <div className="flex flex-col sm:flex-row sm:justify-between sm:items-start gap-2">
                             <div className="flex-1">
                               <div className="font-medium text-gray-900 text-sm">
@@ -572,12 +572,12 @@ const AdminCustomers = () => {
                               </div>
                             </div>
                             <div className="flex flex-col items-start sm:items-end">
-                              <div className="font-semibold text-[#2A4365] text-sm">
+                              <div className="font-semibold text-green-700 text-sm">
                                 ₹{order.total?.toFixed(2) || '0.00'}
                               </div>
                               <span className={`px-2 py-1 rounded-full text-xs font-medium mt-2 ${
                                 order.orderStatus === 'delivered' ? 'bg-green-50 text-green-700 border border-green-200' : 
-                                order.paymentStatus === 'completed' ? 'bg-blue-50 text-blue-700 border border-blue-200' : 
+                                order.paymentStatus === 'completed' ? 'bg-green-50 text-green-700 border border-green-200' : 
                                 'bg-yellow-50 text-yellow-700 border border-yellow-200'
                               }`}>
                                 {order.orderStatus === 'delivered' ? 'Delivered' : 
@@ -606,7 +606,7 @@ const AdminCustomers = () => {
             <Button
               variant="outline"
               onClick={handleCloseCustomerDetails}
-              className="border-[#2A4365] text-[#2A4365] hover:bg-[#2A4365] hover:text-white transition-colors duration-150"
+              className="border-green-600 text-green-700 hover:bg-green-600 hover:text-white transition-colors duration-150"
             >
               <ChevronLeft className="h-4 w-4 mr-2" />
               Back to Customers

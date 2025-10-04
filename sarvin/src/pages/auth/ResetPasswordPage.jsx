@@ -153,8 +153,8 @@ useEffect(() => {
         <div className="max-w-md mx-auto bg-white rounded-lg shadow-sm overflow-hidden">
           <div className="p-6 sm:p-8">
             <div className="text-center mb-8">
-              <div className="mx-auto w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mb-4">
-                <Lock className="w-8 h-8 text-blue-600" />
+              <div className="mx-auto w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mb-4">
+                <Lock className="w-8 h-8 text-green-600" />
               </div>
               <h1 className="text-2xl font-bold mb-2">
                 {resetComplete ? 'Password Reset Complete!' : 'Reset Your Password'}
@@ -257,7 +257,7 @@ useEffect(() => {
             <div className="mt-8 text-center">
               <Link
                 to="/login"
-                className="text-sm text-[#2A4365] hover:text-[#C87941]"
+                className="text-sm text-green-700 hover:text-emerald-600"
               >
                 Back to Login
               </Link>

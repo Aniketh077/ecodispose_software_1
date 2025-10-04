@@ -14,7 +14,7 @@ const FormField = ({
   min,
   step
 }) => {
-  const baseInputClasses = "w-full px-4 py-3 border border-[#E2E8F0] rounded-md focus:outline-none focus:ring-2 focus:ring-[#2A4365] focus:border-[#2A4365] transition-all duration-200 text-[#2A4365] placeholder-gray-400";
+  const baseInputClasses = "w-full px-4 py-3 border border-[#E2E8F0] rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 transition-all duration-200 text-green-700 placeholder-gray-400";
 
   const renderInput = () => {
     switch (type) {
@@ -89,8 +89,8 @@ const FormField = ({
 
   return (
     <div className="mb-4">
-      <label className="block text-sm font-medium text-[#2A4365] mb-2">
-        {label} {required && <span className="text-[#C87941]">*</span>}
+      <label className="block text-sm font-medium text-green-700 mb-2">
+        {label} {required && <span className="text-emerald-600">*</span>}
       </label>
       {renderInput()}
     </div>

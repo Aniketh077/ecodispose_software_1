@@ -74,7 +74,7 @@ const HeroSlider = () => {
                   </p>
                   <a
                     href="/products"
-                    className="inline-block px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                    className="inline-block px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold rounded-lg hover:from-green-700 hover:to-green-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
                     {slide.cta}
                   </a>
@@ -91,7 +91,7 @@ const HeroSlider = () => {
             <button
               key={index}
               className={`h-2 w-8 rounded-full transition-all ${
-                activeSlide === index ? "bg-[#C87941] w-12" : "bg-white/50"
+                activeSlide === index ? "bg-emerald-500 w-12" : "bg-white/50"
               }`}
               onClick={() => setActiveSlide(index)}
             ></button>

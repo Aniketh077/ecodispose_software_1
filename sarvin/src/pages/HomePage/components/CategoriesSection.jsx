@@ -28,7 +28,7 @@ const CategoriesSection = ({ categories }) => {
                   />
                 </div>
                 <div className="p-4 text-center">
-                  <h3 className="font-semibold text-gray-900 group-hover:text-[#2A4365] transition-colors">
+                  <h3 className="font-semibold text-gray-900 group-hover:text-green-700 transition-colors">
                     {category.name}
                   </h3>
                 </div>

@@ -78,7 +78,7 @@ const AdminOrders = ({ initialOrderId }) => {
       {!orderDetails ? (
         <>
           <div className="flex justify-between items-center mb-6">
-            <h1 className="text-2xl font-bold text-[#2A4365]">Orders Management</h1>
+            <h1 className="text-2xl font-bold text-green-700">Orders Management</h1>
             <Button onClick={() => dispatch(fetchAllOrders({ page, limit: ordersPerPage, search: debouncedSearchQuery, status: statusFilter }))} disabled={loading}>
               {loading ? 'Refreshing...' : 'Refresh'}
             </Button>

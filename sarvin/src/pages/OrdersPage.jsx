@@ -222,7 +222,7 @@ const OrdersPage = () => {
                     </div>
                     <Link
                       to={`/orders/${order._id}`}
-                      className="text-[#2A4365] hover:text-[#C87941] text-sm font-medium inline-flex items-center"
+                      className="text-green-700 hover:text-emerald-600 text-sm font-medium inline-flex items-center"
                     >
                       View Details
                       <ChevronRight className="ml-1 h-4 w-4" />

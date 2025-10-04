@@ -179,17 +179,17 @@ const Header = () => {
   const DesktopNavLinks = () => (
     <ul className="flex items-center justify-center space-x-6 xl:space-x-8">
       <li>
-        <Link to="/" className="text-sm font-medium transition-colors hover:text-[#C87941] text-[#01364a]">
+        <Link to="/" className="text-sm font-medium transition-colors hover:text-emerald-600 text-[#01364a]">
           Home
         </Link>
       </li>
       <li>
-        <Link to="/products" className="text-sm font-medium transition-colors hover:text-[#C87941] text-[#01364a]">
+        <Link to="/products" className="text-sm font-medium transition-colors hover:text-emerald-600 text-[#01364a]">
           All Products
         </Link>
       </li>
       <li className="relative group">
-        <Link to="/products/smartphones" className="text-sm font-medium transition-colors hover:text-[#C87941] text-[#01364a] flex items-center">
+        <Link to="/products/smartphones" className="text-sm font-medium transition-colors hover:text-emerald-600 text-[#01364a] flex items-center">
           Smartphones
           <ChevronDown className="ml-1 h-3 w-3 relative top-[3px]" />
         </Link>
@@ -200,7 +200,7 @@ const Header = () => {
                 <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Brands</h4>
                 <ul className="space-y-1.5 mt-2">
                   {activeSmartphonesMenu.types.map((item) => (
-                    <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-[#C87941]">{item.name}</Link></li>
+                    <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-emerald-600">{item.name}</Link></li>
                   ))}
                 </ul>
               </div>
@@ -208,7 +208,7 @@ const Header = () => {
                 <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Condition</h4>
                 <ul className="space-y-1.5 mt-2">
                   {activeSmartphonesMenu.conditions.map((item) => (
-                    <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-[#C87941]">{item.name}</Link></li>
+                    <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-emerald-600">{item.name}</Link></li>
                   ))}
                 </ul>
               </div>
@@ -227,7 +227,7 @@ const Header = () => {
         </div>
       </li>
       <li className="relative group">
-        <Link to="/products/laptops" className="text-sm font-medium transition-colors hover:text-[#C87941] text-[#01364a] flex items-center">
+        <Link to="/products/laptops" className="text-sm font-medium transition-colors hover:text-emerald-600 text-[#01364a] flex items-center">
           Laptops <ChevronDown className="ml-1 h-3 w-3 relative top-[3px]" />
         </Link>
         <div className="absolute left-[-6rem] top-full mt-2 bg-white shadow-lg rounded-md p-6 z-50 transition-all duration-300 transform opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 translate-y-2" style={{ minWidth: "600px" }}>
@@ -236,7 +236,7 @@ const Header = () => {
               <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Brands</h4>
               <ul className="space-y-1.5 mt-2">
                 {activeLaptopsMenu.types.map((item) => (
-                  <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-[#C87941]">{item.name}</Link></li>
+                  <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-emerald-600">{item.name}</Link></li>
                 ))}
               </ul>
             </div>
@@ -253,10 +253,10 @@ const Header = () => {
           </div>
         </div>
       </li>
-      <li><Link to="/products?filter=new" className="text-sm font-medium transition-colors hover:text-[#C87941] text-[#01364a]">New Arrivals</Link></li>
-      <li><Link to="/products?filter=featured" className="text-sm font-medium transition-colors hover:text-[#C87941] text-[#01364a]">Featured Products</Link></li>
-      <li><Link to="/about" className="text-sm font-medium transition-colors hover:text-[#C87941] text-[#01364a]">About</Link></li>
-      <li><Link to="/contact" className="text-sm font-medium transition-colors hover:text-[#C87941] text-[#01364a]">Contact</Link></li>
+      <li><Link to="/products?filter=new" className="text-sm font-medium transition-colors hover:text-emerald-600 text-[#01364a]">New Arrivals</Link></li>
+      <li><Link to="/products?filter=featured" className="text-sm font-medium transition-colors hover:text-emerald-600 text-[#01364a]">Featured Products</Link></li>
+      <li><Link to="/about" className="text-sm font-medium transition-colors hover:text-emerald-600 text-[#01364a]">About</Link></li>
+      <li><Link to="/contact" className="text-sm font-medium transition-colors hover:text-emerald-600 text-[#01364a]">Contact</Link></li>
     </ul>
   );
 
@@ -321,17 +321,17 @@ const Header = () => {
   <p className="text-xs text-[#01374ae1]">Mon - Sat  | 8am - 8pm</p>
 </div>
              
-             <Link to="/cart" className="relative p-2 text-[#01364a] hover:text-[#C87941]" aria-label={`Cart with ${cart.items.length} items`}>
+             <Link to="/cart" className="relative p-2 text-[#01364a] hover:text-emerald-600" aria-label={`Cart with ${cart.items.length} items`}>
                 <ShoppingCart className="h-6 w-6" />
                 {cart.items.length > 0 && (
-                    <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-[#C87941] text-xs font-bold text-white">
+                    <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-xs font-bold text-white">
                         {cart.items.reduce((total, item) => total + item.quantity, 0)}
                     </span>
                 )}
              </Link>
 
              <div ref={profileMenuRef} className="relative profile-menu" onMouseEnter={handleProfileMenuEnter} onMouseLeave={handleProfileMenuLeave}>
-                <button onClick={toggleProfileMenu} className="flex items-center p-2 text-[#01364a] hover:text-[#C87941]" aria-label="User account menu">
+                <button onClick={toggleProfileMenu} className="flex items-center p-2 text-[#01364a] hover:text-emerald-600" aria-label="User account menu">
                     <User className="h-6 w-6" />
                     {/* {isAuthenticated && <ChevronDown className="h-4 w-4 ml-1" />} */}
                 </button>
@@ -386,7 +386,7 @@ const Header = () => {
                    placeholder="Search products..."
                    value={searchQuery}
                    onChange={(e) => setSearchQuery(e.target.value)}
-                   className="w-full rounded-md border border-gray-300 pl-3 pr-10 py-3 text-sm focus:border-[#C87941] focus:outline-none focus:ring-1 focus:ring-[#C87941]"
+                   className="w-full rounded-md border border-gray-300 pl-3 pr-10 py-3 text-sm focus:border-emerald-500 focus:outline-none focus:ring-1 focus:ring-emerald-500"
                  />
                  <button
                    type="submit"
@@ -443,7 +443,7 @@ const Header = () => {
                          <li key={item.name}>
                            <Link
                              to={item.path}
-                             className="block text-sm text-gray-600 hover:text-[#C87941] pl-2 py-1"
+                             className="block text-sm text-gray-600 hover:text-emerald-600 pl-2 py-1"
                            >
                              {item.name}
                            </Link>
@@ -458,7 +458,7 @@ const Header = () => {
                          <li key={item.name}>
                            <Link
                              to={item.path}
-                             className="block text-sm text-gray-600 hover:text-[#C87941] pl-2 py-1"
+                             className="block text-sm text-gray-600 hover:text-emerald-600 pl-2 py-1"
                            >
                              {item.name}
                            </Link>
@@ -496,7 +496,7 @@ const Header = () => {
                          <li key={item.name}>
                            <Link
                              to={item.path}
-                             className="block text-sm text-gray-600 hover:text-[#C87941] pl-2 py-1"
+                             className="block text-sm text-gray-600 hover:text-emerald-600 pl-2 py-1"
                            >
                              {item.name}
                            </Link>

@@ -4,7 +4,7 @@ import Button from '../../../components/ui/Button';
 
 const PromotionalBanner = () => {
   return (
-    <section className="py-16 bg-gradient-to-r from-[#2A4365] to-[#1A365D] relative overflow-hidden">
+    <section className="py-16 bg-gradient-to-r from-green-600 to-green-700 relative overflow-hidden">
       <div className="absolute inset-0 opacity-10">
         <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
           <defs>
@@ -18,7 +18,7 @@ const PromotionalBanner = () => {
       
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center text-white">
-          <div className="inline-block bg-[#C87941] text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
+          <div className="inline-block bg-emerald-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
             Sustainable Tech Sale
           </div>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">Refurbished Electronics Sale</h2>
@@ -39,7 +39,7 @@ const PromotionalBanner = () => {
               <Button
                 variant="outline"
                 size="lg"
-                className="border-white text-white hover:bg-white hover:text-[#2A4365]"
+                className="border-white text-white hover:bg-white hover:text-green-700"
               >
                 Browse All Devices
               </Button>

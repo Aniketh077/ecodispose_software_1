@@ -261,7 +261,7 @@ const AdminCollections = () => {
                   <td className="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                     <button
                       onClick={() => handleOpenModal(collection)}
-                      className="text-blue-600 hover:text-blue-900 mr-3"
+                      className="text-green-600 hover:text-blue-900 mr-3"
                       title="Edit"
                     >
                       <Edit2 size={18} />
@@ -377,7 +377,7 @@ const AdminCollections = () => {
                       className="mb-2"
                     />
                     {uploading['collectionImage'] && (
-                      <p className="text-sm text-blue-600">Uploading image...</p>
+                      <p className="text-sm text-green-600">Uploading image...</p>
                     )}
                     {formData.image && (
                       <img

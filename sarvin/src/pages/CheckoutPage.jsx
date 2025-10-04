@@ -193,7 +193,7 @@ const CheckoutPage = () => {
           <div className="py-8">
             <button
               onClick={() => navigate('/cart')}
-              className="flex items-center text-[#2A4365] hover:text-[#335077] font-semibold mb-4 transition-colors"
+              className="flex items-center text-green-700 hover:text-[#335077] font-semibold mb-4 transition-colors"
             >
               <ArrowLeft className="h-4 w-4 mr-1" />
               Back to Cart
@@ -218,7 +218,7 @@ const CheckoutPage = () => {
             <div className="lg:col-span-2">
               <div className="bg-white rounded-lg shadow-sm p-6 mb-6">
                 <div className="flex items-center mb-6">
-                  <MapPin className="h-6 w-6 text-[#2A4365] mr-2" />
+                  <MapPin className="h-6 w-6 text-green-700 mr-2" />
                   <h2 className="text-xl font-semibold">Shipping Address</h2>
                 </div>
 
@@ -441,7 +441,7 @@ const CheckoutPage = () => {
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
           <div className="bg-white rounded-lg p-8 max-w-md mx-4 text-center">
             <div className="mb-6">
-              <Loader2 className="h-12 w-12 text-blue-600 mx-auto animate-spin" />
+              <Loader2 className="h-12 w-12 text-green-600 mx-auto animate-spin" />
             </div>
             <h3 className="text-lg font-semibold mb-2">Processing Your Order</h3>
             <p className="text-gray-600">Please wait while we process your payment and create your order...</p>

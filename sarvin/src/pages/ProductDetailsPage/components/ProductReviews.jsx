@@ -80,7 +80,7 @@ const ProductReviews = ({
           <div className="w-full lg:w-[30%] space-y-6">
             {/* Overall Rating */}
             {product.reviews && product.reviews.length > 0 && (
-              <div className="bg-gradient-to-br from-[#2A4365] to-[#3A5A7A] rounded-lg p-4 lg:p-6 text-white text-center">
+              <div className="bg-gradient-to-br from-green-600 to-[#3A5A7A] rounded-lg p-4 lg:p-6 text-white text-center">
                 <div className="text-3xl lg:text-4xl font-bold mb-2">
                   {product.rating.toFixed(1)}
                 </div>
@@ -103,14 +103,14 @@ const ProductReviews = ({
                               className="absolute top-0 left-0 overflow-hidden"
                               style={{ width: `${partialPercent}%` }}
                             >
-                              <Star className="h-4 w-4 lg:h-5 lg:w-5 text-[#C87941] fill-[#C87941]" />
+                              <Star className="h-4 w-4 lg:h-5 lg:w-5 text-emerald-600 fill-[#C87941]" />
                             </div>
                           </div>
                         ) : (
                           <Star
                             className={`h-4 w-4 lg:h-5 lg:w-5 ${
                               isFullStar
-                                ? "text-[#C87941] fill-[#C87941]"
+                                ? "text-emerald-600 fill-[#C87941]"
                                 : "text-white/40"
                             }`}
                           />
@@ -149,11 +149,11 @@ const ProductReviews = ({
                           <span className="text-xs lg:text-sm font-medium w-3">
                             {rating}
                           </span>
-                          <Star className="h-3 w-3 lg:h-4 lg:w-4 text-[#C87941] fill-[#C87941]" />
+                          <Star className="h-3 w-3 lg:h-4 lg:w-4 text-emerald-600 fill-[#C87941]" />
                         </div>
                         <div className="flex-1 h-2 lg:h-3 bg-gray-200 rounded-full overflow-hidden">
                           <div
-                            className="h-full bg-gradient-to-r from-[#C87941] to-[#D4935C] rounded-full transition-all duration-500 ease-out"
+                            className="h-full bg-gradient-to-r from-emerald-500 to-[#D4935C] rounded-full transition-all duration-500 ease-out"
                             style={{ width: `${percentage}%` }}
                           ></div>
                         </div>
@@ -190,7 +190,7 @@ const ProductReviews = ({
                         >
                           <div className="flex items-start justify-between mb-3 lg:mb-4">
                             <div className="flex items-center space-x-3">
-                              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-[#2A4365] to-[#3A5A7A] rounded-full flex items-center justify-center text-white font-semibold text-base lg:text-lg">
+                              <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-green-600 to-[#3A5A7A] rounded-full flex items-center justify-center text-white font-semibold text-base lg:text-lg">
                                 {(review.user?.name || "A")
                                   .charAt(0)
                                   .toUpperCase()}
@@ -203,7 +203,7 @@ const ProductReviews = ({
                                       key={star}
                                       className={`h-3 w-3 lg:h-4 lg:w-4 ${
                                         star <= review.rating
-                                          ? "text-[#C87941] fill-[#C87941]"
+                                          ? "text-emerald-600 fill-[#C87941]"
                                           : "text-gray-300"
                                       }`}
                                     />
@@ -247,7 +247,7 @@ const ProductReviews = ({
                                 onClick={() =>
                                   toggleCommentExpansion(review._id)
                                 }
-                                className="mt-2 flex items-center space-x-1 text-[#2A4365] hover:text-[#3A5A7A] text-sm font-medium transition-colors duration-200"
+                                className="mt-2 flex items-center space-x-1 text-green-700 hover:text-[#3A5A7A] text-sm font-medium transition-colors duration-200"
                               >
                                 {isExpanded ? (
                                   <>
@@ -319,8 +319,8 @@ const ProductReviews = ({
                             onClick={() => setCurrentReviewPage(pageNumber)}
                             className={`w-8 h-8 rounded-lg text-sm font-medium transition-all duration-200 ${
                               isActive
-                                ? "bg-[#2A4365] text-white shadow-lg transform scale-105"
-                                : "text-gray-500 hover:text-[#2A4365] hover:bg-gray-100"
+                                ? "bg-green-600 text-white shadow-lg transform scale-105"
+                                : "text-gray-500 hover:text-green-700 hover:bg-gray-100"
                             }`}
                           >
                             {pageNumber}

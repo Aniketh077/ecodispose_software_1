@@ -22,7 +22,7 @@ const OrderTimeline = ({ order }) => {
       case 'processing':
         return <Clock className="h-4 w-4 text-yellow-600" />;
       case 'shipped':
-        return <Truck className="h-4 w-4 text-blue-600" />;
+        return <Truck className="h-4 w-4 text-green-600" />;
       case 'delivered':
         return <CheckCircle className="h-4 w-4 text-green-600" />;
       case 'cancelled':
@@ -106,7 +106,7 @@ const OrderTimeline = ({ order }) => {
                     </p>
                     <div className="flex items-center space-x-2">
                       {statusItem.customerNotified && (
-                        <span className="text-xs text-blue-600 bg-blue-50 px-2 py-1 rounded-full flex items-center">
+                        <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full flex items-center">
                           <Mail className="h-3 w-3 mr-1" />
                           Notified
                         </span>

@@ -12,7 +12,7 @@ const FilterSection = ({ title, children, isOpen, onToggle }) => (
   <div className="border-b">
     <button
       onClick={onToggle}
-      className="w-full flex justify-between items-center py-4 text-left font-semibold text-gray-800 hover:text-[#2A4365]"
+      className="w-full flex justify-between items-center py-4 text-left font-semibold text-gray-800 hover:text-green-700"
     >
       <span>{title}</span>
       <ChevronDown
@@ -34,7 +34,7 @@ const FilterCheckbox = ({ label, value, checked, onChange, count }) => (
       value={value}
       checked={checked}
       onChange={onChange}
-      className="h-4 w-4 rounded border-gray-300 text-[#2A4365] focus:ring-2 focus:ring-[#C87941] focus:ring-offset-0"
+      className="h-4 w-4 rounded border-gray-300 text-green-700 focus:ring-2 focus:ring-emerald-500 focus:ring-offset-0"
     />
     <span className="text-sm text-gray-700 group-hover:text-black">
       {label} {count && `(${count})`}
@@ -82,7 +82,7 @@ const Pagination = ({ currentPage, totalPages, onPageChange }) => {
           onClick={() => onPageChange(pageNum)}
           className={`px-3 py-2 rounded-md border ${
             pageNum === currentPage
-              ? "bg-[#2A4365] text-white border-[#2A4365]"
+              ? "bg-green-600 text-white border-green-600"
               : "border-gray-300 hover:bg-gray-50"
           }`}
         >
@@ -339,11 +339,11 @@ const SearchPage = () => {
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
                 placeholder="Search for any Kitchen Appliances etc..."
-                className="w-full rounded-lg border border-gray-300 pl-4 pr-12 py-3 text-lg focus:border-[#2A4365] focus:outline-none focus:ring-1 focus:ring-[#2A4365]"
+                className="w-full rounded-lg border border-gray-300 pl-4 pr-12 py-3 text-lg focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
               />
               <button
                 type="submit"
-                className="absolute right-0 top-0 flex h-full items-center justify-center px-4 text-gray-500 hover:text-[#2A4365]"
+                className="absolute right-0 top-0 flex h-full items-center justify-center px-4 text-gray-500 hover:text-green-700"
               >
                 <Search className="h-6 w-6" />
               </button>
@@ -381,10 +381,10 @@ const SearchPage = () => {
                 </Button>
                 <div className="flex items-center space-x-2">
                   <button onClick={() => setViewMode("grid")} className={`p-2 rounded ${viewMode === "grid" ? "bg-gray-100" : ""}`}>
-                    <Grid size={18} className={viewMode === "grid" ? "text-[#2A4365]" : "text-gray-500"} />
+                    <Grid size={18} className={viewMode === "grid" ? "text-green-700" : "text-gray-500"} />
                   </button>
                   <button onClick={() => setViewMode("list")} className={`p-2 rounded ${viewMode === "list" ? "bg-gray-100" : ""}`}>
-                    <List size={18} className={viewMode === "list" ? "text-[#2A4365]" : "text-gray-500"} />
+                    <List size={18} className={viewMode === "list" ? "text-green-700" : "text-gray-500"} />
                   </button>
                 </div>
               </div>
@@ -398,11 +398,11 @@ const SearchPage = () => {
               <div className={`w-full sm:w-64 md:w-56 lg:w-60 xl:w-72 mb-6 md:mb-0 md:mr-6 ${isFilterVisible ? "block" : "hidden md:block"}`}>
                 <div className="sticky top-24 bg-white rounded-md shadow-lg border p-5">
                     <div className="flex justify-between items-center mb-4">
-                        <h3 className="font-bold text-xl text-[#2A4365]">Filters</h3>
+                        <h3 className="font-bold text-xl text-green-700">Filters</h3>
                         <button
                           onClick={clearFilters}
                           disabled={getActiveFiltersCount() === 0}
-                          className="text-sm text-blue-600 hover:underline disabled:text-gray-400 disabled:no-underline"
+                          className="text-sm text-green-600 hover:underline disabled:text-gray-400 disabled:no-underline"
                         >
                           Clear All
                         </button>
@@ -455,7 +455,7 @@ const SearchPage = () => {
               <div className="flex-1">
                 {loading && products.length === 0 ? (
                     <div className="flex items-center justify-center p-12">
-                        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-[#2A4365]"></div>
+                        <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-green-600"></div>
                     </div>
                 ) : !loading && products.length === 0 ? (
                     <div className="bg-white p-8 rounded-lg shadow-sm text-center">
