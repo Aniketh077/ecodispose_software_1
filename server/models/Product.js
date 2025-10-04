@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema({
   collection: {
     type: String,
     required: true,
-    enum: ['Smartphones', 'Laptops', 'Tablets', 'Audio Devices', 'Gaming Consoles', 'Smart Watches', 'Small Appliances'],
+    enum: ['Smartphones', 'Laptops', 'Tablets', 'Cameras', 'Smartwatches', 'Headphones', 'Gaming Consoles', 'Home Appliances', 'Computer Accessories'],
   },
   condition: {
     type: String,
@@ -56,11 +56,7 @@ const productSchema = new mongoose.Schema({
 productSchema.pre('save', function(next) {
   if (!this.productCode && this.isNew) {
     const timestamp = Date.now().toString().slice(-6);
-    this.productCode = `PROD-${timestamp}`;
-  }
-  if (this.collection !== 'Cooking Appliances') {
-    this.burners = undefined;
-    this.ignitionType = undefined;
+    this.productCode = `ECO-${timestamp}`;
   }
   next();
 });

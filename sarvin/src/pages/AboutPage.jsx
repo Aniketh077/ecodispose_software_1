@@ -61,9 +61,9 @@ const AboutPage = () => {
       <section className="py-20 bg-gradient-to-r from-[#2A4365] to-[#1A365D] text-white">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h1 className="text-5xl md:text-6xl font-bold mb-6">About Cashify</h1>
+            <h1 className="text-5xl md:text-6xl font-bold mb-6">About EcoTrade</h1>
             <p className="text-xl md:text-2xl text-gray-200 mb-8">
-              Transforming India's electronics ecosystem with quality refurbished devices and sustainable solutions
+              Leading the way in sustainable technology with premium refurbished electronics for everyone
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/products">
@@ -104,7 +104,7 @@ const AboutPage = () => {
                 <h2 className="text-4xl font-bold mb-6">Our Story</h2>
                 <div className="space-y-4 text-gray-600 text-lg">
                   <p>
-                    Cashify was born from the vision of making quality electronics accessible to everyone while promoting sustainability. We believe that refurbished doesn't mean compromised. Every device goes through rigorous testing and certification to ensure it meets our high standards. By choosing refurbished, you're not just saving money - you're helping reduce electronic waste and contributing to a greener planet.
+                    EcoTrade was founded with a simple mission: make premium technology accessible while protecting our planet. We believe everyone deserves quality electronics without the premium price tag or environmental cost. Each device undergoes comprehensive testing and certification, ensuring it meets strict quality standards. When you choose EcoTrade, you're making a smart financial decision and an environmentally conscious choice that helps combat e-waste.
                   </p>
                 </div>
               </div>
@@ -130,8 +130,7 @@ const AboutPage = () => {
               </div>
               <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
               <p className="text-gray-600 text-lg">
-                To revolutionize the way Indians buy and sell electronics by providing quality refurbished devices, 
-                exceptional service, and sustainable solutions that benefit both customers and the environment.
+                To make premium refurbished electronics accessible to everyone while reducing e-waste and promoting sustainable technology consumption for a better tomorrow.
               </p>
             </div>
             <div>
@@ -140,8 +139,7 @@ const AboutPage = () => {
               </div>
               <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
               <p className="text-gray-600 text-lg">
-                To become India's most trusted marketplace for refurbished electronics, 
-                empowering everyone to access premium technology while building a sustainable future.
+                To be the world's leading platform for certified refurbished electronics, creating a circular economy that benefits people and the planet.
               </p>
             </div>
           </div>
@@ -206,9 +204,9 @@ const AboutPage = () => {
       <section className="py-16 bg-[#2A4365] text-white">
         <div className="container mx-auto px-4">
           <div className="text-center mb-12">
-            <h2 className="text-4xl font-bold mb-4">Why Choose Cashify?</h2>
+            <h2 className="text-4xl font-bold mb-4">Why Choose EcoTrade?</h2>
             <p className="text-gray-200 text-lg max-w-2xl mx-auto">
-              We're more than just a marketplace - we're your trusted partner in sustainable technology solutions
+              Your trusted partner for quality refurbished electronics and sustainable technology solutions
             </p>
           </div>
           
@@ -252,9 +250,9 @@ const AboutPage = () => {
       <section className="py-16 bg-gray-50">
         <div className="container mx-auto px-4">
           <div className="max-w-4xl mx-auto text-center">
-            <h2 className="text-4xl font-bold mb-4">Ready to Go Sustainable?</h2>
+            <h2 className="text-4xl font-bold mb-4">Ready to Make a Difference?</h2>
             <p className="text-gray-600 text-lg mb-8">
-              Join thousands of satisfied customers who have made Cashify their trusted refurbished electronics partner
+              Join thousands of satisfied customers who trust EcoTrade for quality refurbished electronics
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Link to="/products">

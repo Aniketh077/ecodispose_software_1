@@ -24,25 +24,19 @@ const Footer = () => {
             {/* Company Info */}
             <div className="lg:col-span-2">
               <Link to="/" className="flex items-center mb-4">
-                <img
-                  src="/logo_light.png"
-                  alt="Cashify"
-                  className="h-10 w-auto object-contain"
-                  style={{ maxWidth: '120px' }}
-                />
+                <span className="text-3xl font-bold text-white">Eco<span className="text-[#10B981]">Trade</span></span>
               </Link>
               <p className="text-gray-300 mb-6">
-                Cashify brings you the best in refurbished electronics with premium quality, thorough testing,
-                and exceptional customer service. Get sustainable tech solutions with our wide range of certified pre-owned devices.
+                EcoTrade offers premium refurbished electronics that are good for your wallet and the planet. Every device is thoroughly tested, certified, and comes with a warranty. Join us in reducing e-waste while enjoying quality technology.
               </p>
               <div className="space-y-3">
                 <div className="flex items-start">
-                  <Mail className="h-5 w-5 text-[#C87941] mt-1 mr-3" />
-                  <span className="text-gray-300">support@cashify.com</span>
+                  <Mail className="h-5 w-5 text-[#10B981] mt-1 mr-3" />
+                  <span className="text-gray-300">team@eco-dispose.com</span>
                 </div>
                 <div className="flex items-start">
-                  <Phone className="h-5 w-5 text-[#C87941] mt-1 mr-3" />
-                  <span className="text-gray-300">+91 93109 79906</span>
+                  <Phone className="h-5 w-5 text-[#10B981] mt-1 mr-3" />
+                  <span className="text-gray-300">8008030203</span>
                 </div>
               </div>
             </div>
@@ -51,11 +45,10 @@ const Footer = () => {
             <div>
               <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Quick Links</h3>
               <ul className="space-y-2">
-                <li><Link to="/" className="text-gray-300 hover:text-[#C87941] transition-colors">Home</Link></li>
-                <li><Link to="/products" className="text-gray-300 hover:text-[#C87941] transition-colors">Shop</Link></li>
-                {/* <li><Link to="/deals" className="text-gray-300 hover:text-[#C87941] transition-colors">Special Deals</Link></li> */}
-                <li><Link to="/about" className="text-gray-300 hover:text-[#C87941] transition-colors">About Us</Link></li>
-                <li><Link to="/contact" className="text-gray-300 hover:text-[#C87941] transition-colors">Contact</Link></li>
+                <li><Link to="/" className="text-gray-300 hover:text-[#10B981] transition-colors">Home</Link></li>
+                <li><Link to="/products" className="text-gray-300 hover:text-[#10B981] transition-colors">Shop</Link></li>
+                <li><Link to="/about" className="text-gray-300 hover:text-[#10B981] transition-colors">About Us</Link></li>
+                <li><Link to="/contact" className="text-gray-300 hover:text-[#10B981] transition-colors">Contact</Link></li>
               </ul>
             </div>
 
@@ -65,11 +58,11 @@ const Footer = () => {
               <div>
                 <h3 className="text-lg font-semibold mb-4 border-b border-gray-700 pb-2">Help & Info</h3>
                 <ul className="space-y-2">
-                  <li><a href="tel:+919310979906" className="text-gray-300 hover:text-[#C87941] transition-colors">Customer Service +91 93109 79906</a></li>
+                  <li><a href="tel:8008030203" className="text-gray-300 hover:text-[#10B981] transition-colors">Customer Service 8008030203</a></li>
                   <li>
-                    <button 
+                    <button
                       onClick={handleFAQClick}
-                      className="text-gray-300 hover:text-[#C87941] transition-colors text-left"
+                      className="text-gray-300 hover:text-[#10B981] transition-colors text-left"
                     >
                       FAQs
                     </button>
@@ -104,21 +97,18 @@ const Footer = () => {
           <div className="border-t border-gray-700 py-6">
             <div className="flex flex-col md:flex-row justify-between items-center">
               <p className="text-gray-300 text-sm mb-4 md:mb-0">
-                &copy; {new Date().getFullYear()} Sarvin Home Appliances. All rights reserved.
+                &copy; {new Date().getFullYear()} EcoTrade. All rights reserved.
               </p>
               <div className="flex space-x-4">
-                <a href="https://www.facebook.com/profile.php?id=100079974925586&mibextid=ZbWKwL" className="text-gray-300 hover:text-[#C87941] transition-colors" aria-label="Facebook">
+                <a href="#" className="text-gray-300 hover:text-[#10B981] transition-colors" aria-label="Facebook">
                   <Facebook className="h-5 w-5" />
                 </a>
-                {/* <a href="#" className="text-gray-300 hover:text-[#C87941] transition-colors" aria-label="Twitter">
-                  <Twitter className="h-5 w-5" />
-                </a> */}
-                <a href="https://www.instagram.com/sarvinindia/" className="text-gray-300 hover:text-[#C87941] transition-colors" aria-label="Instagram">
+                <a href="#" className="text-gray-300 hover:text-[#10B981] transition-colors" aria-label="Instagram">
                   <Instagram className="h-5 w-5" />
                 </a>
-                {/* <a href="#" className="text-gray-300 hover:text-[#C87941] transition-colors" aria-label="YouTube">
+                <a href="#" className="text-gray-300 hover:text-[#10B981] transition-colors" aria-label="YouTube">
                   <Youtube className="h-5 w-5" />
-                </a> */}
+                </a>
               </div>
             </div>
           </div>

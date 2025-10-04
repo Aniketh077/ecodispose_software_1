@@ -33,9 +33,9 @@ const corsOptions = {
       'http://127.0.0.1:5173',
       'http://127.0.0.1:5174',
       'http://127.0.0.1:3000',
-      // Production URL
-      'https://sarvinindia.com',
-      'https://www.sarvinindia.com',
+      // Production URL (update with your actual domain)
+      'https://ecotrade.com',
+      'https://www.ecotrade.com',
     ];
     
     if (allowedOrigins.includes(origin)) {
@@ -106,7 +106,7 @@ app.get('/api/health', (req, res) => {
 // Root route
 app.get('/', (req, res) => {
   res.json({
-    message: 'E-commerce API Server',
+    message: 'EcoTrade API Server - Premium Refurbished Electronics',
     environment: process.env.NODE_ENV || 'development',
     status: 'running',
     endpoints: {

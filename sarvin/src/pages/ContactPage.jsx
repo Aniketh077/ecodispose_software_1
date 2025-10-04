@@ -96,39 +96,32 @@ const ContactPage = () => {
   };
 
   const handleCallNow = () => {
-    window.open('tel:+919310979906');
+    window.open('tel:8008030203');
   };
 
   const handleSendEmail = () => {
-    window.open('mailto:sarvinhomeappl@gmail.com');
+    window.open('mailto:team@eco-dispose.com');
   };
 
   const handleLiveChat = () => {
-    const whatsappNumber = '+919310979906';
-    const message = 'Hello! I would like to get assistance with your products and services.';
+    const whatsappNumber = '8008030203';
+    const message = 'Hello! I would like to get assistance with your refurbished electronics.';
     const encodedMessage = encodeURIComponent(message);
-    window.open(`https://wa.me/${whatsappNumber.replace('+', '')}?text=${encodedMessage}`, '_blank');
+    window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
   };
 
   const contactInfo = [
     {
-      icon: MapPin,
-      title: 'Visit Our Factory',
-      details: ['Plot No. 33 Bhankri - Pali Road', 'Behind JAV Forging', 'Faridabad, Haryana - 121001'],
-      action: 'Get Directions',
-      onClick: handleGetDirections
-    },
-    {
       icon: Phone,
       title: 'Call Us',
-      details: ['+91 93109 79906', 'Customer Support', 'Mon-Sat: 8AM-8PM'],
+      details: ['8008030203', 'Customer Support', 'Mon-Sat: 9AM-6PM'],
       action: 'Call Now',
       onClick: handleCallNow
     },
     {
       icon: Mail,
       title: 'Email Us',
-      details: ['sarvinhomeappl@gmail.com', 'We reply within 24 hours'],
+      details: ['team@eco-dispose.com', 'We reply within 24 hours'],
       action: 'Send Email',
       onClick: handleSendEmail
     },
@@ -160,8 +153,7 @@ const ContactPage = () => {
           <div className="max-w-4xl mx-auto text-center">
             <h1 className="text-5xl font-bold mb-6">Get in Touch</h1>
             <p className="text-xl text-gray-200">
-              We're here to help you find the perfect refurbished device for your needs. 
-              Reach out to our expert team for personalized assistance and device recommendations.
+              Have questions about our refurbished electronics? Our expert team is ready to help you find the perfect device for your needs.
             </p>
           </div>
         </div>
@@ -309,7 +301,7 @@ const ContactPage = () => {
 
             {/* Map & Additional Info */}
             <div>
-              <h2 className="text-3xl font-bold mb-6">Visit Our Factory</h2>
+              <h2 className="text-3xl font-bold mb-6">Find Us</h2>
               
               {/* Google Maps Embed */}
               <div className="rounded-lg overflow-hidden shadow-md mb-6"> 
@@ -430,10 +422,10 @@ const ContactPage = () => {
               <div className="bg-white/10 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6">
                 <Users className="h-10 w-10" />
               </div>
-              <h2 className="text-3xl font-bold mb-4">Ready to Connect? We're Here to Help!</h2>
+              <h2 className="text-3xl font-bold mb-4">Ready to Go Green?</h2>
               <p className="text-xl text-gray-200 mb-8">
-                Get instant support through WhatsApp or call our dedicated team at +91 93109 79906. 
-                Experience seamless service and expert guidance for all your refurbished device needs.
+                Get instant support through WhatsApp or call our dedicated team at 8008030203.
+                Experience quality refurbished electronics with expert guidance.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 
@@ -451,7 +443,7 @@ const ContactPage = () => {
                   onClick={handleCallNow}
                   leftIcon={<Phone className="h-5 w-5" />}
                 >
-                  Call +91 93109 79906
+                  Call 8008030203
                 </Button>
               </div>
             </div>

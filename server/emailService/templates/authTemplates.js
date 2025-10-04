@@ -6,8 +6,8 @@ function verificationEmailTemplate(email, verificationUrl, name) {
       <p>Thank you for registering with ${process.env.APP_NAME}. To complete your registration, please verify your email address by clicking the button below:</p>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href="${verificationUrl}" 
-           style="background-color: #4CAF50; color: white; padding: 14px 20px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;">
+        <a href="${verificationUrl}"
+           style="background-color: #10B981; color: white; padding: 14px 20px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;">
           Verify Email Address
         </a>
       </div>
@@ -35,8 +35,8 @@ function passwordResetTemplate(email, resetUrl, name) {
       <p>We received a request to reset your password for your ${process.env.APP_NAME} account. If you made this request, please click the button below to reset your password:</p>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href="${resetUrl}" 
-           style="background-color: #094275; color: white; padding: 14px 20px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;">
+        <a href="${resetUrl}"
+           style="background-color: #10B981; color: white; padding: 14px 20px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;">
           Reset Password
         </a>
       </div>
@@ -65,8 +65,8 @@ function welcomeEmailTemplate(email, name) {
       <p>You can now enjoy all the features of ${process.env.APP_NAME}. Thank you for joining us!</p>
       
       <div style="text-align: center; margin: 30px 0;">
-        <a href="${process.env.FRONTEND_URL}/login" 
-           style="background-color: #094275; color: white; padding: 14px 20px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;">
+        <a href="${process.env.FRONTEND_URL}/login"
+           style="background-color: #10B981; color: white; padding: 14px 20px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold;">
           Login to Your Account
         </a>
       </div>

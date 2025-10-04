@@ -266,7 +266,7 @@ const Header = () => {
              </button>
              {/* MOBILE LOGO MOVED HERE */}
              <Link to="/" className="lg:hidden flex items-center flex-shrink-0">
-                <img src="/logo_light.png" alt="Cashify" className="h-12 w-auto object-contain" style={{ maxWidth: "130px" }} />
+                <span className="text-2xl font-bold text-[#01364a]">Eco<span className="text-[#10B981]">Trade</span></span>
              </Link>
              {/* Desktop Left Content */}
              <div className="hidden lg:flex items-center space-x-4">
@@ -276,7 +276,7 @@ const Header = () => {
                     </button>
                 )}
                 <Link to="/" className="flex items-center flex-shrink-0">
-                    <img src="/logo_light.png" alt="Cashify" className="h-12 w-auto object-contain" style={{ maxWidth: "130px" }} />
+                    <span className="text-2xl font-bold text-[#01364a]">Eco<span className="text-[#10B981]">Trade</span></span>
                 </Link>
              </div>
           </div>
@@ -304,9 +304,9 @@ const Header = () => {
           <div className="flex items-center justify-end space-x-2 md:space-x-4 lg:w-auto flex-1">
            <div className="hidden lg:block text-right">
   <p className="text-sm font-semibold text-[#01364a] whitespace-nowrap">
-    <a href="tel:9310979906" className="flex items-center justify-end hover:underline">
+    <a href="tel:8008030203" className="flex items-center justify-end hover:underline">
       <Phone Width={3} className="h-3 w-3 mr-1 mt-1 " />
-      <span>9310979906 (sales & service)</span>
+      <span>8008030203</span>
     </a>
   </p>
   <p className="text-xs text-[#01374ae1]">Mon - Sat  | 8am - 8pm</p>
