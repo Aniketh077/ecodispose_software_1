@@ -14,7 +14,7 @@ const BrandsSection = ({ types }) => {
       return false;
     }
     
-    // Ensure we have essential data as strings
+    // Ensure we have essential data as stringsa
     const typeId = type._id ? String(type._id) : (type.id ? String(type.id) : '');
     const typeName = type.name ? String(type.name) : '';
     
