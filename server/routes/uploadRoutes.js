@@ -6,18 +6,16 @@ const { protect, admin } = require('../middlewares/auth');
 // @desc    Upload single image
 // @route   POST /api/upload/single
 // @access  Private
-router.post('/single', protect, (req, res, next) => {
-  req.uploadFolder = req.body.folder || 'images';
-  next();
-}, upload.single('image'), async (req, res) => {
+router.post('/single', protect, upload.single('image'), async (req, res) => {
   try {
     if (!req.file) {
       return res.status(400).json({ message: 'No file uploaded' });
     }
 
-    const s3Key = await uploadToS3(req.file, req.uploadFolder);
+    const folder = req.query.folder || req.body.folder || 'images';
+    const s3Key = await uploadToS3(req.file, folder);
     const cloudFrontUrl = getCloudFrontUrl(s3Key);
-    
+
     res.json({
       message: 'File uploaded successfully',
       url: cloudFrontUrl,
@@ -34,18 +32,17 @@ router.post('/single', protect, (req, res, next) => {
 // @desc    Upload multiple images
 // @route   POST /api/upload/multiple
 // @access  Private
-router.post('/multiple', protect, (req, res, next) => {
-  req.uploadFolder = req.body.folder || 'images';
-  next();
-}, upload.array('images', 10), async (req, res) => {
+router.post('/multiple', protect, upload.array('images', 10), async (req, res) => {
   try {
     if (!req.files || req.files.length === 0) {
       return res.status(400).json({ message: 'No files uploaded' });
     }
 
+    const folder = req.query.folder || req.body.folder || 'images';
     const uploadedFiles = [];
+
     for (const file of req.files) {
-      const s3Key = await uploadToS3(file, req.uploadFolder);
+      const s3Key = await uploadToS3(file, folder);
       uploadedFiles.push({
         url: getCloudFrontUrl(s3Key),
         key: s3Key,
@@ -53,10 +50,11 @@ router.post('/multiple', protect, (req, res, next) => {
         mimetype: file.mimetype
       });
     }
-    
+
     res.json({
       message: 'Files uploaded successfully',
-      files: uploadedFiles
+      files: uploadedFiles,
+      urls: uploadedFiles.map(file => file.url)
     });
   } catch (error) {
     console.error('Upload error:', error);
