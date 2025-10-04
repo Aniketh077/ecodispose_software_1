@@ -96,7 +96,7 @@ const Header = () => {
   const smartphonesMenu = getCollectionMenu('Smartphones');
   const laptopsMenu = getCollectionMenu('Laptops');
 
-  const cartItemsCount = cart.reduce((total, item) => total + item.quantity, 0);
+  const cartItemsCount = cart?.items ? cart.items.reduce((total, item) => total + item.quantity, 0) : 0;
 
   return (
     <header className="sticky top-0 z-50 bg-white border-b border-gray-200 shadow-sm">
