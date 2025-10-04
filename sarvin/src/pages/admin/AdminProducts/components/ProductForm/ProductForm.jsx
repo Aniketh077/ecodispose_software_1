@@ -183,14 +183,14 @@ const ProductForm = ({ onClose, onSave, product, types }) => {
   };
   
   const typeOptions = [
-    { value: '', label: 'Select Type' },
+    { value: '', label: 'Select Brand' },
     ...types.map(type => ({ value: type.id, label: type.name })),
-    { value: 'new', label: '+ Add New Type' },
-    { value: 'manage', label: '📝 Manage Types' }
+    { value: 'new', label: '+ Add New Brand' },
+    { value: 'manage', label: '📝 Manage Brands' }
   ];
 
   const collectionOptions = [
-    { value: '', label: 'Select Collection' },
+    { value: '', label: 'Select Category' },
     ...collections
       .filter(col => col.isActive)
       .map(col => ({
@@ -229,9 +229,57 @@ const ProductForm = ({ onClose, onSave, product, types }) => {
               </div>
             </div>
             <div className="px-2 sm:px-8 py-4 sm:py-6 max-h-[70vh] overflow-y-auto product-form-scrollbar text-xs sm:text-sm">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
-                <FormField label="Product Name" name="name" value={formData.name} onChange={handleChange} required />
-                <FormField label="Product Collection" name="collection" value={formData.collection} onChange={handleChange} type="select" options={collectionOptions} required />
+              <div className="grid grid-cols-1 gap-4 sm:gap-6 mb-6">
+                <FormField label="Product Name" name="name" value={formData.name} onChange={handleChange} required placeholder="e.g., iPhone 13 Pro Max 256GB" />
+              </div>
+
+              {/* Category and Brand Selection */}
+              <div className="mb-6 p-5 bg-gradient-to-br from-blue-50 to-indigo-50 border-l-4 border-blue-500 rounded-lg shadow-sm">
+                <div className="flex items-center mb-4">
+                  <svg className="w-6 h-6 text-blue-600 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 7h.01M7 3h5c.512 0 1.024.195 1.414.586l7 7a2 2 0 010 2.828l-7 7a2 2 0 01-2.828 0l-7-7A1.994 1.994 0 013 12V7a4 4 0 014-4z" />
+                  </svg>
+                  <h4 className="text-base font-bold text-blue-900">Product Classification</h4>
+                </div>
+                <p className="text-sm text-blue-700 mb-4">Categorize your product to help customers find it easily</p>
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+                  <div className="bg-white p-4 rounded-lg border border-blue-200">
+                    <div className="mb-2">
+                      <FormField
+                        label={
+                          <span className="flex items-center text-sm font-semibold text-gray-800">
+                            📱 Category
+                          </span>
+                        }
+                        name="collection"
+                        value={formData.collection}
+                        onChange={handleChange}
+                        type="select"
+                        options={collectionOptions}
+                        required
+                      />
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">Select product type: Smartphones, Laptops, Cameras, etc.</p>
+                  </div>
+                  <div className="bg-white p-4 rounded-lg border border-blue-200">
+                    <div className="mb-2">
+                      <FormField
+                        label={
+                          <span className="flex items-center text-sm font-semibold text-gray-800">
+                            🏷️ Brand/Manufacturer
+                          </span>
+                        }
+                        name="typeId"
+                        value={formData.typeId}
+                        onChange={handleChange}
+                        type="select"
+                        options={typeOptions}
+                        required
+                      />
+                    </div>
+                    <p className="text-xs text-gray-500 mt-1">Select brand: Apple, Samsung, Dell, HP, etc.</p>
+                  </div>
+                </div>
               </div>
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6 p-4 bg-green-50 rounded-md border border-green-200">
@@ -255,56 +303,78 @@ const ProductForm = ({ onClose, onSave, product, types }) => {
                 <FormField label="Warranty" name="warranty" value={formData.warranty} onChange={handleChange} placeholder="e.g., 2 Year" required />
               </div>
 
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6">
-                <div>
-                  <FormField label="Type" name="typeId" value={formData.typeId} onChange={handleChange} type="select" options={typeOptions} required className="text-xs sm:text-sm" />
-                  {showManageTypes && (
-                    <div className="mt-2 sm:mt-4 p-3 sm:p-6 bg-white rounded-md border border-[#E2E8F0] shadow-lg">
-                      <div className="flex justify-between items-center mb-2 sm:mb-4">
-                        <h4 className="text-base sm:text-lg font-semibold text-green-700">Manage Types</h4>
-                        <button type="button" onClick={() => setShowManageTypes(false)} className="text-gray-500 hover:text-gray-700"><X className="h-5 w-5" /></button>
-                      </div>
-                      <div className="max-h-40 sm:max-h-60 overflow-y-auto product-form-scrollbar">
-                        {types.map(type => (
-                          <div key={type.id} className="flex justify-between items-center py-2 sm:py-3 border-b border-gray-200">
-                            <span className="text-green-700 text-xs sm:text-sm">{type.name}</span>
-                            <div className="flex space-x-2">
-                              <button type="button" onClick={() => { handleEditType(type); setShowManageTypes(false); }} className="text-green-600 hover:text-blue-800 text-xs sm:text-sm">Edit</button>
-                              <button type="button" onClick={() => handleDeleteType(type.id)} className="text-red-600 hover:text-red-800 text-xs sm:text-sm">Delete</button>
-                            </div>
+              {/* Brand Management Section */}
+              {showManageTypes && (
+                <div className="mb-6 p-4 sm:p-6 bg-white rounded-lg border-2 border-blue-300 shadow-lg">
+                  <div className="flex justify-between items-center mb-4">
+                    <h4 className="text-base sm:text-lg font-semibold text-blue-900 flex items-center">
+                      <svg className="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20">
+                        <path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14 8a1 1 0 102 0 1 1 0 00-2 0zM2 12a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2zM14 14a1 1 0 102 0 1 1 0 00-2 0z" />
+                      </svg>
+                      Manage Brands
+                    </h4>
+                    <button type="button" onClick={() => setShowManageTypes(false)} className="text-gray-500 hover:text-gray-700"><X className="h-5 w-5" /></button>
+                  </div>
+                  <div className="max-h-60 overflow-y-auto product-form-scrollbar">
+                    {types.length === 0 ? (
+                      <p className="text-center text-gray-500 py-4">No brands added yet. Create your first brand below.</p>
+                    ) : (
+                      types.map(type => (
+                        <div key={type.id} className="flex justify-between items-center py-3 border-b border-gray-200 hover:bg-gray-50">
+                          <div className="flex items-center">
+                            {type.logo && (
+                              <img src={type.logo} alt={type.name} className="w-8 h-8 object-contain mr-3" />
+                            )}
+                            <span className="text-gray-800 text-sm font-medium">{type.name}</span>
                           </div>
-                        ))}
-                      </div>
-                      <div className="mt-2 sm:mt-4">
-                        <button type="button" onClick={() => { setEditingType(null); setShowNewType(true); setShowManageTypes(false); }} className="w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-md hover:from-[#1A365D] hover:to-[#2A4365] transition-all duration-200 text-xs sm:text-sm">Add New Type</button>
-                      </div>
-                    </div>
-                  )}
-                  {showNewType && (
-                    <div className="mt-2 sm:mt-4 p-3 sm:p-6 bg-gradient-to-br from-[#F7FAFC] to-[#EDF2F7] rounded-md border border-[#E2E8F0]">
-                      <div className="flex justify-between items-center mb-2 sm:mb-4">
-                        <h4 className="text-xs sm:text-sm font-semibold text-green-700 flex items-center"><span className="w-2 h-2 bg-emerald-500 rounded-full mr-2"></span>{editingType ? 'Edit Type' : 'Create New Type'}</h4>
-                        <button type="button" onClick={resetTypeState} className="text-xs text-red-600 hover:underline">Cancel</button>
-                      </div>
-                      <div className="grid grid-cols-1 gap-2 sm:gap-4">
-                        <FormField label="Type Name" name="name" value={newTypeData.name} onChange={handleNewTypeChange} required className="text-xs sm:text-sm" />
-                        <div>
-                          <label className="block text-xs sm:text-sm font-medium text-green-700 mb-1 sm:mb-2">Type Logo URL <span className="text-emerald-600 text-xs">optional</span></label>
-                          <input type="url" name="logo" value={newTypeData.logo} onChange={handleNewTypeChange} className="w-full px-2 sm:px-4 py-2 sm:py-3 border border-[#E2E8F0] rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 transition-all duration-200 text-green-700 placeholder-gray-400 mb-2 sm:mb-3 text-xs sm:text-sm" placeholder="https://example.com/logo.jpg" />
-                          <div className="flex items-center justify-between mb-2 sm:mb-3">
-                            <label className={`flex items-center px-2 sm:px-4 py-2 bg-green-600 text-white rounded-md transition-all duration-200 text-xs sm:text-sm cursor-pointer ${typeLogoUploading ? 'opacity-60 cursor-not-allowed' : 'hover:bg-green-700'}`} disabled={typeLogoUploading}><input type="file" accept="image/*" onChange={handleNewTypeLogoUpload} disabled={typeLogoUploading} className="hidden" />{typeLogoUploading ? (<><svg className="animate-spin h-4 w-4 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>Uploading...</>) : (<><Upload className="h-4 w-4 mr-2" />Or Upload Type Logo</>)}</label>
-                            {newTypeData.logo && (<span className="text-xs text-green-600 font-medium">✓ Logo added</span>)}
+                          <div className="flex space-x-2">
+                            <button type="button" onClick={() => { handleEditType(type); setShowManageTypes(false); }} className="text-blue-600 hover:text-blue-800 text-sm font-medium">Edit</button>
+                            <button type="button" onClick={() => handleDeleteType(type.id)} className="text-red-600 hover:text-red-800 text-sm font-medium">Delete</button>
                           </div>
-                          {newTypeData.logo && (<div className="w-14 h-14 sm:w-20 sm:h-20 rounded-md overflow-hidden border-2 border-[#E2E8F0] shadow-sm"><img src={newTypeData.logo} alt="Type logo preview" className="w-full h-full object-cover" onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} /><div className="hidden w-full h-full bg-gray-100 items-center justify-center text-xs text-gray-500">Invalid Image</div></div>)}
                         </div>
-                      </div>
-                      <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 mt-2 sm:mt-4">
-                        {editingType && (<button type="button" onClick={() => handleDeleteType(editingType.id)} className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-all duration-200 text-xs sm:text-sm">Delete Type</button>)}
-                        <button type="button" onClick={handleSaveType} className="px-4 py-2 bg-gradient-to-r from-green-600 to-green-700 text-white rounded-md hover:from-[#1A365D] hover:to-[#2A4365] transition-all duration-200 text-xs sm:text-sm">{editingType ? 'Update Type' : 'Create Type'}</button>
-                      </div>
-                    </div>
-                  )}
+                      ))
+                    )}
+                  </div>
+                  <div className="mt-4">
+                    <button type="button" onClick={() => { setEditingType(null); setShowNewType(true); setShowManageTypes(false); }} className="w-full px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-md hover:from-blue-700 hover:to-blue-800 transition-all duration-200 text-sm font-medium">+ Add New Brand</button>
+                  </div>
                 </div>
+              )}
+              {showNewType && (
+                <div className="mb-6 p-4 sm:p-6 bg-gradient-to-br from-blue-50 to-indigo-50 rounded-lg border-2 border-blue-300 shadow-md">
+                  <div className="flex justify-between items-center mb-4">
+                    <h4 className="text-base font-bold text-blue-900 flex items-center">
+                      <span className="w-3 h-3 bg-blue-500 rounded-full mr-2"></span>
+                      {editingType ? 'Edit Brand' : 'Create New Brand'}
+                    </h4>
+                    <button type="button" onClick={resetTypeState} className="text-sm text-red-600 hover:underline font-medium">Cancel</button>
+                  </div>
+                  <div className="grid grid-cols-1 gap-4">
+                    <FormField label="Brand Name" name="name" value={newTypeData.name} onChange={handleNewTypeChange} required placeholder="e.g., Apple, Samsung, Dell" className="text-sm" />
+                    <div>
+                      <label className="block text-sm font-medium text-gray-800 mb-2">Brand Logo URL <span className="text-blue-600 text-xs">(optional)</span></label>
+                      <input type="url" name="logo" value={newTypeData.logo} onChange={handleNewTypeChange} className="w-full px-4 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all duration-200 text-gray-800 placeholder-gray-400 mb-3 text-sm" placeholder="https://example.com/logo.jpg" />
+                      <div className="flex items-center justify-between mb-3">
+                        <label className={`flex items-center px-4 py-2 bg-blue-600 text-white rounded-md transition-all duration-200 text-sm cursor-pointer font-medium ${typeLogoUploading ? 'opacity-60 cursor-not-allowed' : 'hover:bg-blue-700'}`} disabled={typeLogoUploading}><input type="file" accept="image/*" onChange={handleNewTypeLogoUpload} disabled={typeLogoUploading} className="hidden" />{typeLogoUploading ? (<><svg className="animate-spin h-4 w-4 mr-2 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle className="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="4"></circle><path className="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8v8z"></path></svg>Uploading...</>) : (<><Upload className="h-4 w-4 mr-2" />Or Upload Brand Logo</>)}</label>
+                        {newTypeData.logo && (<span className="text-xs text-blue-600 font-medium">✓ Logo added</span>)}
+                      </div>
+                      {newTypeData.logo && (
+                        <div className="w-24 h-24 rounded-md overflow-hidden border-2 border-blue-200 shadow-sm bg-white p-2">
+                          <img src={newTypeData.logo} alt="Brand logo preview" className="w-full h-full object-contain" onError={(e) => { e.target.style.display='none'; e.target.nextSibling.style.display='flex'; }} />
+                          <div className="hidden w-full h-full bg-gray-100 items-center justify-center text-xs text-gray-500">Invalid Image</div>
+                        </div>
+                      )}
+                    </div>
+                  </div>
+                  <div className="flex flex-col sm:flex-row justify-end space-y-2 sm:space-y-0 sm:space-x-3 mt-4">
+                    {editingType && (<button type="button" onClick={() => handleDeleteType(editingType.id)} className="px-4 py-2 bg-red-600 text-white rounded-md hover:bg-red-700 transition-all duration-200 text-sm font-medium">Delete Brand</button>)}
+                    <button type="button" onClick={handleSaveType} className="px-4 py-2 bg-gradient-to-r from-blue-600 to-blue-700 text-white rounded-md hover:from-blue-700 hover:to-blue-800 transition-all duration-200 text-sm font-medium">{editingType ? 'Update Brand' : 'Create Brand'}</button>
+                  </div>
+                </div>
+              )}
+
+              {/* Main Image Upload */}
+              <div className="mb-6">
                 <div>
                   <label className="block text-xs sm:text-sm font-medium text-green-700 mb-1 sm:mb-2">Main Image <span className="text-emerald-600">*</span></label>
                   <input type="url" name="image" value={formData.image} onChange={handleChange} className="w-full px-2 sm:px-4 py-2 sm:py-3 border border-[#E2E8F0] rounded-md focus:outline-none focus:ring-2 focus:ring-green-600 focus:border-green-600 transition-all duration-200 text-green-700 placeholder-gray-400 mb-2 sm:mb-3 text-xs sm:text-sm" placeholder="https://example.com/image.jpg" required />
