@@ -1,98 +1,110 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ChevronRight } from "lucide-react";
+import { Laptop, Smartphone, Tablet, Gamepad2, Watch, Speaker } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCollections } from "../../../store/slices/collectionSlice";
-import { fetchCollections as fetchCollectionsWithTypes } from "../../../store/slices/productSlice";
 
 const CollectionCards = () => {
   const dispatch = useDispatch();
   const { collections } = useSelector((state) => state.collections);
-  const { collections: collectionsWithTypes } = useSelector((state) => state.products);
 
   useEffect(() => {
     dispatch(fetchCollections({ includeInactive: false }));
-    dispatch(fetchCollectionsWithTypes());
   }, [dispatch]);
 
-  const bgColors = [
-    "bg-[#2A4365]",
-    "bg-[#C87941]",
-    "bg-[#2D5F5D]",
-    "bg-[#7C3AED]",
-    "bg-[#DC2626]",
-    "bg-[#059669]"
-  ];
+  const iconMap = {
+    laptop: Laptop,
+    laptops: Laptop,
+    smartphone: Smartphone,
+    smartphones: Smartphone,
+    tablet: Tablet,
+    tablets: Tablet,
+    gaming: Gamepad2,
+    smartwatch: Watch,
+    speaker: Speaker,
+  };
+
+  const getIconForCollection = (name) => {
+    const lowerName = name.toLowerCase();
+    for (const key in iconMap) {
+      if (lowerName.includes(key)) {
+        return iconMap[key];
+      }
+    }
+    return Laptop;
+  };
 
   if (!collections || !Array.isArray(collections) || collections.length === 0) {
     return null;
   }
 
-  const displayCollections = collections.slice(0, 6).map((collection, index) => {
-    const collectionWithTypes = Array.isArray(collectionsWithTypes)
-      ? collectionsWithTypes.find(c => c._id === collection._id || c.name === collection.name)
-      : null;
-
-    const slug = collection.slug || collection.name.toLowerCase().replace(/\s+/g, '-');
-    const types = collectionWithTypes?.types || [];
-
-    return {
-      id: collection._id || collection.id,
-      title: collection.name,
-      bgColor: bgColors[index % bgColors.length],
-      imageUrl: collection.image || "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg",
-      exploreUrl: `/products/${slug}`,
-      types: types.slice(0, 3).map(type => ({
-        name: type.name,
-        link: `/products?types=${encodeURIComponent(type.name)}`
-      }))
-    };
-  });
+  const displayCollections = collections.slice(0, 8);
 
   return (
-    <section className="py-16 bg-slate-50">
+    <section className="py-12 bg-gradient-to-b from-white to-gray-50">
       <div className="container mx-auto px-4">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {displayCollections.map((collection) => (
-            <div
-              key={collection.id}
-              className={`relative ${collection.bgColor} rounded-lg shadow-lg overflow-hidden flex flex-col lg:flex-row lg:h-[360px]`}
-            >
-              <div className="p-8 text-white w-full lg:w-1/2 flex flex-col justify-center z-10 order-2 lg:order-1">
-                <h3 className="text-4xl font-bold mb-4">{collection.title}</h3>
-                <ul className="space-y-2 mb-6">
-                  {collection.types.map((type) => (
-                    <li key={type.name}>
-                      <Link
-                        to={type.link}
-                        className="hover:font-normal text-base font-normal"
-                      >
-                        {type.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  to={collection.exploreUrl}
-                  className="font-semibold text-lg flex items-center group whitespace-nowrap"
-                >
-                  Explore All
-                  <ChevronRight
-                    size={22}
-                    className="ml-1 transition-transform group-hover:translate-x-1"
-                  />
-                </Link>
+        <div className="text-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-3">
+            Shop by Category
+          </h2>
+          <p className="text-gray-600 text-lg">
+            Browse our collection of refurbished electronics
+          </p>
+        </div>
+
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 md:gap-6">
+          {displayCollections.map((collection) => {
+            const Icon = getIconForCollection(collection.name);
+            const slug = collection.slug || collection.name.toLowerCase().replace(/\s+/g, '-');
+
+            return (
+              <Link
+                key={collection._id || collection.id}
+                to={`/products?collection=${encodeURIComponent(collection.name)}`}
+                className="group relative bg-gradient-to-br from-gray-50 to-white rounded-2xl p-6 shadow-sm hover:shadow-xl border border-gray-200 hover:border-primary-300 transition-all duration-300 transform hover:-translate-y-1"
+              >
+                <div className="flex flex-col items-center text-center space-y-4">
+                  <div className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-primary-50 flex items-center justify-center group-hover:bg-primary-100 transition-colors duration-300">
+                    {collection.image ? (
+                      <img
+                        src={collection.image}
+                        alt={collection.name}
+                        className="w-16 h-16 md:w-20 md:h-20 object-contain"
+                      />
+                    ) : (
+                      <Icon className="w-12 h-12 md:w-16 md:h-16 text-primary-600" />
+                    )}
+                  </div>
+
+                  <div>
+                    <h3 className="font-semibold text-base md:text-lg text-gray-900 group-hover:text-primary-600 transition-colors">
+                      Sell {collection.name}
+                    </h3>
+                  </div>
+                </div>
+
+                <div className="absolute inset-0 rounded-2xl bg-primary-600 opacity-0 group-hover:opacity-5 transition-opacity duration-300"></div>
+              </Link>
+            );
+          })}
+
+          {/* "Sell More" Card */}
+          <Link
+            to="/products"
+            className="group relative bg-gradient-to-br from-primary-500 to-primary-600 rounded-2xl p-6 shadow-sm hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+          >
+            <div className="flex flex-col items-center justify-center text-center h-full space-y-3">
+              <div className="flex space-x-1">
+                <div className="w-3 h-3 rounded-full bg-white animate-bounce"></div>
+                <div className="w-3 h-3 rounded-full bg-white animate-bounce" style={{ animationDelay: '0.1s' }}></div>
+                <div className="w-3 h-3 rounded-full bg-white animate-bounce" style={{ animationDelay: '0.2s' }}></div>
               </div>
-              
-              <div className="relative lg:absolute lg:right-[-90px] lg:top-0 h-[320px] lg:h-full w-full lg:w-[85%] flex items-center justify-center lg:justify-end order-1 lg:order-2">
-                <img
-                  src={collection.imageUrl}
-                  alt={collection.title}
-                  className="h-full w-full object-cover lg:h-auto lg:w-auto lg:max-h-[600px] lg:object-contain"
-                />
-              </div>
+              <h3 className="font-bold text-lg md:text-xl text-white">
+                Sell More
+              </h3>
+              <p className="text-white text-sm opacity-90">View All Categories</p>
             </div>
-          ))}
+          </Link>
         </div>
       </div>
     </section>
