@@ -97,14 +97,14 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
         )}
         {product.newArrival && (
           <div className="absolute top-2 right-2 bg-green-600 text-white px-2 py-1 text-xs font-semibold rounded">
-            NEW
+            CERTIFIED
           </div>
         )}
       </div>
       
       <div className="p-4">
         <div className="text-xs text-gray-500 mb-1">
-          {product.type?.name || product.type || 'General'}
+          {product.type?.name || product.type || 'Refurbished'}
         </div>
         <Link to={`/product/${product._id}`}>
           <h3 className="font-semibold mb-2 line-clamp-2 hover:text-green-700 transition-colors">

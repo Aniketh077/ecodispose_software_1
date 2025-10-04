@@ -24,34 +24,72 @@ const CollectionCards = () => {
     "bg-[#059669]"
   ];
 
+  // Add comprehensive safety checks
   if (!collections || !Array.isArray(collections) || collections.length === 0) {
     return null;
   }
 
   const displayCollections = collections.slice(0, 6).map((collection, index) => {
+    // Ensure collection is a valid object, not a string or other type
+    if (!collection || typeof collection !== 'object') {
+      return null;
+    }
+
     const collectionWithTypes = Array.isArray(collectionsWithTypes)
-      ? collectionsWithTypes.find(c => c._id === collection._id || c.name === collection.name)
+      ? collectionsWithTypes.find(c => {
+          if (!c || typeof c !== 'object') return false;
+          return c._id === collection._id || c.name === collection.name;
+        })
       : null;
 
-    const slug = collection.slug || collection.name.toLowerCase().replace(/\s+/g, '-');
-    const types = collectionWithTypes?.types || [];
+    const collectionId = collection._id || collection.id;
+    const collectionName = collection.name;
+    const slug = collection.slug || collectionName?.toLowerCase().replace(/\s+/g, '-');
+    
+    // Ensure types is always an array
+    const types = (collectionWithTypes?.types && Array.isArray(collectionWithTypes.types)) 
+      ? collectionWithTypes.types 
+      : [];
+
+    // Skip if we don't have essential data
+    if (!collectionId || !collectionName) {
+      return null;
+    }
 
     return {
-      id: collection._id || collection.id,
-      title: collection.name,
+      id: collectionId,
+      title: collectionName,
       bgColor: bgColors[index % bgColors.length],
       imageUrl: collection.image || "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg",
       exploreUrl: `/products/${slug}`,
-      types: types.slice(0, 3).map(type => ({
-        name: type.name,
-        link: `/products?types=${encodeURIComponent(type.name)}`
-      }))
+      types: types.slice(0, 3).map(type => {
+        // Ensure type is valid
+        if (!type || typeof type !== 'object' || !type.name) {
+          return null;
+        }
+        return {
+          name: type.name,
+          link: `/products?types=${encodeURIComponent(type.name)}`
+        };
+      }).filter(Boolean) // Remove null entries
     };
-  });
+  }).filter(Boolean); // Remove null collections
+
+  // Don't render if no valid collections
+  if (displayCollections.length === 0) {
+    return null;
+  }
 
   return (
     <section className="py-16 bg-slate-50">
       <div className="container mx-auto px-4">
+        <div className="text-center mb-12">
+          <h2 className="text-4xl font-bold mb-4">Shop by Category</h2>
+          <p className="text-gray-600 text-lg max-w-2xl mx-auto">
+            Discover our premium refurbished electronics across different categories
+          </p>
+        </div>
+        
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {displayCollections.map((collection) => (
             <div
@@ -60,18 +98,20 @@ const CollectionCards = () => {
             >
               <div className="p-8 text-white w-full lg:w-1/2 flex flex-col justify-center z-10 order-2 lg:order-1">
                 <h3 className="text-4xl font-bold mb-4">{collection.title}</h3>
-                <ul className="space-y-2 mb-6">
-                  {collection.types.map((type) => (
-                    <li key={type.name}>
-                      <Link
-                        to={type.link}
-                        className="hover:font-normal text-base font-normal"
-                      >
-                        {type.name}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
+                {collection.types.length > 0 && (
+                  <ul className="space-y-2 mb-6">
+                    {collection.types.map((type) => (
+                      <li key={type.name}>
+                        <Link
+                          to={type.link}
+                          className="hover:font-normal text-base font-normal hover:underline"
+                        >
+                          {type.name}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                )}
                 <Link
                   to={collection.exploreUrl}
                   className="font-semibold text-lg flex items-center group whitespace-nowrap"

@@ -104,7 +104,7 @@ const AboutPage = () => {
                 <h2 className="text-4xl font-bold mb-6">Our Story</h2>
                 <div className="space-y-4 text-gray-600 text-lg">
                   <p>
-                    EcoTrade was founded with a simple mission: make premium technology accessible while protecting our planet. We believe everyone deserves quality electronics without the premium price tag or environmental cost. Each device undergoes comprehensive testing and certification, ensuring it meets strict quality standards. When you choose EcoTrade, you're making a smart financial decision and an environmentally conscious choice that helps combat e-waste.
+                    EcoTrade was founded with a simple mission: make premium technology accessible while protecting our planet. We believe everyone deserves quality electronics without the premium price tag or environmental cost. Each device undergoes comprehensive 40-point testing and certification, ensuring it meets strict quality standards. When you choose EcoTrade, you're making a smart financial decision and an environmentally conscious choice that helps combat e-waste.
                   </p>
                 </div>
               </div>
@@ -130,7 +130,7 @@ const AboutPage = () => {
               </div>
               <h3 className="text-2xl font-bold mb-4">Our Mission</h3>
               <p className="text-gray-600 text-lg">
-                To make premium refurbished electronics accessible to everyone while reducing e-waste and promoting sustainable technology consumption for a better tomorrow.
+                To make premium certified refurbished electronics accessible to everyone while reducing e-waste and promoting sustainable technology consumption for a better tomorrow.
               </p>
             </div>
             <div>
@@ -139,7 +139,7 @@ const AboutPage = () => {
               </div>
               <h3 className="text-2xl font-bold mb-4">Our Vision</h3>
               <p className="text-gray-600 text-lg">
-                To be the world's leading platform for certified refurbished electronics, creating a circular economy that benefits people and the planet.
+                To be India's leading platform for certified refurbished electronics, creating a circular economy that benefits people and the planet.
               </p>
             </div>
           </div>

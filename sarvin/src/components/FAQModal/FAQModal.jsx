@@ -170,7 +170,7 @@ const FAQModal = ({ isOpen, onClose }) => {
                     leftIcon={<MessageCircle className="h-4 w-4" />}
                     onClick={() => {
                       const whatsappNumber = '+918008030203';
-                      const message = 'Hello! I have a question that\'s not covered in your FAQ section.';
+                      const message = 'Hello! I have a question about EcoTrade refurbished electronics that\'s not covered in your FAQ section.';
                       const encodedMessage = encodeURIComponent(message);
                       window.open(`https://wa.me/${whatsappNumber.replace('+', '')}?text=${encodedMessage}`, '_blank');
                     }}
@@ -183,7 +183,7 @@ const FAQModal = ({ isOpen, onClose }) => {
                     leftIcon={<Phone className="h-4 w-4" />}
                     onClick={() => window.open('tel:+918008030203')}
                   >
-                    Call +91 93109 79906 
+                    Call 8008030203
                   </Button>
 
               </div>

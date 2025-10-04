@@ -1,13 +1,13 @@
 export const faqData = [
    {
         id: 1,
-        question: 'What is your return policy for refurbished products?',
-        answer: 'We offer a 15-day return policy for all refurbished products. Items must be in the same condition as received with all original accessories and packaging. We provide a full refund if the product doesn\'t meet your expectations.'
+        question: 'What is your return policy for certified refurbished products?',
+        answer: 'We offer a 15-day return policy for all certified refurbished products. Items must be in the same condition as received with all original accessories and packaging. We provide a full refund if the product doesn\'t meet your expectations.'
       },
       {
         id: 2,
-        question: 'How do you ensure the quality of refurbished products?',
-        answer: 'Every device goes through our rigorous 32-point quality check process. We test functionality, battery health, screen quality, and all hardware components. Each product is cleaned, sanitized, and comes with a detailed quality report.'
+        question: 'How do you ensure the quality of certified refurbished products?',
+        answer: 'Every device goes through our rigorous 40-point quality check process. We test functionality, battery health, screen quality, and all hardware components. Each product is cleaned, sanitized, and comes with a detailed quality report and certification.'
       },
       {
         id: 3,
@@ -26,7 +26,7 @@ export const faqData = [
       },
       {
         id: 6,
-        question: 'Can I sell my old device to Cashify?',
+        question: 'Can I sell my old device to EcoTrade?',
         answer: 'Yes! We buy old smartphones, laptops, tablets, and other electronics. Get an instant quote on our website, schedule a free pickup, and receive payment immediately after device verification. We accept devices in any working condition.'
       },
       {
@@ -36,8 +36,8 @@ export const faqData = [
       },
       {
         id: 8,
-        question: 'What does the refurbished warranty cover?',
-        answer: 'Our warranty covers hardware defects, battery issues, and functional problems. It includes free repair or replacement of defective components. Warranty does not cover physical damage, water damage, or issues caused by misuse after purchase.'
+        question: 'What does the certified refurbished warranty cover?',
+        answer: 'Our comprehensive warranty covers hardware defects, battery issues, and functional problems. It includes free repair or replacement of defective components. Warranty does not cover physical damage, water damage, or issues caused by misuse after purchase.'
       },
       {
         id: 9,

@@ -107,12 +107,12 @@ const OrderSuccessPage= () => {
             <div className="mt-8 pt-6 border-t border-gray-200">
               <p className="text-sm text-gray-500">
                 Need help? Contact our support team at{' '}
-                <a href="mailto:support@cashify.com" className="text-green-700 hover:text-emerald-600">
-                  support@cashify.com
+                <a href="mailto:team@eco-dispose.com" className="text-green-700 hover:text-emerald-600">
+                  team@eco-dispose.com
                 </a>{' '}
                 or call{' '}
-                <a href="tel:+919310979906" className="text-green-700 hover:text-emerald-600">
-                  +91 93109 79906
+                <a href="tel:8008030203" className="text-green-700 hover:text-emerald-600">
+                  8008030203
                 </a>
               </p>
             </div>

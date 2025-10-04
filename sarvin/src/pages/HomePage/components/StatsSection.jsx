@@ -3,10 +3,10 @@ import { Users, Award, TrendingUp, Zap } from 'lucide-react';
 
 const StatsSection = () => {
   const stats = [
-    { icon: Users, value: '100K+', label: 'Happy Customers' },
-    { icon: Award, value: '500+', label: 'Devices Refurbished' },
+    { icon: Users, value: '50K+', label: 'Happy Customers' },
+    { icon: Award, value: '100K+', label: 'Devices Refurbished' },
     { icon: TrendingUp, value: '99%', label: 'Satisfaction Rate' },
-    { icon: Zap, value: '32-Point', label: 'Quality Check' }
+    { icon: Zap, value: '40-Point', label: 'Quality Check' }
   ];
 
   return (

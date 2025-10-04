@@ -178,8 +178,8 @@ return (
               {( isMobile ) && (
                 <>
                   <img 
-                    src="/sarvinindia.jpeg" 
-                    alt="Sarvin Admin" 
+                    src="/logo1.png" 
+                    alt="EcoTrade Admin" 
                     className="h-8 w-32 rounded flex-shrink-0"
                   />
                   <span className="ml-2 text-lg font-bold">Admin</span>

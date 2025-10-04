@@ -21,7 +21,7 @@ export const initiatePayment = (options) => {
         contact: options.contact
       },
       theme: {
-        color: '#2A4365'
+        color: '#16A34A'
       }
     });
     

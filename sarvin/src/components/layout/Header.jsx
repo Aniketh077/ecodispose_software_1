@@ -318,7 +318,7 @@ const Header = () => {
       <span>8008030203</span>
     </a>
   </p>
-  <p className="text-xs text-[#01374ae1]">Mon - Sat  | 8am - 8pm</p>
+  <p className="text-xs text-[#01374ae1]">Mon - Sat | 8am - 8pm</p>
 </div>
              
              <Link to="/cart" className="relative p-2 text-[#01364a] hover:text-emerald-600" aria-label={`Cart with ${cart.items.length} items`}>

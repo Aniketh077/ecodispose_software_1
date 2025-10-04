@@ -115,7 +115,7 @@ export const initiateRazorpayPayment = async (amount, userDetails, onSuccess, on
         contact: userDetails.contact
       },
       theme: {
-        color: '#2A4365'
+        color: '#16A34A'
       },
       modal: {
         ondismiss: function() {

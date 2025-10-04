@@ -105,7 +105,7 @@ const ContactPage = () => {
 
   const handleLiveChat = () => {
     const whatsappNumber = '8008030203';
-    const message = 'Hello! I would like to get assistance with your refurbished electronics.';
+    const message = 'Hello! I would like to get assistance with EcoTrade refurbished electronics.';
     const encodedMessage = encodeURIComponent(message);
     window.open(`https://wa.me/${whatsappNumber}?text=${encodedMessage}`, '_blank');
   };
@@ -425,7 +425,7 @@ const ContactPage = () => {
               <h2 className="text-3xl font-bold mb-4">Ready to Go Green?</h2>
               <p className="text-xl text-gray-200 mb-8">
                 Get instant support through WhatsApp or call our dedicated team at 8008030203.
-                Experience quality refurbished electronics with expert guidance.
+                Experience quality certified refurbished electronics with expert guidance.
               </p>
               <div className="flex flex-col sm:flex-row gap-4 justify-center">
                 <Button 

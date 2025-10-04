@@ -236,11 +236,11 @@ const ProductForm = ({ onClose, onSave, product, types }) => {
 
               <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6 p-4 bg-green-50 rounded-md border border-green-200">
                 <FormField label="Condition" name="condition" value={formData.condition} onChange={handleChange} type="select" options={conditionOptions} required />
-                <FormField label="Original Retail Price" name="originalPrice" value={formData.originalPrice} onChange={handleChange} type="number" min="0" step="0.01" placeholder="Original price before refurbishment" className="text-xs sm:text-sm" />
+                <FormField label="Original Retail Price" name="originalPrice" value={formData.originalPrice} onChange={handleChange} type="number" min="0" step="0.01" placeholder="Original price before certification" className="text-xs sm:text-sm" />
               </div>
 
               <div className="mb-4 sm:mb-6">
-                <FormField label="Refurbishment Details" name="refurbishmentDetails" value={formData.refurbishmentDetails} onChange={handleChange} type="textarea" rows={3} className="text-xs sm:text-sm" placeholder="Describe the refurbishment process and quality checks" />
+                <FormField label="Refurbishment Details" name="refurbishmentDetails" value={formData.refurbishmentDetails} onChange={handleChange} type="textarea" rows={3} className="text-xs sm:text-sm" placeholder="Describe the certification process and quality checks" />
               </div>
 
               <FormField label="Description" name="description" value={formData.description} onChange={handleChange} type="textarea" rows={3} className="text-xs sm:text-sm mb-6" />

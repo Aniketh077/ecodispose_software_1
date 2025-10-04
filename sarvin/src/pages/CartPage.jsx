@@ -261,7 +261,7 @@ const CartPage = () => {
                 </Button>
 
                 <p className="text-sm text-gray-500 mt-4 text-center">
-                  Shipping charges across India is free
+                  Free shipping on all refurbished electronics across India
                 </p>
               </div>
             </div>

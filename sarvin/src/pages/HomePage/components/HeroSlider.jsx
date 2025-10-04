@@ -74,7 +74,7 @@ const HeroSlider = () => {
                   </p>
                   <a
                     href="/products"
-                    className="inline-block px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-green-600 to-green-500 text-white font-semibold rounded-lg hover:from-green-700 hover:to-green-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                    className="inline-block px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-green-600 to-emerald-500 text-white font-semibold rounded-lg hover:from-green-700 hover:to-emerald-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
                   >
                     {slide.cta}
                   </a>

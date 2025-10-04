@@ -338,7 +338,7 @@ const SearchPage = () => {
                 type="text"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Search for any Kitchen Appliances etc..."
+                placeholder="Search for refurbished electronics, smartphones, laptops..."
                 className="w-full rounded-lg border border-gray-300 pl-4 pr-12 py-3 text-lg focus:border-green-600 focus:outline-none focus:ring-1 focus:ring-green-600"
               />
               <button

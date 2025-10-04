@@ -401,7 +401,7 @@ const ProductsPage = () => {
           <div className="text-center">
             <h1 className="text-3xl font-bold mb-3">{getPageTitle()}</h1>
             <p className="text-lg text-gray-100 mb-4">
-              Displaying {products.length} products on this page
+              Displaying {products.length} certified refurbished products
             </p>
           </div>
         </div>

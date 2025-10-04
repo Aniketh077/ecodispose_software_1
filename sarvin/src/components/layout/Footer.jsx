@@ -27,7 +27,7 @@ const Footer = () => {
                 <span className="text-3xl font-bold text-white">Eco<span className="text-[#10B981]">Trade</span></span>
               </Link>
               <p className="text-gray-300 mb-6">
-                EcoTrade offers premium refurbished electronics that are good for your wallet and the planet. Every device is thoroughly tested, certified, and comes with a warranty. Join us in reducing e-waste while enjoying quality technology.
+                EcoTrade offers premium certified refurbished electronics that are good for your wallet and the planet. Every device is thoroughly tested, certified, and comes with comprehensive warranty. Join us in reducing e-waste while enjoying quality technology.
               </p>
               <div className="space-y-3">
                 <div className="flex items-start">

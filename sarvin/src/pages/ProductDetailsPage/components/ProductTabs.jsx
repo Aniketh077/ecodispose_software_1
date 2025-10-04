@@ -50,14 +50,14 @@ const ProductTabs = ({ product, activeTab, setActiveTab }) => {
         {activeTab === 'additionalInfo' && (
           <div className="prose prose-sm max-w-none">
             <p>
-              This refurbished {product.name} comes with a {(product.warranty && product.warranty) || '6 months'} warranty that covers hardware defects and functionality issues.
+              This certified refurbished {product.name} comes with a {(product.warranty && product.warranty) || '6 months'} warranty that covers hardware defects and functionality issues.
             </p>
             <p>
-              For technical support or device assistance, please contact our customer service team at support@cashify.com or call us at +91 93109 79906.
+              For technical support or device assistance, please contact our customer service team at team@eco-dispose.com or call us at 8008030203.
             </p>
-            <h4>Refurbished Device Care</h4>
+            <h4>Certified Refurbished Device Care</h4>
             <ul>
-              <li>Handle with care as refurbished devices may show minor cosmetic wear</li>
+              <li>Handle with care as certified refurbished devices may show minor cosmetic wear</li>
               <li>Clean the device with a soft, dry cloth and avoid harsh chemicals</li>
               <li>Keep the device away from extreme temperatures and moisture</li>
               <li>Follow manufacturer's guidelines for optimal battery performance</li>

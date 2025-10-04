@@ -6,22 +6,22 @@ const BenefitsSection = () => {
     {
       icon: CheckCircle,
       title: 'Quality Tested',
-      description: 'Every device goes through rigorous 40-point quality checks'
+      description: 'Every device goes through rigorous 40-point quality checks and certification'
     },
     {
       icon: Shield,
       title: 'Certified Warranty',
-      description: 'Up to 1 year warranty on all certified refurbished electronics'
+      description: 'Up to 12 months warranty on all certified refurbished electronics'
     },
     {
       icon: Leaf,
       title: 'Eco-Friendly',
-      description: 'Reduce e-waste and carbon footprint with sustainable tech'
+      description: 'Reduce e-waste and carbon footprint with sustainable refurbished tech'
     },
     {
       icon: Award,
       title: 'Great Savings',
-      description: 'Save up to 70% compared to brand new devices'
+      description: 'Save up to 60% compared to brand new devices with same quality'
     }
   ];
 

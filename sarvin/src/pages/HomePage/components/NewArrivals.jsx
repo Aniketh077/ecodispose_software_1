@@ -12,7 +12,7 @@ const NewArrivals = ({ products }) => {
         <div className="flex justify-between items-center mb-12">
           <div>
             <h2 className="text-4xl font-bold mb-2">New Arrivals</h2>
-            <p className="text-gray-600 text-lg">The latest additions to our collection</p>
+            <p className="text-gray-600 text-lg">The latest certified refurbished additions to our collection</p>
           </div>
           <Link to="/products?filter=new" className="hidden md:flex items-center text-green-700 hover:text-emerald-600 font-medium">
             View All <ArrowRight className="ml-2 h-5 w-5" />

@@ -19,11 +19,11 @@ const PromotionalBanner = () => {
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center text-white">
           <div className="inline-block bg-emerald-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
-            Sustainable Tech Sale
+            Certified Refurbished Sale
           </div>
-          <h2 className="text-4xl md:text-5xl font-bold mb-4">Refurbished Electronics Sale</h2>
+          <h2 className="text-4xl md:text-5xl font-bold mb-4">Premium Refurbished Electronics</h2>
           <p className="text-xl mb-8">
-            Save up to 60% on premium refurbished devices and help the environment!
+            Save up to 60% on certified refurbished devices with warranty and quality guarantee!
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/products?filter=featured">
@@ -32,7 +32,7 @@ const PromotionalBanner = () => {
                 size="lg"
                 className="animate-pulse"
               >
-                Shop the Sale
+                Shop Certified Devices
               </Button>
             </Link>
             <Link to="/products">
@@ -41,7 +41,7 @@ const PromotionalBanner = () => {
                 size="lg"
                 className="border-white text-white hover:bg-white hover:text-green-700"
               >
-                Browse All Devices
+                Browse All Electronics
               </Button>
             </Link>
           </div>
