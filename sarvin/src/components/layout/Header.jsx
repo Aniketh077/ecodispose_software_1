@@ -176,20 +176,58 @@ const Header = () => {
   const smartphonesMenu = getCollectionMenu('Smartphones');
   const laptopsMenu = getCollectionMenu('Laptops');
 
-  // Use dynamic menus or fallback to empty arrays
+  // Use dynamic menus or fallback to popular brands
   const activeSmartphonesMenu = smartphonesMenu.types && smartphonesMenu.types.length > 0 ? smartphonesMenu : {
-    types: [],
-    conditions: [
-      { name: "Like New", path: "/products?condition=Like+New" },
-      { name: "Excellent", path: "/products?condition=Excellent" },
-      { name: "Good", path: "/products?condition=Good" },
+    types: [
+      { name: "Apple iPhone", path: "/products/smartphones?search=Apple" },
+      { name: "Samsung Galaxy", path: "/products/smartphones?search=Samsung" },
+      { name: "OnePlus", path: "/products/smartphones?search=OnePlus" },
+      { name: "Google Pixel", path: "/products/smartphones?search=Google" },
+      { name: "Xiaomi", path: "/products/smartphones?search=Xiaomi" }
     ],
-    images: []
+    conditions: [
+      { name: "Like New", path: "/products/smartphones?condition=Like+New" },
+      { name: "Excellent", path: "/products/smartphones?condition=Excellent" },
+      { name: "Good", path: "/products/smartphones?condition=Good" },
+    ],
+    images: [
+      {
+        name: "Premium Smartphones",
+        path: "/products/smartphones?condition=Like+New",
+        src: "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg",
+        alt: "Refurbished Premium Smartphones"
+      },
+      {
+        name: "Budget Friendly",
+        path: "/products/smartphones?condition=Good",
+        src: "https://images.pexels.com/photos/699122/pexels-photo-699122.jpeg",
+        alt: "Affordable Refurbished Phones"
+      }
+    ]
   };
 
   const activeLaptopsMenu = laptopsMenu.types && laptopsMenu.types.length > 0 ? laptopsMenu : {
-    types: [],
-    images: []
+    types: [
+      { name: "Apple MacBook", path: "/products/laptops?search=Apple" },
+      { name: "Dell", path: "/products/laptops?search=Dell" },
+      { name: "HP", path: "/products/laptops?search=HP" },
+      { name: "Lenovo", path: "/products/laptops?search=Lenovo" },
+      { name: "ASUS", path: "/products/laptops?search=ASUS" }
+    ],
+    images: [
+      {
+        name: "Premium Laptops",
+        path: "/products/laptops?condition=Like+New",
+        src: "https://images.pexels.com/photos/18105/pexels-photo.jpg",
+        alt: "Refurbished Premium Laptops"
+      },
+      {
+        name: "Business Laptops",
+        path: "/products/laptops?search=business",
+        src: "https://images.pexels.com/photos/374074/pexels-photo-374074.jpeg",
+        alt: "Refurbished Business Laptops"
+      }
+    ]
   };
 
   const DesktopNavLinks = () => (
@@ -246,15 +284,25 @@ const Header = () => {
         <Link to="/products/laptops" className="text-sm font-medium transition-colors hover:text-emerald-600 text-[#01364a] flex items-center">
           Laptops <ChevronDown className="ml-1 h-3 w-3 relative top-[3px]" />
         </Link>
-        <div className="absolute left-[-6rem] top-full mt-2 bg-white shadow-lg rounded-md p-6 z-50 transition-all duration-300 transform opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 translate-y-2" style={{ minWidth: "600px" }}>
+        <div className="absolute left-[-6rem] top-full mt-2 bg-white shadow-lg rounded-md p-6 z-50 transition-all duration-300 transform opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 translate-y-2" style={{ minWidth: "800px" }}>
           <div className="flex justify-between items-start space-x-8">
-            <div>
-              <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Brands</h4>
-              <ul className="space-y-1.5 mt-2">
-                {activeLaptopsMenu.types.map((item) => (
-                  <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-emerald-600">{item.name}</Link></li>
-                ))}
-              </ul>
+            <div className="flex space-x-12">
+              <div>
+                <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Brands</h4>
+                <ul className="space-y-1.5 mt-2">
+                  {activeLaptopsMenu.types.map((item) => (
+                    <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-emerald-600">{item.name}</Link></li>
+                  ))}
+                </ul>
+              </div>
+              <div>
+                <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Condition</h4>
+                <ul className="space-y-1.5 mt-2">
+                  <li><Link to="/products/laptops?condition=Like+New" className="block text-sm text-gray-600 hover:text-emerald-600">Like New</Link></li>
+                  <li><Link to="/products/laptops?condition=Excellent" className="block text-sm text-gray-600 hover:text-emerald-600">Excellent</Link></li>
+                  <li><Link to="/products/laptops?condition=Good" className="block text-sm text-gray-600 hover:text-emerald-600">Good</Link></li>
+                </ul>
+              </div>
             </div>
             <div className="flex space-x-6 pl-8 border-l border-gray-200">
               {activeLaptopsMenu.images.map((image) => (
@@ -277,17 +325,17 @@ const Header = () => {
   );
 
   return (
-    <header className="fixed top-0 z-50 w-full bg-white  transition-all duration-300">
+    <header className="fixed top-0 z-50 w-full bg-white shadow-md transition-all duration-300">
       <div className="max-w-screen-2xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* --- Top Bar (Logo, Search, Icons) --- */}
        {/* --- Top Bar (Logo, Search, Icons) --- */}
-        <div className="flex items-center justify-between py-2">
+        <div className="flex items-center justify-between py-3 sm:py-4">
 
           {/* === LEFT SECTION: Mobile Menu & Logo / Desktop Logo & Scrolled Nav === */}
           <div className="flex justify-start items-center lg:w-auto">
              {/* Mobile Menu Toggle */}
-             <button className="lg:hidden p-2 -ml-2 text-[#01364a]" onClick={toggleMenu} aria-label="Open mobile menu">
-                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-11" />}
+             <button className="lg:hidden p-3 -ml-2 text-[#01364a] hover:bg-gray-100 rounded-md transition-colors" onClick={toggleMenu} aria-label="Open mobile menu">
+                {isMenuOpen ? <X className="h-6 w-6" /> : <Menu className="h-6 w-6" />}
              </button>
              {/* MOBILE LOGO MOVED HERE */}
              <Link to="/" className="lg:hidden flex items-center flex-shrink-0">
@@ -337,7 +385,7 @@ const Header = () => {
   <p className="text-xs text-[#01374ae1]">Mon - Sat | 8am - 8pm</p>
 </div>
              
-             <Link to="/cart" className="relative p-2 text-[#01364a] hover:text-emerald-600" aria-label={`Cart with ${cart.items.length} items`}>
+             <Link to="/cart" className="relative p-2 sm:p-3 text-[#01364a] hover:text-emerald-600 hover:bg-gray-100 rounded-md transition-colors" aria-label={`Cart with ${cart.items.length} items`}>
                 <ShoppingCart className="h-6 w-6" />
                 {cart.items.length > 0 && (
                     <span className="absolute -right-0.5 -top-0.5 flex h-5 w-5 items-center justify-center rounded-full bg-emerald-500 text-xs font-bold text-white">
@@ -347,9 +395,8 @@ const Header = () => {
              </Link>
 
              <div ref={profileMenuRef} className="relative profile-menu" onMouseEnter={handleProfileMenuEnter} onMouseLeave={handleProfileMenuLeave}>
-                <button onClick={toggleProfileMenu} className="flex items-center p-2 text-[#01364a] hover:text-emerald-600" aria-label="User account menu">
+                <button onClick={toggleProfileMenu} className="flex items-center p-2 sm:p-3 text-[#01364a] hover:text-emerald-600 hover:bg-gray-100 rounded-md transition-colors" aria-label="User account menu">
                     <User className="h-6 w-6" />
-                    {/* {isAuthenticated && <ChevronDown className="h-4 w-4 ml-1" />} */}
                 </button>
                 {isProfileMenuOpen && (
                     <div className="absolute right-0 mt-2 w-48 rounded-md bg-white py-2 shadow-lg border border-gray-100 z-30">
@@ -392,9 +439,9 @@ const Header = () => {
         </div>
       )}
 
-      {/* --- Mobile Menu (Original Logic, unchanged) --- */}
+      {/* --- Mobile Menu --- */}
       {isMobileMenuBreakpoint && isMenuOpen && (
-       <div className="mt-4">
+       <div className="mt-4 pb-4 max-h-[calc(100vh-80px)] overflow-y-auto">
              <form onSubmit={handleSearch} className="mb-4 flex items-center">
                <div className="relative w-full">
                  <input
@@ -507,7 +554,7 @@ const Header = () => {
                      <h4 className="font-semibold text-xs mb-2 text-gray-700">
                        Brands
                      </h4>
-                     <ul className="space-y-1">
+                     <ul className="space-y-1 mb-3">
                        {activeLaptopsMenu.types.map((item) => (
                          <li key={item.name}>
                            <Link
@@ -518,6 +565,35 @@ const Header = () => {
                            </Link>
                          </li>
                        ))}
+                     </ul>
+                     <h4 className="font-semibold text-xs mb-2 text-gray-700">
+                       Condition
+                     </h4>
+                     <ul className="space-y-1">
+                       <li>
+                         <Link
+                           to="/products/laptops?condition=Like+New"
+                           className="block text-sm text-gray-600 hover:text-emerald-600 pl-2 py-1"
+                         >
+                           Like New
+                         </Link>
+                       </li>
+                       <li>
+                         <Link
+                           to="/products/laptops?condition=Excellent"
+                           className="block text-sm text-gray-600 hover:text-emerald-600 pl-2 py-1"
+                         >
+                           Excellent
+                         </Link>
+                       </li>
+                       <li>
+                         <Link
+                           to="/products/laptops?condition=Good"
+                           className="block text-sm text-gray-600 hover:text-emerald-600 pl-2 py-1"
+                         >
+                           Good
+                         </Link>
+                       </li>
                      </ul>
                    </div>
                  )}
