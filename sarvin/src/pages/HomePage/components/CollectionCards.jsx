@@ -24,7 +24,7 @@ const CollectionCards = () => {
     "bg-[#059669]"
   ];
 
-  // Add comprehensive safety checks to prevent React child errors
+  // Comprehensive safety checks to prevent React child errors
   if (!collections || !Array.isArray(collections) || collections.length === 0) {
     return null;
   }
@@ -34,18 +34,16 @@ const CollectionCards = () => {
     .slice(0, 6)
     .map((collection, index) => {
       // Ensure collection is a valid object with required properties
-      if (!collection || typeof collection !== 'object' || !collection.name) {
+      if (!collection || typeof collection !== 'object') {
         console.warn('Invalid collection object:', collection);
         return null;
       }
 
-      // Safely extract collection properties
-      const collectionId = collection._id || collection.id;
-      const collectionName = typeof collection.name === 'string' ? collection.name : '';
-      const collectionSlug = typeof collection.slug === 'string' ? collection.slug : 
-                            collectionName.toLowerCase().replace(/\s+/g, '-');
-      const collectionImage = typeof collection.image === 'string' ? collection.image : 
-                             "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg";
+      // Safely extract collection properties as strings only
+      const collectionId = String(collection._id || collection.id || '');
+      const collectionName = String(collection.name || '');
+      const collectionSlug = String(collection.slug || collectionName.toLowerCase().replace(/\s+/g, '-'));
+      const collectionImage = String(collection.image || "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg");
 
       // Skip if essential data is missing
       if (!collectionId || !collectionName) {
@@ -57,21 +55,24 @@ const CollectionCards = () => {
       const collectionWithTypes = Array.isArray(collectionsWithTypes)
         ? collectionsWithTypes.find(c => {
             if (!c || typeof c !== 'object') return false;
-            const cId = c._id || c.id;
-            const cName = typeof c.name === 'string' ? c.name : '';
+            const cId = String(c._id || c.id || '');
+            const cName = String(c.name || '');
             return cId === collectionId || cName === collectionName;
           })
         : null;
 
-      // Safely extract types with validation
+      // Safely extract types with validation - ensure only strings are used
       const types = [];
       if (collectionWithTypes && Array.isArray(collectionWithTypes.types)) {
         collectionWithTypes.types.slice(0, 3).forEach(type => {
-          if (type && typeof type === 'object' && typeof type.name === 'string') {
-            types.push({
-              name: type.name,
-              link: `/products?types=${encodeURIComponent(type.name)}`
-            });
+          if (type && typeof type === 'object' && type.name) {
+            const typeName = String(type.name);
+            if (typeName) {
+              types.push({
+                name: typeName,
+                link: `/products?types=${encodeURIComponent(typeName)}`
+              });
+            }
           }
         });
       }
