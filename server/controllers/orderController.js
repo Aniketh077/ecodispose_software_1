@@ -1,5 +1,6 @@
 const Order = require('../models/Order');
 const Product = require('../models/Product');
+const User = require('../models/User');
 const razorpay = require('../config/razorpay');
 const mongoose = require('mongoose');
 const crypto = require('crypto');

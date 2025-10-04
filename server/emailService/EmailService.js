@@ -15,7 +15,8 @@ const {
 } = require('./templates/authTemplates');
 const {
   orderConfirmationTemplate,
-  orderAdminNotificationTemplate
+  orderAdminNotificationTemplate,
+  orderStatusUpdateTemplate
 } = require('./templates/orderTemplates');
 
 class EmailService {

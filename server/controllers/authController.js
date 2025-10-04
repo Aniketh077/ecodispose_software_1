@@ -143,9 +143,9 @@ const verifyEmail = async (req, res) => {
       emailVerificationExpires: { $gt: Date.now() }
     });
 
-    // if (!user) {
-    //   return res.status(400).json({ message: 'Invalid or expired verification token' });
-    // }
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired verification token' });
+    }
 
     // Update user
     user.isEmailVerified = true;
@@ -261,9 +261,9 @@ const resetPassword = async (req, res) => {
       passwordResetExpires: { $gt: Date.now() }
     });
 
-    // if (!user) {
-    //   return res.status(400).json({ message: 'Invalid or expired reset token' });
-    // }
+    if (!user) {
+      return res.status(400).json({ message: 'Invalid or expired reset token' });
+    }
 
     // Hash new password
     const salt = await bcrypt.genSalt(10);
