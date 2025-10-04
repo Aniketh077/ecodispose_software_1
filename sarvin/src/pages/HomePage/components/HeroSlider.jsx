@@ -6,22 +6,22 @@ const HeroSlider = () => {
 
   const slides = [
     {
-      mobileImage: "/assets/Hero1.jpg",
-      desktopImage: "/assets/Hero1_1.jpg",
+      mobileImage: "https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=800",
+      desktopImage: "https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg?auto=compress&cs=tinysrgb&w=1920",
       title: "Premium Refurbished Electronics",
       subtitle: "Quality devices at unbeatable prices. Certified, tested, and warrantied.",
       cta: "Shop Now"
     },
     {
-      mobileImage: "/assets/Hero2.jpg",
-      desktopImage: "/assets/Hero2_1.jpg",
+      mobileImage: "https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&w=800",
+      desktopImage: "https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg?auto=compress&cs=tinysrgb&w=1920",
       title: "Save Big on Top Brands",
       subtitle: "Get up to 70% off on certified refurbished smartphones, laptops & more.",
       cta: "Explore Deals"
     },
     {
-      mobileImage: "/assets/Hero3.jpg",
-      desktopImage: "/assets/Hero3_1.jpg",
+      mobileImage: "https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=800",
+      desktopImage: "https://images.pexels.com/photos/356056/pexels-photo-356056.jpeg?auto=compress&cs=tinysrgb&w=1920",
       title: "Sustainable Tech, Smart Choice",
       subtitle: "Reduce e-waste while enjoying premium technology. Good for you, great for the planet.",
       cta: "Learn More"

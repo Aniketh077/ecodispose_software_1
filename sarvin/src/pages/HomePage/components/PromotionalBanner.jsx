@@ -4,18 +4,16 @@ import Button from '../../../components/ui/Button';
 
 const PromotionalBanner = () => {
   return (
-    <section className="py-16 bg-gradient-to-r from-green-600 to-green-700 relative overflow-hidden">
-      <div className="absolute inset-0 opacity-10">
-        <svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
-          <defs>
-            <pattern id="pattern" width="40" height="40" patternUnits="userSpaceOnUse">
-              <path d="M0,40 L40,0 M-10,10 L10,-10 M30,50 L50,30" stroke="white" strokeWidth="2" />
-            </pattern>
-          </defs>
-          <rect width="100%" height="100%" fill="url(#pattern)" />
-        </svg>
+    <section className="py-16 relative overflow-hidden">
+      <div className="absolute inset-0 z-0">
+        <img
+          src="https://images.pexels.com/photos/3861969/pexels-photo-3861969.jpeg?auto=compress&cs=tinysrgb&w=1920"
+          alt="Refurbished electronics"
+          className="w-full h-full object-cover"
+        />
+        <div className="absolute inset-0 bg-gradient-to-r from-green-900/95 to-emerald-900/90"></div>
       </div>
-      
+
       <div className="container mx-auto px-4 relative z-10">
         <div className="max-w-4xl mx-auto text-center text-white">
           <div className="inline-block bg-emerald-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-4">
