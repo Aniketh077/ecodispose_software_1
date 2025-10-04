@@ -13,10 +13,21 @@ const ProductInfo = ({
   setIsDescriptionExpanded, 
   collectionName
 }) => {
-  // Safely extract type name as string
-  const typeName = typeof product.type === 'string' ? product.type :
-                   (product.type && typeof product.type === 'object' && product.type.name) ?
-                   String(product.type.name) : 'Unknown';
+  // Safely extract type name as string with comprehensive validation
+  let typeName = 'Refurbished Electronics';
+  if (product && product.type) {
+    if (typeof product.type === 'string' && product.type.trim()) {
+      typeName = product.type.trim();
+    } else if (typeof product.type === 'object' && product.type.name) {
+      typeName = String(product.type.name).trim();
+    }
+  }
+
+  // Safely extract collection name for display
+  let safeCollectionName = 'Electronics';
+  if (typeof collectionName === 'string' && collectionName.trim() && collectionName !== 'Unknown') {
+    safeCollectionName = collectionName.trim();
+  }
 
   return (
     <div className="p-6 flex flex-col">
@@ -171,9 +182,9 @@ const ProductInfo = ({
       
       <div className="border-t border-gray-100 pt-4 mt-auto">
         <div className="flex items-center text-sm">
-          <span className="text-gray-500">SKU: {product._id}</span>
+          <span className="text-gray-500">SKU: {product._id ? String(product._id) : 'N/A'}</span>
           <span className="mx-2 text-gray-300">|</span>
-          <span className="text-gray-500">Collection: {collectionName}</span>
+          <span className="text-gray-500">Collection: {safeCollectionName}</span>
         </div>
       </div>
     </div>

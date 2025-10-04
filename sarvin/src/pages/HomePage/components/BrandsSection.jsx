@@ -15,8 +15,8 @@ const BrandsSection = ({ types }) => {
     }
     
     // Ensure we have essential data as strings
-    const typeId = String(type._id || type.id || '');
-    const typeName = String(type.name || '');
+    const typeId = type._id ? String(type._id) : (type.id ? String(type.id) : '');
+    const typeName = type.name ? String(type.name) : '';
     
     if (!typeId || !typeName) {
       console.warn('Missing essential type data:', { typeId, typeName });
@@ -44,8 +44,8 @@ const BrandsSection = ({ types }) => {
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           {validTypes.map((type, index) => {
             // Safely extract type properties as strings
-            const typeId = String(type._id || type.id || '');
-            const typeName = String(type.name || '');
+            const typeId = type._id ? String(type._id) : (type.id ? String(type.id) : '');
+            const typeName = type.name ? String(type.name) : '';
             const typeLogo = type.logo && typeof type.logo === 'string' ? String(type.logo) : null;
 
             return (

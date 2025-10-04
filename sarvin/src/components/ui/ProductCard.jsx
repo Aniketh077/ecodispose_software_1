@@ -104,13 +104,20 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
       
       <div className="p-4">
         <div className="text-xs text-gray-500 mb-1">
-          {typeof product.type === 'string' ? product.type : 
-           (product.type && typeof product.type === 'object' && product.type.name) ? 
-           String(product.type.name) : 'Refurbished'}
+          {(() => {
+            if (product && product.type) {
+              if (typeof product.type === 'string' && product.type.trim()) {
+                return product.type.trim();
+              } else if (typeof product.type === 'object' && product.type.name) {
+                return String(product.type.name).trim();
+              }
+            }
+            return 'Certified Refurbished';
+          })()}
         </div>
         <Link to={`/product/${product._id}`}>
           <h3 className="font-semibold mb-2 line-clamp-2 hover:text-green-700 transition-colors">
-            {String(product.name || 'Product')}
+            {product && product.name ? String(product.name) : 'Product'}
           </h3>
         </Link>
         

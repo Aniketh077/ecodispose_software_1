@@ -128,17 +128,33 @@ const Header = () => {
   // Create dynamic menu helper
   const getCollectionMenu = (collectionName) => {
     const collection = Array.isArray(collections)
-      ? collections.find(c => c.name.toLowerCase() === collectionName.toLowerCase())
+      ? collections.find(c => {
+          if (!c || typeof c !== 'object' || !c.name) return false;
+          return String(c.name).toLowerCase() === collectionName.toLowerCase();
+        })
       : null;
 
     const collectionWithTypes = Array.isArray(collectionsWithTypes)
-      ? collectionsWithTypes.find(c => c.name?.toLowerCase() === collectionName.toLowerCase())
+      ? collectionsWithTypes.find(c => {
+          if (!c || typeof c !== 'object' || !c.name) return false;
+          return String(c.name).toLowerCase() === collectionName.toLowerCase();
+        })
       : null;
 
-    const types = collectionWithTypes?.types?.slice(0, 3).map(type => ({
-      name: type.name,
-      path: `/products?types=${encodeURIComponent(type.name)}`
-    })) || [];
+    const types = [];
+    if (collectionWithTypes && Array.isArray(collectionWithTypes.types)) {
+      collectionWithTypes.types.slice(0, 3).forEach(type => {
+        if (type && typeof type === 'object' && type.name) {
+          const typeName = String(type.name);
+          if (typeName) {
+            types.push({
+              name: typeName,
+              path: `/products?types=${encodeURIComponent(typeName)}`
+            });
+          }
+        }
+      });
+    }
 
     const conditions = [
       { name: "Like New", path: "/products?condition=Like+New" },
@@ -149,7 +165,7 @@ const Header = () => {
     const images = types.slice(0, 2).map(type => ({
       name: type.name,
       path: type.path,
-      src: collection?.image || "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg",
+      src: (collection && collection.image) ? String(collection.image) : "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg",
       alt: `Refurbished ${type.name}`
     }));
 

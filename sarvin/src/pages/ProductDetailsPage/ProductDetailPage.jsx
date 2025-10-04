@@ -100,9 +100,14 @@ const ProductDetailPage = () => {
   }
 
   // Safely extract collection name as string
-  const collectionName = typeof product.collection === 'string' ? product.collection :
-                         (product.collection && typeof product.collection === 'object' && product.collection.name) ?
-                         String(product.collection.name) : 'Unknown';
+  let collectionName = 'Unknown';
+  if (product && product.collection) {
+    if (typeof product.collection === 'string' && product.collection.trim()) {
+      collectionName = product.collection.trim();
+    } else if (typeof product.collection === 'object' && product.collection.name) {
+      collectionName = String(product.collection.name).trim();
+    }
+  }
 
   return (
     <div className="min-h-screen pt-20 pb-16">

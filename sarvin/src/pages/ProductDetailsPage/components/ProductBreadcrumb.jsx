@@ -2,10 +2,25 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const ProductBreadcrumb = ({ product, collectionName }) => {
-  // Ensure collectionName is a string
-  const safeCollectionName = typeof collectionName === 'string' ? collectionName : 
-                            (collectionName && typeof collectionName === 'object' && collectionName.name) ? 
-                            String(collectionName.name) : 'Unknown';
+  // Safely extract collection name as string with comprehensive validation
+  let safeCollectionName = 'Unknown';
+  
+  if (typeof collectionName === 'string' && collectionName.trim()) {
+    safeCollectionName = collectionName.trim();
+  } else if (collectionName && typeof collectionName === 'object') {
+    if (collectionName.name && typeof collectionName.name === 'string') {
+      safeCollectionName = String(collectionName.name).trim();
+    }
+  } else if (product && product.collection) {
+    if (typeof product.collection === 'string' && product.collection.trim()) {
+      safeCollectionName = product.collection.trim();
+    } else if (typeof product.collection === 'object' && product.collection.name) {
+      safeCollectionName = String(product.collection.name).trim();
+    }
+  }
+
+  // Safely extract product name
+  const productName = product && product.name ? String(product.name) : 'Product';
 
   return (
     <nav className="py-4">
@@ -29,7 +44,7 @@ const ProductBreadcrumb = ({ product, collectionName }) => {
             <span className="mx-2 text-gray-400">/</span>
           </li>
         )}
-        <li className="text-gray-900 font-medium">{String(product.name || 'Product')}</li>
+        <li className="text-gray-900 font-medium">{productName}</li>
       </ol>
     </nav>
   );

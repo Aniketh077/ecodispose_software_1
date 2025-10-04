@@ -3,8 +3,11 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 
 const RelatedProducts = ({ relatedProducts, collectionName }) => {
-  // Ensure collectionName is a string
-  const safeCollectionName = typeof collectionName === 'string' ? collectionName : 'products';
+  // Safely extract collection name as string
+  let safeCollectionName = 'products';
+  if (typeof collectionName === 'string' && collectionName.trim() && collectionName !== 'Unknown') {
+    safeCollectionName = collectionName.trim();
+  }
 
   return (
     <section className="mt-16">
@@ -35,18 +38,18 @@ const RelatedProducts = ({ relatedProducts, collectionName }) => {
             
             <div className="p-4">
               <h3 className="font-medium line-clamp-2 group-hover:text-green-700">
-                {String(relatedProduct.name || 'Product')}
+                {relatedProduct && relatedProduct.name ? String(relatedProduct.name) : 'Product'}
               </h3>
               
               <div className="mt-2">
                 {relatedProduct.discountPrice ? (
                   <div className="flex items-center">
-                    <span className="font-semibold">₹{Number(relatedProduct.discountPrice || 0).toFixed(2)}</span>
-                    <span className="ml-2 text-sm text-gray-500 line-through">₹{Number(relatedProduct.price || 0).toFixed(2)}</span>
+                      ₹{(relatedProduct.price || 0).toFixed(2)}
+                      ₹{(relatedProduct.discountPrice || 0).toFixed(2)}
                   </div>
                 ) : (
                   <span className="font-semibold">₹{Number(relatedProduct.price || 0).toFixed(2)}</span>
-                )}
+                    ₹{(relatedProduct.price || 0).toFixed(2)}
               </div>
             </div>
           </Link>

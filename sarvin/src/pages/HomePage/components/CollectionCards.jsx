@@ -40,10 +40,10 @@ const CollectionCards = () => {
       }
 
       // Safely extract collection properties as strings only
-      const collectionId = String(collection._id || collection.id || '');
-      const collectionName = String(collection.name || '');
-      const collectionSlug = String(collection.slug || collectionName.toLowerCase().replace(/\s+/g, '-'));
-      const collectionImage = String(collection.image || "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg");
+      const collectionId = collection._id ? String(collection._id) : (collection.id ? String(collection.id) : '');
+      const collectionName = collection.name ? String(collection.name) : '';
+      const collectionSlug = collection.slug ? String(collection.slug) : collectionName.toLowerCase().replace(/\s+/g, '-');
+      const collectionImage = collection.image ? String(collection.image) : "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg";
 
       // Skip if essential data is missing
       if (!collectionId || !collectionName) {
@@ -55,8 +55,8 @@ const CollectionCards = () => {
       const collectionWithTypes = Array.isArray(collectionsWithTypes)
         ? collectionsWithTypes.find(c => {
             if (!c || typeof c !== 'object') return false;
-            const cId = String(c._id || c.id || '');
-            const cName = String(c.name || '');
+            const cId = c._id ? String(c._id) : (c.id ? String(c.id) : '');
+            const cName = c.name ? String(c.name) : '';
             return cId === collectionId || cName === collectionName;
           })
         : null;
@@ -111,7 +111,7 @@ const CollectionCards = () => {
             >
               <div className="p-8 text-white w-full lg:w-1/2 flex flex-col justify-center z-10 order-2 lg:order-1">
                 <h3 className="text-4xl font-bold mb-4">{collection.title}</h3>
-                {collection.types && collection.types.length > 0 && (
+                {collection.types && Array.isArray(collection.types) && collection.types.length > 0 && (
                   <ul className="space-y-2 mb-6">
                     {collection.types.map((type, typeIndex) => (
                       <li key={`${collection.id}-type-${typeIndex}`}>
