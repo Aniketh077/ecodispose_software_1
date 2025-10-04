@@ -15,7 +15,7 @@ const productSchema = new mongoose.Schema({
   collection: {
     type: String,
     required: true,
-    enum: ['Smartphones', 'Laptops', 'Tablets', 'Audio Devices', 'Gaming Consoles', 'Smart Watches'],
+    enum: ['Smartphones', 'Laptops', 'Tablets', 'Audio Devices', 'Gaming Consoles', 'Smart Watches', 'Small Appliances'],
   },
   condition: {
     type: String,
