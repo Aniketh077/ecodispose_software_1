@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Mail, Users, Calendar, Search, Download, Filter, ChevronLeft, ChevronRight } from 'lucide-react';
+import { Mail, Users, Calendar, Search, Download, ListFilter as Filter, ChevronLeft, ChevronRight } from 'lucide-react';
 import { getSubscribers } from '../../store/slices/newsletterContactSlice';
 import Button from '../../components/ui/Button';
 

@@ -1,6 +1,6 @@
 import React, { useState , useEffect} from 'react';
 import { useNavigate } from 'react-router-dom';
-import { CreditCard, MapPin, User, Phone, Mail, ShoppingBag, ArrowLeft, AlertCircle, Loader2 } from 'lucide-react';
+import { CreditCard, MapPin, User, Phone, Mail, ShoppingBag, ArrowLeft, CircleAlert as AlertCircle, Loader as Loader2 } from 'lucide-react';
 import { useCart } from '../contexts/CartContext';
 import { useAuth } from '../contexts/AuthContext';
 import { orderAPI } from '../api/orderAPI';
