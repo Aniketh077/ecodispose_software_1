@@ -44,12 +44,16 @@ const RelatedProducts = ({ relatedProducts, collectionName }) => {
               <div className="mt-2">
                 {relatedProduct.discountPrice ? (
                   <div className="flex items-center">
+                    <span className="line-through text-gray-500 mr-2">
                       ₹{(relatedProduct.price || 0).toFixed(2)}
+                    </span>
+                    <span className="font-semibold">
                       ₹{(relatedProduct.discountPrice || 0).toFixed(2)}
+                    </span>
                   </div>
                 ) : (
                   <span className="font-semibold">₹{Number(relatedProduct.price || 0).toFixed(2)}</span>
-                    ₹{(relatedProduct.price || 0).toFixed(2)}
+                )}
               </div>
             </div>
           </Link>
