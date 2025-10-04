@@ -21,10 +21,11 @@ const ProductForm = ({ onClose, onSave, product, types }) => {
     description: product?.description || '',
     price: product?.price !== undefined ? product.price : '',
     discountPrice: product?.discountPrice || null,
-    collection: product?.collection || 'Small Appliances',
+    originalPrice: product?.originalPrice || '',
+    collection: product?.collection || 'Smartphones',
+    condition: product?.condition || 'Good',
+    refurbishmentDetails: product?.refurbishmentDetails || 'Professionally refurbished and quality tested',
     warranty: product?.warranty || '',
-    burners: product?.burners || '',
-    ignitionType: product?.ignitionType || '',
     typeId: product?.type?._id || '',
     image: product?.image || '',
     images: product?.images || [],
@@ -137,11 +138,6 @@ const ProductForm = ({ onClose, onSave, product, types }) => {
     }
   };
 
-  useEffect(() => {
-    if (formData.collection !== 'Cooking Appliances') {
-      setFormData(prev => ({ ...prev, burners: '', ignitionType: '' }));
-    }
-  }, [formData.collection]);
 
   const resetTypeState = () => {
     setShowNewType(false);
@@ -188,21 +184,22 @@ const ProductForm = ({ onClose, onSave, product, types }) => {
   ];
 
   const collectionOptions = [
-    { value: 'Small Appliances', label: 'Small Appliances' },
-    { value: 'Cooking Appliances', label: 'Cooking Appliances' }
-  ];
-  
-  const burnerOptions = [
-    { value: '', label: 'Select Burners' },
-    { value: 2, label: '2 Burners' },
-    { value: 3, label: '3 Burners' },
-    { value: 4, label: '4 Burners' }
+    { value: 'Smartphones', label: 'Smartphones' },
+    { value: 'Laptops', label: 'Laptops' },
+    { value: 'Tablets', label: 'Tablets' },
+    { value: 'Cameras', label: 'Cameras' },
+    { value: 'Smartwatches', label: 'Smartwatches' },
+    { value: 'Headphones', label: 'Headphones' },
+    { value: 'Gaming Consoles', label: 'Gaming Consoles' },
+    { value: 'Home Appliances', label: 'Home Appliances' },
+    { value: 'Computer Accessories', label: 'Computer Accessories' }
   ];
 
-  const ignitionOptions = [
-    { value: '', label: 'Select Ignition Type' },
-    { value: 'Auto Ignition', label: 'Auto Ignition' },
-    { value: 'Manual Ignition', label: 'Manual Ignition' }
+  const conditionOptions = [
+    { value: 'Like New', label: 'Like New' },
+    { value: 'Excellent', label: 'Excellent' },
+    { value: 'Good', label: 'Good' },
+    { value: 'Fair', label: 'Fair' }
   ];
 
   const mainImageUploading = uploading['mainImage'] || false;
@@ -233,12 +230,14 @@ const ProductForm = ({ onClose, onSave, product, types }) => {
                 <FormField label="Product Collection" name="collection" value={formData.collection} onChange={handleChange} type="select" options={collectionOptions} required />
               </div>
 
-              {formData.collection === 'Cooking Appliances' && (
-                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mt-6 p-4 bg-gray-50 rounded-md border mb-6">
-                      <FormField label="Number of Burners" name="burners" value={formData.burners} onChange={handleChange} type="select" options={burnerOptions} required />
-                      <FormField label="Ignition Type" name="ignitionType" value={formData.ignitionType} onChange={handleChange} type="select" options={ignitionOptions} required />
-                  </div>
-              )}
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-4 sm:gap-6 mb-4 sm:mb-6 p-4 bg-blue-50 rounded-md border border-blue-200">
+                <FormField label="Condition" name="condition" value={formData.condition} onChange={handleChange} type="select" options={conditionOptions} required />
+                <FormField label="Original Retail Price" name="originalPrice" value={formData.originalPrice} onChange={handleChange} type="number" min="0" step="0.01" placeholder="Original price before refurbishment" className="text-xs sm:text-sm" />
+              </div>
+
+              <div className="mb-4 sm:mb-6">
+                <FormField label="Refurbishment Details" name="refurbishmentDetails" value={formData.refurbishmentDetails} onChange={handleChange} type="textarea" rows={3} className="text-xs sm:text-sm" placeholder="Describe the refurbishment process and quality checks" />
+              </div>
 
               <FormField label="Description" name="description" value={formData.description} onChange={handleChange} type="textarea" rows={3} className="text-xs sm:text-sm mb-6" />
               

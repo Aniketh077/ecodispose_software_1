@@ -13,25 +13,25 @@ const AboutPage = () => {
     {
       icon: Award,
       title: 'Quality Excellence',
-      description: 'We partner only with brands that meet our stringent quality standards.'
+      description: '40-point quality checks ensure every device meets our strict certification standards.'
     },
     {
       icon: Zap,
-      title: 'Innovation',
-      description: 'We embrace cutting-edge technology to bring you the latest in home appliances.'
+      title: 'Sustainability',
+      description: 'Reducing e-waste and promoting circular economy through refurbished electronics.'
     },
     {
       icon: Shield,
       title: 'Trust & Reliability',
-      description: 'Building lasting relationships through transparent and honest business practices.'
+      description: 'Certified refurbished devices backed by comprehensive warranty and support.'
     }
   ];
 
   const stats = [
-    { number: '50,000+', label: 'Happy Customers' },
-    { number: '40+', label: 'Products' },
-    { number: '50+', label: 'Cities Served' },
-    { number: '99%', label: 'Satisfaction Rate' }
+    { number: '50,000+', label: 'Devices Refurbished' },
+    { number: '500+', label: 'Products' },
+    { number: '100+', label: 'Cities Served' },
+    { number: '20 Tons', label: 'E-Waste Prevented' }
   ];
 
   const team = [

@@ -146,8 +146,7 @@ const ProductsPage = () => {
   // UI state driven by URL
   const [selectedPriceRanges, setSelectedPriceRanges] = useState([]);
   const [inStockOnly, setInStockOnly] = useState(false);
-  const [selectedBurnerTypes, setSelectedBurnerTypes] = useState([]);
-  const [selectedIgnitionTypes, setSelectedIgnitionTypes] = useState([]);
+  const [selectedConditions, setSelectedConditions] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
   const [sortBy, setSortBy] = useState("featured");
 
@@ -157,8 +156,7 @@ const ProductsPage = () => {
   const [openSections, setOpenSections] = useState({
     price: true,
     availability: false,
-    burner: false,
-    ignition: false,
+    condition: true,
     type: false,
   });
 
@@ -179,14 +177,11 @@ const ProductsPage = () => {
     { label: "15000 to 20000", value: "15000-20000" },
     { label: "Above 20000", value: "20000+" },
   ];
-  const burnerTypeOptions = [
-    { label: "2 Burners", value: "2" },
-    { label: "3 Burners", value: "3" },
-    { label: "4 Burners", value: "4" },
-  ];
-  const ignitionTypeOptions = [
-    { label: "Auto Ignition", value: "Auto Ignition" },
-    { label: "Manual Ignition", value: "Manual Ignition" },
+  const conditionOptions = [
+    { label: "Like New", value: "Like New" },
+    { label: "Excellent", value: "Excellent" },
+    { label: "Good", value: "Good" },
+    { label: "Fair", value: "Fair" },
   ];
   const sortOptions = [
     { value: "featured", label: "Featured" },
@@ -216,8 +211,7 @@ const ProductsPage = () => {
   useEffect(() => {
     const params = new URLSearchParams(searchParams);
     setSelectedPriceRanges(params.get("priceRanges")?.split(",") || []);
-    setSelectedBurnerTypes(params.get("burners")?.split(",") || []);
-    setSelectedIgnitionTypes(params.get("ignition")?.split(",") || []);
+    setSelectedConditions(params.get("condition")?.split(",") || []);
     setInStockOnly(params.get("inStock") === "true");
     setSortBy(params.get("sortBy") || "featured");
 
@@ -242,8 +236,7 @@ const ProductsPage = () => {
     if (params.get("filter") === "featured") filters.featured = true;
     if (params.get("filter") === "new") filters.newArrival = true;
     if (params.get("inStock") === "true") filters.inStock = true;
-    if (params.get("burners")) filters.burners = params.get("burners");
-    if (params.get("ignition")) filters.ignition = params.get("ignition");
+    if (params.get("condition")) filters.condition = params.get("condition");
 
     const priceRangesFromURL = params.get("priceRanges");
     if (priceRangesFromURL) {
@@ -345,8 +338,7 @@ const ProductsPage = () => {
     let count = 0;
     if (params.has("priceRanges")) count++;
     if (params.has("inStock")) count++;
-    if (params.has("burners")) count++;
-    if (params.has("ignition")) count++;
+    if (params.has("condition")) count++;
     if (params.has("types") || params.has("type")) count++;
     return count;
   };
@@ -532,57 +524,29 @@ const ProductsPage = () => {
                   </div>
                 </FilterSection>
 
-                {(!decodedCollectionName ||
-                  decodedCollectionName === "cooking appliances") && (
-                  <>
-                    <FilterSection
-                      title="Burner Type"
-                      isOpen={openSections.burner}
-                      onToggle={() => toggleSection("burner")}
-                    >
-                      <div className="space-y-3">
-                        {burnerTypeOptions.map((opt) => (
-                          <FilterCheckbox
-                            key={opt.value}
-                            label={opt.label}
-                            value={opt.value}
-                            checked={selectedBurnerTypes.includes(opt.value)}
-                            onChange={() =>
-                              handleCheckboxChange(
-                                opt.value,
-                                selectedBurnerTypes,
-                                "burners"
-                              )
-                            }
-                          />
-                        ))}
-                      </div>
-                    </FilterSection>
-                    <FilterSection
-                      title="Ignition Type"
-                      isOpen={openSections.ignition}
-                      onToggle={() => toggleSection("ignition")}
-                    >
-                      <div className="space-y-3">
-                        {ignitionTypeOptions.map((opt) => (
-                          <FilterCheckbox
-                            key={opt.value}
-                            label={opt.label}
-                            value={opt.value}
-                            checked={selectedIgnitionTypes.includes(opt.value)}
-                            onChange={() =>
-                              handleCheckboxChange(
-                                opt.value,
-                                selectedIgnitionTypes,
-                                "ignition"
-                              )
-                            }
-                          />
-                        ))}
-                      </div>
-                    </FilterSection>
-                  </>
-                )}
+                <FilterSection
+                  title="Condition"
+                  isOpen={openSections.condition}
+                  onToggle={() => toggleSection("condition")}
+                >
+                  <div className="space-y-3">
+                    {conditionOptions.map((opt) => (
+                      <FilterCheckbox
+                        key={opt.value}
+                        label={opt.label}
+                        value={opt.value}
+                        checked={selectedConditions.includes(opt.value)}
+                        onChange={() =>
+                          handleCheckboxChange(
+                            opt.value,
+                            selectedConditions,
+                            "condition"
+                          )
+                        }
+                      />
+                    ))}
+                  </div>
+                </FilterSection>
 
                 <FilterSection
                   title="Type"

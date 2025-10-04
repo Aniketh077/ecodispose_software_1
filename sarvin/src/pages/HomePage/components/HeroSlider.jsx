@@ -8,14 +8,23 @@ const HeroSlider = () => {
     {
       mobileImage: "/assets/Hero1.jpg",
       desktopImage: "/assets/Hero1_1.jpg",
+      title: "Premium Refurbished Electronics",
+      subtitle: "Quality devices at unbeatable prices. Certified, tested, and warrantied.",
+      cta: "Shop Now"
     },
     {
       mobileImage: "/assets/Hero2.jpg",
       desktopImage: "/assets/Hero2_1.jpg",
+      title: "Save Big on Top Brands",
+      subtitle: "Get up to 70% off on certified refurbished smartphones, laptops & more.",
+      cta: "Explore Deals"
     },
     {
       mobileImage: "/assets/Hero3.jpg",
       desktopImage: "/assets/Hero3_1.jpg",
+      title: "Sustainable Tech, Smart Choice",
+      subtitle: "Reduce e-waste while enjoying premium technology. Good for you, great for the planet.",
+      cta: "Learn More"
     },
   ];
 
@@ -37,11 +46,11 @@ const HeroSlider = () => {
               activeSlide === index ? "opacity-100 z-20" : "opacity-0 z-10"
             }`}
           >
-            <div className="absolute inset-0 bg-gradient-to-r from-black/30 to-black/10 z-10"></div>
-            
+            <div className="absolute inset-0 bg-gradient-to-r from-black/60 via-black/30 to-transparent z-10"></div>
+
             <picture>
               <source media="(min-width: 1024px)" srcSet={slide.desktopImage} />
-              
+
               <img
                 src={slide.mobileImage}
                 alt={`Hero slide ${index + 1}`}
@@ -52,6 +61,26 @@ const HeroSlider = () => {
                 }}
               />
             </picture>
+
+            {/* Text Overlay */}
+            <div className="absolute inset-0 z-20 flex items-center">
+              <div className="container mx-auto px-4 md:px-8 lg:px-12">
+                <div className="max-w-2xl">
+                  <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-white mb-4 animate-fade-in">
+                    {slide.title}
+                  </h1>
+                  <p className="text-base md:text-xl lg:text-2xl text-gray-100 mb-6 md:mb-8 animate-fade-in">
+                    {slide.subtitle}
+                  </p>
+                  <a
+                    href="/products"
+                    className="inline-block px-6 md:px-8 py-3 md:py-4 bg-gradient-to-r from-blue-600 to-blue-500 text-white font-semibold rounded-lg hover:from-blue-700 hover:to-blue-600 transition-all duration-300 shadow-lg hover:shadow-xl transform hover:scale-105"
+                  >
+                    {slide.cta}
+                  </a>
+                </div>
+              </div>
+            </div>
 
           </div>
         ))}

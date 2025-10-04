@@ -10,10 +10,10 @@ const { deleteFromS3, extractS3KeyFromUrl } = require('../utils/s3Upload');
 const getProducts = async (req, res) => {
   try {
     const {
-      collection, 
+      collection,
       featured,
       newArrival,
-      bestSeller, 
+      bestSeller,
       search,
       page = 1,
       limit = 12,
@@ -21,8 +21,7 @@ const getProducts = async (req, res) => {
       minPrice,
       maxPrice,
       types,
-      burners,
-      ignition,
+      condition,
       inStock
     } = req.query;
 
@@ -85,16 +84,10 @@ const getProducts = async (req, res) => {
       }
     }
 
-    // Burner type filter
-    if (burners) {
-      const burnerValues = burners.split(',').map(b => parseInt(b));
-      query.burners = { $in: burnerValues };
-    }
-
-    // Ignition type filter
-    if (ignition) {
-      const ignitionValues = ignition.split(',').map(i => i.trim());
-      query.ignitionType = { $in: ignitionValues };
+    // Condition filter
+    if (condition) {
+      const conditionValues = condition.split(',').map(c => c.trim());
+      query.condition = { $in: conditionValues };
     }
 
     // Stock filter

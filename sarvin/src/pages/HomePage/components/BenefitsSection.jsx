@@ -1,27 +1,27 @@
 import React from 'react';
-import { Truck, Shield, CreditCard, Phone } from 'lucide-react';
+import { Truck, Shield, CheckCircle, Leaf, Award, RefreshCw } from 'lucide-react';
 
 const BenefitsSection = () => {
   const benefits = [
     {
-      icon: Truck,
-      title: 'Free Shipping',
-      description: 'Free shipping on refurbished devices across India.'
+      icon: CheckCircle,
+      title: 'Quality Tested',
+      description: 'Every device goes through rigorous 40-point quality checks'
     },
     {
       icon: Shield,
-      title: 'Quality Warranty',
-      description: 'Up to 1 year warranty on all refurbished devices'
+      title: 'Certified Warranty',
+      description: 'Up to 1 year warranty on all certified refurbished electronics'
     },
     {
-      icon: CreditCard,
-      title: 'Secure Payment',
-      description: '100% secure checkout with Razorpay'
+      icon: Leaf,
+      title: 'Eco-Friendly',
+      description: 'Reduce e-waste and carbon footprint with sustainable tech'
     },
     {
-      icon: Phone,
-      title: 'Expert Support',
-      description: 'Dedicated tech support and device guidance'
+      icon: Award,
+      title: 'Great Savings',
+      description: 'Save up to 70% compared to brand new devices'
     }
   ];
 
@@ -29,19 +29,19 @@ const BenefitsSection = () => {
     <section className="py-16 bg-white">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
-          <h2 className="text-4xl font-bold mb-4">Why Choose Cashify?</h2>
+          <h2 className="text-4xl font-bold mb-4 bg-gradient-to-r from-blue-600 to-blue-500 bg-clip-text text-transparent">Why Choose Refurbished?</h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            We're committed to providing the best refurbished device experience
+            Premium quality electronics at unbeatable prices. Good for your wallet, great for the planet.
           </p>
         </div>
         
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           {benefits.map((benefit, index) => (
-            <div key={index} className="text-center group">
-              <div className="bg-gradient-to-br from-[#EBF5FF] to-[#DBEAFE] w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform">
-                <benefit.icon className="h-10 w-10 text-[#2A4365]" />
+            <div key={index} className="text-center group hover:transform hover:-translate-y-2 transition-all duration-300">
+              <div className="bg-gradient-to-br from-blue-100 to-blue-50 w-20 h-20 rounded-full flex items-center justify-center mx-auto mb-6 group-hover:scale-110 transition-transform shadow-lg group-hover:shadow-xl">
+                <benefit.icon className="h-10 w-10 text-blue-600" />
               </div>
-              <h3 className="text-xl font-semibold mb-3">{benefit.title}</h3>
+              <h3 className="text-xl font-semibold mb-3 text-gray-800">{benefit.title}</h3>
               <p className="text-gray-600">{benefit.description}</p>
             </div>
           ))}

@@ -7,12 +7,29 @@ import {
   Star,
   CheckCircle,
   AlertCircle,
+  Award,
+  Shield,
 } from "lucide-react";
 import { Link } from "react-router-dom";
 
 const truncateText = (text, maxLength) => {
   if (!text) return "";
   return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+};
+
+const getConditionBadge = (condition) => {
+  const badges = {
+    'Like New': { bg: 'bg-green-500', text: 'Like New', icon: Award },
+    'Excellent': { bg: 'bg-blue-500', text: 'Excellent', icon: Award },
+    'Good': { bg: 'bg-orange-500', text: 'Good', icon: Award },
+    'Fair': { bg: 'bg-yellow-500', text: 'Fair', icon: Award }
+  };
+  return badges[condition] || badges['Good'];
+};
+
+const calculateSavings = (originalPrice, currentPrice) => {
+  if (!originalPrice || originalPrice <= currentPrice) return 0;
+  return Math.round(((originalPrice - currentPrice) / originalPrice) * 100);
 };
 
 const ProductCard = ({ product, viewMode = "grid" }) => {
@@ -47,9 +64,14 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
   const itemInCart = isInCart(productId);
   const quantity = getItemQuantity(productId);
 
+  const conditionBadgeList = getConditionBadge(product.condition);
+  const currentPriceList = product.discountPrice || product.price;
+  const savingsPercentList = calculateSavings(product.originalPrice, currentPriceList);
+  const ConditionIconList = conditionBadgeList.icon;
+
   if (viewMode === "list") {
     return (
-      <div className="group relative flex flex-col md:flex-row bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-md transition-all">
+      <div className="group relative flex flex-col md:flex-row bg-white rounded-lg border border-gray-200 overflow-hidden shadow-sm hover:shadow-lg hover:border-blue-300 transition-all">
         {/* Success/Error indicators */}
         {showSuccess && (
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-20 bg-[#C87941] text-white px-4 py-2 rounded-lg flex items-center">
@@ -66,19 +88,24 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
         )}
 
         {/* Badges */}
-        {product.discountPrice && (
-  Math.round(((product.price - product.discountPrice) / product.price) * 100) > 0 && (
-    <div className="absolute left-0 top-4 z-10 bg-red-500 px-3 py-1 text-sm font-semibold text-white">
-      {Math.round(
-        ((product.price - product.discountPrice) / product.price) * 100
-      )}
-      % OFF
-    </div>
-  )
-)}
+        <div className="absolute left-2 top-2 z-10 bg-gradient-to-r from-blue-600 to-blue-500 px-2 py-1 rounded-md text-xs font-semibold text-white flex items-center gap-1 shadow-md">
+          <Shield size={12} />
+          Certified
+        </div>
+
+        <div className={`absolute right-2 top-2 z-10 ${conditionBadgeList.bg} px-2 py-1 rounded-md text-xs font-semibold text-white flex items-center gap-1 shadow-md`}>
+          <ConditionIconList size={12} />
+          {conditionBadgeList.text}
+        </div>
+
+        {savingsPercentList > 0 && (
+          <div className="absolute left-2 top-10 z-10 bg-gradient-to-r from-orange-600 to-orange-500 px-2 py-1 rounded-md text-xs font-semibold text-white shadow-md">
+            Save {savingsPercentList}%
+          </div>
+        )}
 
         {product.newArrival && (
-          <div className="absolute right-0 top-4 z-10 bg-[#2A4365] px-3 py-1 text-sm font-semibold text-white">
+          <div className="absolute right-2 top-10 z-10 bg-gradient-to-r from-purple-600 to-purple-500 px-2 py-1 rounded-md text-xs font-semibold text-white shadow-md">
             NEW
           </div>
         )}
@@ -197,22 +224,34 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
   }
 
   // Default grid view
-  return (
-    <div className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-md">
-       {product.discountPrice && (
-  Math.round(((product.price - product.discountPrice) / product.price) * 100) > 0 && (
-    <div className="absolute left-0 top-4 z-10 bg-red-500 px-3 py-1 text-sm font-semibold text-white">
-      {Math.round(
-        ((product.price - product.discountPrice) / product.price) * 100
-      )}
-      % OFF
-    </div>
-  )
-)}
+  const conditionBadge = getConditionBadge(product.condition);
+  const currentPrice = product.discountPrice || product.price;
+  const savingsPercent = calculateSavings(product.originalPrice, currentPrice);
+  const ConditionIcon = conditionBadge.icon;
 
+  return (
+    <div className="group relative overflow-hidden rounded-lg border border-gray-200 bg-white shadow-sm transition-all duration-300 hover:shadow-lg hover:border-blue-300">
+      {/* Certified Refurbished Badge */}
+      <div className="absolute left-2 top-2 z-10 bg-gradient-to-r from-blue-600 to-blue-500 px-2 py-1 rounded-md text-xs font-semibold text-white flex items-center gap-1 shadow-md">
+        <Shield size={12} />
+        Certified
+      </div>
+
+      {/* Condition Badge */}
+      <div className={`absolute right-2 top-2 z-10 ${conditionBadge.bg} px-2 py-1 rounded-md text-xs font-semibold text-white flex items-center gap-1 shadow-md`}>
+        <ConditionIcon size={12} />
+        {conditionBadge.text}
+      </div>
+
+      {/* Savings Badge */}
+      {savingsPercent > 0 && (
+        <div className="absolute left-2 top-10 z-10 bg-gradient-to-r from-orange-600 to-orange-500 px-2 py-1 rounded-md text-xs font-semibold text-white shadow-md">
+          Save {savingsPercent}%
+        </div>
+      )}
 
       {product.newArrival && (
-        <div className="absolute right-0 top-4 z-10 bg-[#2A4365] px-3 py-1 text-sm font-semibold text-white">
+        <div className="absolute right-2 top-10 z-10 bg-gradient-to-r from-purple-600 to-purple-500 px-2 py-1 rounded-md text-xs font-semibold text-white shadow-md">
           NEW
         </div>
       )}
@@ -245,37 +284,41 @@ const ProductCard = ({ product, viewMode = "grid" }) => {
           <div className="mb-1 text-sm text-gray-500">
             {product.type?.name || product.type}
           </div>
-          <h3 className="mb-2 text-base font-medium line-clamp-2 group-hover:text-[#2A4365]">
-            {truncateText(product.name, 25)}
+          <h3 className="mb-2 text-base font-medium line-clamp-2 group-hover:text-blue-600 transition-colors">
+            {truncateText(product.name, 50)}
           </h3>
 
-          <div className="mb-3 flex items-center">
+          <div className="mb-2 flex items-center justify-between">
             <div className="flex items-center">
-              <Star className="mr-1 h-4 w-4 fill-[#C87941] text-[#C87941]" />
+              <Star className="mr-1 h-4 w-4 fill-orange-400 text-orange-400" />
               <span className="text-sm font-medium">{product.rating || 0}</span>
+              <span className="mx-2 text-gray-300">|</span>
+              <span className="text-sm text-gray-500">
+                {product.reviewCount || 0} reviews
+              </span>
             </div>
-            <span className="mx-2 text-gray-300">|</span>
-            <span className="text-sm text-gray-500">
-              {product.reviewCount || 0} reviews
-            </span>
           </div>
+
+          {/* Warranty Badge */}
+          {product.warranty && (
+            <div className="mb-3 flex items-center text-xs text-green-600 bg-green-50 px-2 py-1 rounded-md w-fit">
+              <Shield size={12} className="mr-1" />
+              {product.warranty} Warranty
+            </div>
+          )}
 
           <div className="flex items-center justify-between">
             <div>
-              {product.discountPrice ? (
-                <div className="flex items-center">
-                  <span className="text-lg font-semibold">
-                    ₹{product.discountPrice.toFixed(2)}
-                  </span>
-                  <span className="ml-2 text-sm text-gray-500 line-through">
-                    ₹{product.price.toFixed(2)}
-                  </span>
-                </div>
-              ) : (
-                <span className="text-lg font-semibold">
-                  ₹{product.price.toFixed(2)}
+              <div className="flex items-center gap-2">
+                <span className="text-lg font-bold text-blue-600">
+                  ₹{currentPrice.toFixed(2)}
                 </span>
-              )}
+                {product.originalPrice && product.originalPrice > currentPrice && (
+                  <span className="text-xs text-gray-400 line-through">
+                    ₹{product.originalPrice.toFixed(2)}
+                  </span>
+                )}
+              </div>
 
               {/* Stock indicator */}
               {product.stock === 0 && (
