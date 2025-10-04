@@ -6,7 +6,9 @@
 - Node.js 18+ installed
 - MongoDB installed and running
 
-### 2. Clone and Install Dependencies
+### 2. Install Dependencies (Already Done)
+
+Dependencies are already installed. If you need to reinstall:
 
 ```bash
 # Install backend dependencies
@@ -18,30 +20,19 @@ cd ../sarvin
 npm install
 ```
 
-### 3. Environment Setup
+### 3. Environment Setup (Already Configured)
 
-**Backend Environment (.env):**
-```bash
-cd server
-# Copy the existing .env file or create one with these values:
-NODE_ENV=development
-PORT=5000
-MONGODB_URI=mongodb://localhost:27017/ecotrade-electronics
-JWT_SECRET=ecotrade-super-secret-jwt-key-change-this-in-production-12345
-ADMIN_EMAIL=admin@ecotrade.com
-ADMIN_PASSWORD=Admin@123456
-APP_NAME=EcoTrade
-FRONTEND_URL=http://localhost:5173
-```
+Environment files are already configured:
 
-**Frontend Environment (.env):**
-```bash
-cd ../sarvin
-# Copy the existing .env file or create one with these values:
-VITE_BACKEND_URL=http://localhost:5000
-VITE_FRONTEND_URL=http://localhost:5173
-VITE_RAZORPAY_KEY_ID=rzp_test_your_key_id
-```
+**Backend Environment (server/.env):**
+- MongoDB: `mongodb://localhost:27017/ecotrade-electronics`
+- Admin: `admin@ecotrade.com` / `Admin@123456`
+- JWT Secret: Configured
+- App Name: EcoTrade
+
+**Frontend Environment (sarvin/.env):**
+- Backend URL: `http://localhost:5000`
+- Frontend URL: `http://localhost:5173`
 
 ### 4. Start MongoDB
 
@@ -62,11 +53,7 @@ sudo systemctl start mongodb
 
 ### 5. Run the Application
 
-**Terminal 1 - Backend:**
-```bash
-cd server
-npm run dev
-```
+The backend server is already starting. For the frontend:
 
 **Terminal 2 - Frontend:**
 ```bash
@@ -76,9 +63,11 @@ npm run dev
 
 ### 6. Access the Application
 
-- **Frontend:** http://localhost:5173
-- **Admin Panel:** http://localhost:5173/admin
-- **Admin Login:** admin@ecotrade.com / Admin@123456
+- **Website**: http://localhost:5173
+- **Admin Panel**: http://localhost:5173/admin
+- **Admin Login**: 
+  - Email: `admin@ecotrade.com`
+  - Password: `Admin@123456`
 
 ## What Works Out of the Box
 
@@ -89,7 +78,7 @@ npm run dev
 - Admin panel access
 
 ✅ **Product Management**
-- Browse certified refurbished products
+- Browse certified refurbished electronics
 - Search and filter products
 - View product details with specifications
 - Admin can add/edit/delete products
@@ -151,7 +140,7 @@ cd server && npm install
 cd ../sarvin && npm install
 ```
 
-## Next Steps
+## Testing Steps
 
 1. **Test Basic Functionality:**
    - Register a new user
@@ -159,15 +148,51 @@ cd ../sarvin && npm install
    - Add items to cart
    - Test admin panel
 
-2. **Add Sample Data:**
+2. **Test Admin Features:**
    - Login to admin panel
    - Create product collections
    - Add brands with logos
    - Add sample products
 
-3. **Configure External Services (Optional):**
+3. **Test UI/UX:**
+   - Check responsive design
+   - Verify professional appearance
+   - Test all navigation links
+   - Verify EcoTrade branding
+
+## Key Features
+
+### For Customers
+- Browse certified refurbished electronics
+- Advanced search and filtering
+- Secure shopping cart and checkout
+- User account management
+- Order tracking
+- Product reviews
+
+### For Admins
+- Complete product management
+- Dynamic collections and brands
+- Order management
+- Customer management
+- Dashboard analytics
+- Newsletter and contact management
+
+Your EcoTrade platform is now ready to use! 🚀
+
+## Next Steps
+
+1. **Configure External Services (Optional):**
    - Set up email notifications
    - Configure payment gateway
    - Set up image uploads
 
-Your EcoTrade platform is now ready to use! 🚀
+2. **Add Sample Data:**
+   - Create collections via admin panel
+   - Add brands with logos
+   - Add sample products
+
+3. **Customize:**
+   - Update contact information
+   - Add your own product images
+   - Customize FAQ content

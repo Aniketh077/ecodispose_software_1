@@ -2,8 +2,31 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 const BrandsSection = ({ types }) => {
-  // Add safety checks to prevent React child errors
+  // Add comprehensive safety checks to prevent React child errors
   if (!types || !Array.isArray(types) || types.length === 0) {
+    return null;
+  }
+
+  // Filter and validate types to ensure they have required properties
+  const validTypes = types.filter(type => {
+    if (!type || typeof type !== 'object') {
+      console.warn('Invalid type object:', type);
+      return false;
+    }
+    
+    const typeId = type._id || type.id;
+    const typeName = typeof type.name === 'string' ? type.name : '';
+    
+    if (!typeId || !typeName) {
+      console.warn('Missing essential type data:', { typeId, typeName });
+      return false;
+    }
+    
+    return true;
+  });
+
+  // Don't render if no valid types
+  if (validTypes.length === 0) {
     return null;
   }
 
@@ -18,19 +41,15 @@ const BrandsSection = ({ types }) => {
         </div>
 
         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
-          {types.map((type) => {
-            // Ensure we have valid data before rendering
+          {validTypes.map((type, index) => {
+            // Safely extract type properties
             const typeId = type._id || type.id;
-            const typeName = type.name || 'Unknown Brand';
-            const typeLogo = type.logo;
-
-            if (!typeId || !typeName) {
-              return null;
-            }
+            const typeName = type.name;
+            const typeLogo = typeof type.logo === 'string' ? type.logo : null;
 
             return (
               <Link
-                key={typeId}
+                key={`brand-${typeId}-${index}`}
                 to={`/products?types=${encodeURIComponent(typeName)}`}
                 className="bg-white rounded-xl shadow-sm p-6 flex items-center justify-center transition-all hover:shadow-lg hover:-translate-y-1 group"
               >
@@ -39,23 +58,26 @@ const BrandsSection = ({ types }) => {
                     <div className="w-full h-20 mx-auto mb-3 flex items-center justify-center">
                       <img
                         src={typeLogo}
-                        alt={typeName}
+                        alt={`${typeName} logo`}
                         className="max-w-full max-h-full object-contain"
                         onError={(e) => {
                           e.target.style.display = 'none';
-                          e.target.nextElementSibling.style.display = 'flex';
+                          const fallback = e.target.nextElementSibling;
+                          if (fallback) {
+                            fallback.style.display = 'flex';
+                          }
                         }}
                       />
                       <div className="hidden w-16 h-16 bg-gray-100 rounded-full items-center justify-center group-hover:bg-green-50 transition-colors">
                         <span className="text-2xl font-bold text-green-700">
-                          {typeName.charAt(0)}
+                          {typeName.charAt(0).toUpperCase()}
                         </span>
                       </div>
                     </div>
                   ) : (
                     <div className="w-16 h-16 mx-auto mb-3 bg-gray-100 rounded-full flex items-center justify-center group-hover:bg-green-50 transition-colors">
                       <span className="text-2xl font-bold text-green-700">
-                        {typeName.charAt(0)}
+                        {typeName.charAt(0).toUpperCase()}
                       </span>
                     </div>
                   )}

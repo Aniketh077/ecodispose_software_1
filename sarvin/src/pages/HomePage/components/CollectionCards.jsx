@@ -24,56 +24,68 @@ const CollectionCards = () => {
     "bg-[#059669]"
   ];
 
-  // Add comprehensive safety checks
+  // Add comprehensive safety checks to prevent React child errors
   if (!collections || !Array.isArray(collections) || collections.length === 0) {
     return null;
   }
 
-  const displayCollections = collections.slice(0, 6).map((collection, index) => {
-    // Ensure collection is a valid object, not a string or other type
-    if (!collection || typeof collection !== 'object') {
-      return null;
-    }
+  // Safely process collections with extensive validation
+  const displayCollections = collections
+    .slice(0, 6)
+    .map((collection, index) => {
+      // Ensure collection is a valid object with required properties
+      if (!collection || typeof collection !== 'object' || !collection.name) {
+        console.warn('Invalid collection object:', collection);
+        return null;
+      }
 
-    const collectionWithTypes = Array.isArray(collectionsWithTypes)
-      ? collectionsWithTypes.find(c => {
-          if (!c || typeof c !== 'object') return false;
-          return c._id === collection._id || c.name === collection.name;
-        })
-      : null;
+      // Safely extract collection properties
+      const collectionId = collection._id || collection.id;
+      const collectionName = typeof collection.name === 'string' ? collection.name : '';
+      const collectionSlug = typeof collection.slug === 'string' ? collection.slug : 
+                            collectionName.toLowerCase().replace(/\s+/g, '-');
+      const collectionImage = typeof collection.image === 'string' ? collection.image : 
+                             "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg";
 
-    const collectionId = collection._id || collection.id;
-    const collectionName = collection.name;
-    const slug = collection.slug || collectionName?.toLowerCase().replace(/\s+/g, '-');
-    
-    // Ensure types is always an array
-    const types = (collectionWithTypes?.types && Array.isArray(collectionWithTypes.types)) 
-      ? collectionWithTypes.types 
-      : [];
+      // Skip if essential data is missing
+      if (!collectionId || !collectionName) {
+        console.warn('Missing essential collection data:', { collectionId, collectionName });
+        return null;
+      }
 
-    // Skip if we don't have essential data
-    if (!collectionId || !collectionName) {
-      return null;
-    }
+      // Safely find matching collection with types
+      const collectionWithTypes = Array.isArray(collectionsWithTypes)
+        ? collectionsWithTypes.find(c => {
+            if (!c || typeof c !== 'object') return false;
+            const cId = c._id || c.id;
+            const cName = typeof c.name === 'string' ? c.name : '';
+            return cId === collectionId || cName === collectionName;
+          })
+        : null;
 
-    return {
-      id: collectionId,
-      title: collectionName,
-      bgColor: bgColors[index % bgColors.length],
-      imageUrl: collection.image || "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg",
-      exploreUrl: `/products/${slug}`,
-      types: types.slice(0, 3).map(type => {
-        // Ensure type is valid
-        if (!type || typeof type !== 'object' || !type.name) {
-          return null;
-        }
-        return {
-          name: type.name,
-          link: `/products?types=${encodeURIComponent(type.name)}`
-        };
-      }).filter(Boolean) // Remove null entries
-    };
-  }).filter(Boolean); // Remove null collections
+      // Safely extract types with validation
+      const types = [];
+      if (collectionWithTypes && Array.isArray(collectionWithTypes.types)) {
+        collectionWithTypes.types.slice(0, 3).forEach(type => {
+          if (type && typeof type === 'object' && typeof type.name === 'string') {
+            types.push({
+              name: type.name,
+              link: `/products?types=${encodeURIComponent(type.name)}`
+            });
+          }
+        });
+      }
+
+      return {
+        id: collectionId,
+        title: collectionName,
+        bgColor: bgColors[index % bgColors.length],
+        imageUrl: collectionImage,
+        exploreUrl: `/products/${collectionSlug}`,
+        types: types
+      };
+    })
+    .filter(Boolean); // Remove null entries
 
   // Don't render if no valid collections
   if (displayCollections.length === 0) {
@@ -86,7 +98,7 @@ const CollectionCards = () => {
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-4">Shop by Category</h2>
           <p className="text-gray-600 text-lg max-w-2xl mx-auto">
-            Discover our premium refurbished electronics across different categories
+            Discover our premium certified refurbished electronics across different categories
           </p>
         </div>
         
@@ -98,10 +110,10 @@ const CollectionCards = () => {
             >
               <div className="p-8 text-white w-full lg:w-1/2 flex flex-col justify-center z-10 order-2 lg:order-1">
                 <h3 className="text-4xl font-bold mb-4">{collection.title}</h3>
-                {collection.types.length > 0 && (
+                {collection.types && collection.types.length > 0 && (
                   <ul className="space-y-2 mb-6">
-                    {collection.types.map((type) => (
-                      <li key={type.name}>
+                    {collection.types.map((type, typeIndex) => (
+                      <li key={`${collection.id}-type-${typeIndex}`}>
                         <Link
                           to={type.link}
                           className="hover:font-normal text-base font-normal hover:underline"
