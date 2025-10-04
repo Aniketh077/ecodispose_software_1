@@ -104,11 +104,13 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
       
       <div className="p-4">
         <div className="text-xs text-gray-500 mb-1">
-          {product.type?.name || product.type || 'Refurbished'}
+          {typeof product.type === 'string' ? product.type : 
+           (product.type && typeof product.type === 'object' && product.type.name) ? 
+           String(product.type.name) : 'Refurbished'}
         </div>
         <Link to={`/product/${product._id}`}>
           <h3 className="font-semibold mb-2 line-clamp-2 hover:text-green-700 transition-colors">
-            {product.name}
+            {String(product.name || 'Product')}
           </h3>
         </Link>
         
