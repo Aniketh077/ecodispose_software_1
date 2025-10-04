@@ -1,5 +1,5 @@
 import React from 'react';
-import { Eye, Calendar, User, Package, DollarSign, CheckCircle } from 'lucide-react';
+import { Eye, Calendar, User, Package, DollarSign, CircleCheck as CheckCircle } from 'lucide-react';
 import formatProductNames from  './formatProductNames'
 
 export const OrdersTable = ({ orders, onViewOrder}) => {

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { User, Settings, Package, LogOut, CheckCircle, AlertCircle, Lock, Eye, EyeOff } from 'lucide-react';
+import { User, Settings, Package, LogOut, CircleCheck as CheckCircle, CircleAlert as AlertCircle, Lock, Eye, EyeOff } from 'lucide-react';
 import { updateUserProfile, clearError, forgotPassword, clearSuccessMessage } from '../store/slices/authSlice';
 import { useToast } from '../contexts/ToastContext';
 import Button from '../components/ui/Button';

@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { CheckCircle, AlertCircle, RefreshCw } from 'lucide-react';
+import { CircleCheck as CheckCircle, CircleAlert as AlertCircle, RefreshCw } from 'lucide-react';
 import { useDispatch, useSelector } from 'react-redux';
 import { verifyEmail, clearError, clearSuccessMessage } from '../../features/auth/authSlice';
 import { useToast } from '../../contexts/ToastContext';

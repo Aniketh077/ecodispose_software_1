@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { X, ChevronDown, ChevronUp, Search, HelpCircle, MessageCircle, Phone } from 'lucide-react';
+import { X, ChevronDown, ChevronUp, Search, Circle as HelpCircle, MessageCircle, Phone } from 'lucide-react';
 import {faqData} from '../../data/faqData'; 
 import Button from '../ui/Button';
 

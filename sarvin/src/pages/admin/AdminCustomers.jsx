@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Search, Mail, Phone, Edit, ChevronLeft, ChevronRight, Loader2, User, Eye } from 'lucide-react';
+import { Search, Mail, Phone, CreditCard as Edit, ChevronLeft, ChevronRight, Loader as Loader2, User, Eye } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { CheckCircle, Truck, Clock, AlertCircle, XCircle, Package } from "lucide-react";
+import { CircleCheck as CheckCircle, Truck, Clock, CircleAlert as AlertCircle, Circle as XCircle, Package } from "lucide-react";
 
 const OrderHeader = ({ order }) => {
   const getStatusColor = (status) => {
