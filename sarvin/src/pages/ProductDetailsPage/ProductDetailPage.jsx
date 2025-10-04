@@ -36,17 +36,20 @@ const ProductDetailPage = () => {
 
   useEffect(() => {
      if (product && product.collection){
-       dispatch(fetchProducts({ 
-         collection: product.collection,
-         limit: 5 
-       })).then((action) => {
-         if (action.payload && action.payload.products) {
-           const related = action.payload.products
-             .filter(p => p._id !== product._id)
-             .slice(0, 4);
-           setRelatedProducts(related);
-         }
-       });
+       const collectionSlug = product.collection?.slug || (typeof product.collection === 'string' ? product.collection : product.collection?.name?.toLowerCase().replace(/\s+/g, '-'));
+       if (collectionSlug) {
+         dispatch(fetchProducts({
+           collection: collectionSlug,
+           limit: 5
+         })).then((action) => {
+           if (action.payload && action.payload.products) {
+             const related = action.payload.products
+               .filter(p => p._id !== product._id)
+               .slice(0, 4);
+             setRelatedProducts(related);
+           }
+         });
+       }
     }
   }, [product, dispatch]);
 
@@ -65,7 +68,7 @@ const ProductDetailPage = () => {
         discountPrice: product.discountPrice,
         image: product.image,
         stock: product.stock,
-        collection: product.collection,
+        collection: product.collection?.name || product.collection,
         type: product.type?.name || product.type
       };
       addToCart(cartProduct, quantity);
@@ -96,7 +99,7 @@ const ProductDetailPage = () => {
     return <ErrorMessage error="Product not found" />;
   }
 
-  const collectionName = product.collection || 'Unknown';
+  const collectionName = product.collection?.name || product.collection || 'Unknown';
 
   return (
     <div className="min-h-screen pt-20 pb-16">

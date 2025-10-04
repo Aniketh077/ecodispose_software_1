@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { useCart } from "../../contexts/CartContext";
 import { useAuth } from "../../contexts/AuthContext";
 import {
@@ -12,9 +13,11 @@ import {
   LogOut,
   Settings,
   Package,
-  Phone, 
+  Phone,
 } from "lucide-react";
 import Button from "../ui/Button";
+import { fetchCollections } from "../../store/slices/collectionSlice";
+import { fetchCollections as fetchCollectionsWithTypes } from "../../store/slices/productSlice";
 
 const Header = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); // For mobile menu
@@ -32,6 +35,14 @@ const Header = () => {
   const navigate = useNavigate();
   const profileMenuRef = useRef(null);
   const scrolledNavRef = useRef(null);
+  const dispatch = useDispatch();
+  const { collections } = useSelector((state) => state.collections);
+  const { collections: collectionsWithTypes } = useSelector((state) => state.products);
+
+  useEffect(() => {
+    dispatch(fetchCollections({ includeInactive: false }));
+    dispatch(fetchCollectionsWithTypes());
+  }, [dispatch]);
 
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const toggleProfileMenu = () => setIsProfileMenuOpen(!isProfileMenuOpen);
@@ -114,57 +125,55 @@ const Header = () => {
     return () => document.removeEventListener("mousedown", handleClickOutside);
   }, [isProfileMenuOpen, isScrolledNavOpen]);
 
+  // Create dynamic menu helper
+  const getCollectionMenu = (collectionName) => {
+    const collection = Array.isArray(collections)
+      ? collections.find(c => c.name.toLowerCase() === collectionName.toLowerCase())
+      : null;
+
+    const collectionWithTypes = Array.isArray(collectionsWithTypes)
+      ? collectionsWithTypes.find(c => c.name?.toLowerCase() === collectionName.toLowerCase())
+      : null;
+
+    const types = collectionWithTypes?.types?.slice(0, 3).map(type => ({
+      name: type.name,
+      path: `/products?types=${encodeURIComponent(type.name)}`
+    })) || [];
+
+    const conditions = [
+      { name: "Like New", path: "/products?condition=Like+New" },
+      { name: "Excellent", path: "/products?condition=Excellent" },
+      { name: "Good", path: "/products?condition=Good" },
+    ];
+
+    const images = types.slice(0, 2).map(type => ({
+      name: type.name,
+      path: type.path,
+      src: collection?.image || "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg",
+      alt: `Refurbished ${type.name}`
+    }));
+
+    return { types, conditions, images };
+  };
+
   // Navigation menu data
-  const smartphonesMenu = {
-    types: [
-      {
-        name: "iPhone",
-        path: "/products?type=iPhone",
-      },
-      { name: "Samsung Galaxy", path: "/products?type=Samsung+Galaxy" },
-      { name: "OnePlus", path: "/products?type=OnePlus" },
-    ],
+  const smartphonesMenu = getCollectionMenu('Smartphones');
+  const laptopsMenu = getCollectionMenu('Laptops');
+
+  // Use dynamic menus or fallback to empty arrays
+  const activeSmartphonesMenu = smartphonesMenu.types && smartphonesMenu.types.length > 0 ? smartphonesMenu : {
+    types: [],
     conditions: [
       { name: "Like New", path: "/products?condition=Like+New" },
       { name: "Excellent", path: "/products?condition=Excellent" },
       { name: "Good", path: "/products?condition=Good" },
     ],
-    images: [
-      {
-        name: "iPhone",
-        path: "/products?type=iPhone",
-        src: "https://images.pexels.com/photos/788946/pexels-photo-788946.jpeg",
-        alt: "Refurbished iPhone",
-      },
-      {
-        name: "Samsung Galaxy",
-        path: "/products?type=Samsung+Galaxy",
-        src: "https://images.pexels.com/photos/1092644/pexels-photo-1092644.jpeg",
-        alt: "Refurbished Samsung Galaxy",
-      },
-    ],
+    images: []
   };
 
-  const laptopsMenu = {
-    types: [
-      { name: "MacBook", path: "/products?type=MacBook" },
-      { name: "ThinkPad", path: "/products?type=ThinkPad" },
-      { name: "Dell Laptop", path: "/products?type=Dell+Laptop" },
-    ],
-    images: [
-      {
-        name: "MacBook",
-        path: "/products?type=MacBook",
-        src: "https://images.pexels.com/photos/18105/pexels-photo.jpg",
-        alt: "Refurbished MacBook",
-      },
-      {
-        name: "ThinkPad",
-        path: "/products?type=ThinkPad",
-        src: "https://images.pexels.com/photos/1229861/pexels-photo-1229861.jpeg",
-        alt: "Refurbished ThinkPad",
-      },
-    ],
+  const activeLaptopsMenu = laptopsMenu.types && laptopsMenu.types.length > 0 ? laptopsMenu : {
+    types: [],
+    images: []
   };
 
   const DesktopNavLinks = () => (
@@ -190,7 +199,7 @@ const Header = () => {
               <div>
                 <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Brands</h4>
                 <ul className="space-y-1.5 mt-2">
-                  {smartphonesMenu.types.map((item) => (
+                  {activeSmartphonesMenu.types.map((item) => (
                     <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-[#C87941]">{item.name}</Link></li>
                   ))}
                 </ul>
@@ -198,14 +207,14 @@ const Header = () => {
               <div>
                 <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Condition</h4>
                 <ul className="space-y-1.5 mt-2">
-                  {smartphonesMenu.conditions.map((item) => (
+                  {activeSmartphonesMenu.conditions.map((item) => (
                     <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-[#C87941]">{item.name}</Link></li>
                   ))}
                 </ul>
               </div>
             </div>
             <div className="flex space-x-6 pl-8 border-l border-gray-200">
-              {smartphonesMenu.images.map((image) => (
+              {activeSmartphonesMenu.images.map((image) => (
                 <Link to={image.path} key={image.name} className="block text-center hover:opacity-90 transition-opacity">
                   <div className="w-44 h-44 flex items-center justify-center rounded-md overflow-hidden">
                     <img src={image.src} alt={image.alt} className="w-full h-full object-contain" />
@@ -226,13 +235,13 @@ const Header = () => {
             <div>
               <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Brands</h4>
               <ul className="space-y-1.5 mt-2">
-                {laptopsMenu.types.map((item) => (
+                {activeLaptopsMenu.types.map((item) => (
                   <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-[#C87941]">{item.name}</Link></li>
                 ))}
               </ul>
             </div>
             <div className="flex space-x-6 pl-8 border-l border-gray-200">
-              {laptopsMenu.images.map((image) => (
+              {activeLaptopsMenu.images.map((image) => (
                 <Link to={image.path} key={image.name} className="block text-center hover:opacity-90 transition-opacity">
                   <div className="w-44 h-44 flex items-center justify-center rounded-md overflow-hidden">
                     <img src={image.src} alt={image.alt} className="w-full h-full object-contain" />
@@ -430,7 +439,7 @@ const Header = () => {
                        Brands
                      </h4>
                      <ul className="space-y-1 mb-3">
-                       {smartphonesMenu.types.map((item) => (
+                       {activeSmartphonesMenu.types.map((item) => (
                          <li key={item.name}>
                            <Link
                              to={item.path}
@@ -445,7 +454,7 @@ const Header = () => {
                        Condition
                      </h4>
                      <ul className="space-y-1">
-                       {smartphonesMenu.conditions.map((item) => (
+                       {activeSmartphonesMenu.conditions.map((item) => (
                          <li key={item.name}>
                            <Link
                              to={item.path}
@@ -483,7 +492,7 @@ const Header = () => {
                        Brands
                      </h4>
                      <ul className="space-y-1">
-                       {laptopsMenu.types.map((item) => (
+                       {activeLaptopsMenu.types.map((item) => (
                          <li key={item.name}>
                            <Link
                              to={item.path}

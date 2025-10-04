@@ -24,15 +24,20 @@ const CollectionCards = () => {
     "bg-[#059669]"
   ];
 
+  if (!collections || !Array.isArray(collections) || collections.length === 0) {
+    return null;
+  }
+
   const displayCollections = collections.slice(0, 6).map((collection, index) => {
-    const collectionWithTypes = collectionsWithTypes.find(
-      c => c._id === collection._id || c.name === collection.name
-    );
+    const collectionWithTypes = Array.isArray(collectionsWithTypes)
+      ? collectionsWithTypes.find(c => c._id === collection._id || c.name === collection.name)
+      : null;
 
     const slug = collection.slug || collection.name.toLowerCase().replace(/\s+/g, '-');
     const types = collectionWithTypes?.types || [];
 
     return {
+      id: collection._id || collection.id,
       title: collection.name,
       bgColor: bgColors[index % bgColors.length],
       imageUrl: collection.image || "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg",
@@ -50,7 +55,7 @@ const CollectionCards = () => {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           {displayCollections.map((collection) => (
             <div
-              key={collection.title}
+              key={collection.id}
               className={`relative ${collection.bgColor} rounded-lg shadow-lg overflow-hidden flex flex-col lg:flex-row lg:h-[360px]`}
             >
               <div className="p-8 text-white w-full lg:w-1/2 flex flex-col justify-center z-10 order-2 lg:order-1">
