@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation, Link } from 'react-router-dom';
 import { useToast } from '../../contexts/ToastContext';
-import { Lock, Eye, EyeOff ,AlertCircle, CheckCircle} from 'lucide-react';
+import { Lock, Eye, EyeOff, CircleAlert as AlertCircle, CircleCheck as CheckCircle } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import { useDispatch, useSelector } from 'react-redux';

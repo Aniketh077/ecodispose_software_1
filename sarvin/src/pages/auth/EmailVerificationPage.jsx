@@ -4,7 +4,7 @@ import { useToast } from '../../contexts/ToastContext';
 import Button from '../../components/ui/Button';
 import Input from '../../components/ui/Input';
 import { useDispatch, useSelector } from 'react-redux';
-import { Mail, RefreshCw, CheckCircle } from 'lucide-react';
+import { Mail, RefreshCw, CircleCheck as CheckCircle } from 'lucide-react';
 
 import {
   verifyEmail,

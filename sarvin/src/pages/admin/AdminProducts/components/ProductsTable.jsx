@@ -1,5 +1,5 @@
 import React from 'react';
-import { Edit, Trash2, ExternalLink } from 'lucide-react';
+import { CreditCard as Edit, Trash2, ExternalLink } from 'lucide-react';
 import DriveImage from '../../../../utils/DriveImage';
 
 const ProductsTable = ({ products, onEdit, onDelete, onProductClick }) => {

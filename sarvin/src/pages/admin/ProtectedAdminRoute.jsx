@@ -1,7 +1,7 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
-import { AlertTriangle } from 'lucide-react';
+import { TriangleAlert as AlertTriangle } from 'lucide-react';
 
 const ProtectedAdminRoute = ({ children }) => {
   const { user, isAuthenticated, isAdmin, isInitialized } = useAuth();
