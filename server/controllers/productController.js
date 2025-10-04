@@ -1,5 +1,5 @@
 const Product = require('../models/Product');
-
+const Collection = require('../models/Collection');
 const Type = require('../models/Type');
 const Order = require('../models/Order');
 const { deleteFromS3, extractS3KeyFromUrl } = require('../utils/s3Upload');
@@ -29,8 +29,16 @@ const getProducts = async (req, res) => {
 
     // Collection filter
     if (collection) {
-      const collectionName = decodeURIComponent(collection).replace(/-/g, ' ');
-      query.collection = { $regex: new RegExp(`^${collectionName}$`, 'i') };
+      const collectionSlug = decodeURIComponent(collection).toLowerCase();
+      const collectionDoc = await Collection.findOne({
+        $or: [
+          { slug: collectionSlug },
+          { name: { $regex: new RegExp(`^${collectionSlug.replace(/-/g, ' ')}$`, 'i') } }
+        ]
+      });
+      if (collectionDoc) {
+        query.collection = collectionDoc._id;
+      }
     }
 
     // Featured, new arrival, and best seller filters
@@ -155,7 +163,16 @@ const getProducts = async (req, res) => {
                 as: "type"
               }
             },
-            { $unwind: { path: "$type", preserveNullAndEmptyArrays: true } }
+            { $unwind: { path: "$type", preserveNullAndEmptyArrays: true } },
+            {
+              $lookup: {
+                from: "collections",
+                localField: "collection",
+                foreignField: "_id",
+                as: "collection"
+              }
+            },
+            { $unwind: { path: "$collection", preserveNullAndEmptyArrays: true } }
           ]
         }
       }
@@ -199,6 +216,7 @@ const getProductById = async (req, res) => {
   try {
     const product = await Product.findById(req.params.id)
       .populate('type', 'name logo')
+      .populate('collection', 'name slug image')
       .populate('reviews.user', 'name');
 
     if (!product) {
@@ -230,10 +248,20 @@ const createProduct = async (req, res) => {
       return res.status(400).json({ message: 'Type is required' });
     }
 
+    if (productData.collection) {
+      const collectionExists = await Collection.findById(productData.collection);
+      if (!collectionExists) {
+        return res.status(400).json({ message: 'Selected collection does not exist' });
+      }
+    } else {
+      return res.status(400).json({ message: 'Collection is required' });
+    }
+
     const product = new Product(productData);
     const savedProduct = await product.save();
 
     await savedProduct.populate('type', 'name logo');
+    await savedProduct.populate('collection', 'name slug image');
 
     res.status(201).json(savedProduct);
 
@@ -251,30 +279,44 @@ const getCollectionsWithTypes = async (req, res) => {
     const collections = await Product.aggregate([
       {
         $lookup: {
-          from: 'types', 
+          from: 'collections',
+          localField: 'collection',
+          foreignField: '_id',
+          as: 'collectionDetails'
+        }
+      },
+      {
+        $lookup: {
+          from: 'types',
           localField: 'type',
           foreignField: '_id',
           as: 'typeDetails'
         }
       },
-      // Ensure we only work with products that have a valid, existing type
-      { $match: { 'typeDetails': { $ne: [] } } },
-      // Deconstruct the typeDetails array
+      { $match: {
+        'collectionDetails': { $ne: [] },
+        'typeDetails': { $ne: [] }
+      } },
+      { $unwind: '$collectionDetails' },
       { $unwind: '$typeDetails' },
-      // Group by collection and type to get unique pairs
       {
         $group: {
           _id: {
-            collection: '$collection',
+            collectionId: '$collectionDetails._id',
+            collectionName: '$collectionDetails.name',
+            collectionSlug: '$collectionDetails.slug',
             typeId: '$typeDetails._id',
             typeName: '$typeDetails.name'
           }
         }
       },
-      // Group the unique types under their parent collection
       {
         $group: {
-          _id: '$_id.collection',
+          _id: {
+            collectionId: '$_id.collectionId',
+            collectionName: '$_id.collectionName',
+            collectionSlug: '$_id.collectionSlug'
+          },
           types: {
             $addToSet: {
               _id: '$_id.typeId',
@@ -283,17 +325,16 @@ const getCollectionsWithTypes = async (req, res) => {
           }
         }
       },
-      // Format the final output
       {
         $project: {
-          _id: 0,
-          name: '$_id',
+          _id: '$_id.collectionId',
+          name: '$_id.collectionName',
+          slug: '$_id.collectionSlug',
           types: {
             $sortArray: { input: "$types", sortBy: { name: 1 } }
           }
         }
       },
-      // Sort collections alphabetically
       { $sort: { name: 1 } }
     ]);
     res.json(collections);
@@ -336,7 +377,7 @@ const updateProduct = async (req, res) => {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, {
       new: true,
       runValidators: true
-    }).populate('type', 'name logo');
+    }).populate('type', 'name logo').populate('collection', 'name slug image');
 
     res.json(product);
   } catch (error) {

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { X, Upload } from 'lucide-react';
 import { uploadSingleImage } from '../../../../../store/slices/uploadSlice';
+import { fetchCollections } from '../../../../../store/slices/collectionSlice';
 import FormField from './components/FormField';
 import ImageManager from './components/ImageManager';
 import FeatureManager from './components/FeatureManager';
@@ -15,6 +16,7 @@ import {
 const ProductForm = ({ onClose, onSave, product, types }) => {
   const dispatch = useDispatch();
   const { uploading } = useSelector((state) => state.upload);
+  const { collections } = useSelector((state) => state.collections);
 
   const [formData, setFormData] = useState({
     name: product?.name || '',
@@ -22,7 +24,7 @@ const ProductForm = ({ onClose, onSave, product, types }) => {
     price: product?.price !== undefined ? product.price : '',
     discountPrice: product?.discountPrice || null,
     originalPrice: product?.originalPrice || '',
-    collection: product?.collection || 'Smartphones',
+    collection: product?.collection?._id || product?.collection?.id || product?.collection || '',
     condition: product?.condition || 'Good',
     refurbishmentDetails: product?.refurbishmentDetails || 'Professionally refurbished and quality tested',
     warranty: product?.warranty || '',
@@ -36,6 +38,10 @@ const ProductForm = ({ onClose, onSave, product, types }) => {
     newArrival: product?.newArrival || false,
     bestSeller: product?.bestSeller || false,
   });
+
+  useEffect(() => {
+    dispatch(fetchCollections());
+  }, [dispatch]);
 
   const [errors, setErrors] = useState({});
   const [showNewType, setShowNewType] = useState(false);
@@ -184,15 +190,13 @@ const ProductForm = ({ onClose, onSave, product, types }) => {
   ];
 
   const collectionOptions = [
-    { value: 'Smartphones', label: 'Smartphones' },
-    { value: 'Laptops', label: 'Laptops' },
-    { value: 'Tablets', label: 'Tablets' },
-    { value: 'Cameras', label: 'Cameras' },
-    { value: 'Smartwatches', label: 'Smartwatches' },
-    { value: 'Headphones', label: 'Headphones' },
-    { value: 'Gaming Consoles', label: 'Gaming Consoles' },
-    { value: 'Home Appliances', label: 'Home Appliances' },
-    { value: 'Computer Accessories', label: 'Computer Accessories' }
+    { value: '', label: 'Select Collection' },
+    ...collections
+      .filter(col => col.isActive)
+      .map(col => ({
+        value: col.id || col._id,
+        label: col.name
+      }))
   ];
 
   const conditionOptions = [

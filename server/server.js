@@ -11,6 +11,7 @@ const userRoutes = require('./routes/userRoutes');
 const newsletterRoutes = require('./routes/newsletterRoutes');
 const contactRoutes = require('./routes/contactRoutes');
 const uploadRoutes = require('./routes/uploadRoutes');
+const collectionRoutes = require('./routes/collectionRoutes');
 
 
 const app = express();
@@ -90,7 +91,8 @@ app.use('/api/orders', orderRoutes);
 app.use('/api/admin', userRoutes);
 app.use('/api/newsletter', newsletterRoutes);
 app.use('/api/contact', contactRoutes);
-app.use('/api/upload', uploadRoutes); 
+app.use('/api/upload', uploadRoutes);
+app.use('/api/collections', collectionRoutes); 
 
 // Health check route with environment info
 app.get('/api/health', (req, res) => {

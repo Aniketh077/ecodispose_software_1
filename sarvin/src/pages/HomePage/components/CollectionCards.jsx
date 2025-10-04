@@ -1,38 +1,54 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight } from "lucide-react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCollections } from "../../../store/slices/collectionSlice";
+import { fetchCollections as fetchCollectionsWithTypes } from "../../../store/slices/productSlice";
 
 const CollectionCards = () => {
-  const collections = [
-    {
-      title: "Smartphones",
-      bgColor: "bg-[#2A4365]",
-      imageUrl: "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg",
-      exploreUrl: "/products/smartphones",
-      types: [
-        { name: "iPhone", link: "/products?type=iPhone" },
-        { name: "Samsung Galaxy", link: "/products?type=Samsung+Galaxy" },
-        { name: "OnePlus", link: "/products?type=OnePlus" },
-      ],
-    },
-    {
-      title: "Laptops",
-      bgColor: "bg-[#C87941]",
-      imageUrl: "https://images.pexels.com/photos/18105/pexels-photo.jpg",
-      exploreUrl: "/products/laptops",
-      types: [
-        { name: "MacBook", link: "/products?type=MacBook" },
-        { name: "ThinkPad", link: "/products?type=ThinkPad" },
-        { name: "Dell Laptops", link: "/products?type=Dell+Laptop" },
-      ],
-    },
+  const dispatch = useDispatch();
+  const { collections } = useSelector((state) => state.collections);
+  const { collections: collectionsWithTypes } = useSelector((state) => state.products);
+
+  useEffect(() => {
+    dispatch(fetchCollections({ includeInactive: false }));
+    dispatch(fetchCollectionsWithTypes());
+  }, [dispatch]);
+
+  const bgColors = [
+    "bg-[#2A4365]",
+    "bg-[#C87941]",
+    "bg-[#2D5F5D]",
+    "bg-[#7C3AED]",
+    "bg-[#DC2626]",
+    "bg-[#059669]"
   ];
+
+  const displayCollections = collections.slice(0, 6).map((collection, index) => {
+    const collectionWithTypes = collectionsWithTypes.find(
+      c => c._id === collection._id || c.name === collection.name
+    );
+
+    const slug = collection.slug || collection.name.toLowerCase().replace(/\s+/g, '-');
+    const types = collectionWithTypes?.types || [];
+
+    return {
+      title: collection.name,
+      bgColor: bgColors[index % bgColors.length],
+      imageUrl: collection.image || "https://images.pexels.com/photos/404280/pexels-photo-404280.jpeg",
+      exploreUrl: `/products/${slug}`,
+      types: types.slice(0, 3).map(type => ({
+        name: type.name,
+        link: `/products?types=${encodeURIComponent(type.name)}`
+      }))
+    };
+  });
 
   return (
     <section className="py-16 bg-slate-50">
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {collections.map((collection) => (
+          {displayCollections.map((collection) => (
             <div
               key={collection.title}
               className={`relative ${collection.bgColor} rounded-lg shadow-lg overflow-hidden flex flex-col lg:flex-row lg:h-[360px]`}

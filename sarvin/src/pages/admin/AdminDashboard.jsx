@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import { Package, ShoppingCart, Users, LogOut, Menu, X, ChevronRight, Mail, MessageSquare, BarChart3, Home, ChevronLeft, Calendar, User, DollarSign, Eye } from 'lucide-react';
+import { Package, ShoppingCart, Users, LogOut, Menu, X, ChevronRight, Mail, MessageSquare, BarChart3, Home, ChevronLeft, Calendar, User, DollarSign, Eye, Grid, Tag } from 'lucide-react';
 import { useAuth } from '../../contexts/AuthContext';
 import { fetchDashboardStats, fetchAllUsers } from '../../store/slices/adminSlice';
 import AdminProducts from './AdminProducts/AdminProducts';
@@ -9,6 +9,8 @@ import AdminOrders from './AdminOrders/AdminMainOrders';
 import AdminCustomers from './AdminCustomers';
 import AdminNewsletter from './AdminNewsletter';
 import AdminContactForm from './AdminContactForm/AdminContactForm';
+import AdminCollections from './AdminCollections';
+import AdminBrands from './AdminBrands';
 import Button from '../../components/ui/Button';
 import formatProductNames from  './AdminOrders/components/formatProductNames';
 
@@ -16,6 +18,8 @@ import formatProductNames from  './AdminOrders/components/formatProductNames';
 const AdminTab = {
   DASHBOARD: 'dashboard',
   PRODUCTS: 'products',
+  COLLECTIONS: 'collections',
+  BRANDS: 'brands',
   ORDERS: 'orders',
   CUSTOMERS: 'customers',
   NEWSLETTER: 'newsletter',
@@ -104,6 +108,8 @@ const AdminDashboard = () => {
   const menuItems = [
     { key: AdminTab.DASHBOARD, label: 'Dashboard', icon: BarChart3 },
     { key: AdminTab.PRODUCTS, label: 'Products', icon: Package },
+    { key: AdminTab.COLLECTIONS, label: 'Collections', icon: Grid },
+    { key: AdminTab.BRANDS, label: 'Brands', icon: Tag },
     { key: AdminTab.ORDERS, label: 'Orders', icon: ShoppingCart },
     { key: AdminTab.CUSTOMERS, label: 'Customers', icon: Users },
     { key: AdminTab.NEWSLETTER, label: 'Newsletter', icon: Mail },
@@ -116,8 +122,12 @@ const AdminDashboard = () => {
         return <AdminDashboardContent onViewDetails={handleViewDetails} />;
       case AdminTab.PRODUCTS:
         return <AdminProducts />;
+      case AdminTab.COLLECTIONS:
+        return <AdminCollections />;
+      case AdminTab.BRANDS:
+        return <AdminBrands />;
       case AdminTab.ORDERS:
-        return <AdminOrders initialOrderId={selectedOrderId} />; 
+        return <AdminOrders initialOrderId={selectedOrderId} />;
       case AdminTab.CUSTOMERS:
         return <AdminCustomers />;
       case AdminTab.NEWSLETTER:

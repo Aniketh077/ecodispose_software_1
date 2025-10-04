@@ -6,6 +6,7 @@ import orderReducer from './slices/orderSlice';
 import adminReducer from './slices/adminSlice';
 import newsletterContactReducer from './slices/newsletterContactSlice';
 import uploadReducer from './slices/uploadSlice';
+import collectionReducer from './slices/collectionSlice';
 
 export const store = configureStore({
   reducer: {
@@ -15,7 +16,8 @@ export const store = configureStore({
     orders: orderReducer,
     admin: adminReducer,
     newsletterContact: newsletterContactReducer,
-    upload: uploadReducer
+    upload: uploadReducer,
+    collections: collectionReducer
   },
   middleware: (getDefaultMiddleware) => 
     getDefaultMiddleware({

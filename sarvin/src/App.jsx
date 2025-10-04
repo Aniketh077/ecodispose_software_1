@@ -31,6 +31,8 @@ import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts/AdminProducts";
 import AdminOrders from "./pages/admin/AdminOrders/AdminMainOrders";
 import AdminCustomers from "./pages/admin/AdminCustomers";
+import AdminCollections from "./pages/admin/AdminCollections";
+import AdminBrands from "./pages/admin/AdminBrands";
 import ToastContainer from "./components/ui/ToastContainer";
 import { ToastProvider } from "./contexts/ToastContext";
 import ScrollToTop from "./components/ScrollToTop";
@@ -144,6 +146,22 @@ function App() {
                     element={
                       <ProtectedAdminRoute>
                         <AdminCustomers />
+                      </ProtectedAdminRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/collections"
+                    element={
+                      <ProtectedAdminRoute>
+                        <AdminCollections />
+                      </ProtectedAdminRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/brands"
+                    element={
+                      <ProtectedAdminRoute>
+                        <AdminBrands />
                       </ProtectedAdminRoute>
                     }
                   />

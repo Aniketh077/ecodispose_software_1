@@ -13,9 +13,9 @@ const productSchema = new mongoose.Schema({
   price: { type: Number, required: true },
   discountPrice: Number,
   collection: {
-    type: String,
-    required: true,
-    enum: ['Smartphones', 'Laptops', 'Tablets', 'Cameras', 'Smartwatches', 'Headphones', 'Gaming Consoles', 'Home Appliances', 'Computer Accessories'],
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'Collection',
+    required: true
   },
   condition: {
     type: String,
