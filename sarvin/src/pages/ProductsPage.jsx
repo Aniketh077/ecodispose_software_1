@@ -550,7 +550,7 @@ const ProductsPage = () => {
                 </FilterSection>
 
                 <FilterSection
-                  title="Category"
+                  title="Collections"
                   isOpen={openSections.category}
                   onToggle={() => toggleSection("category")}
                 >

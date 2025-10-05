@@ -247,35 +247,23 @@ const Header = () => {
           Smartphones
           <ChevronDown className="ml-1 h-3 w-3 relative top-[3px]" />
         </Link>
-        <div className="absolute left-[-6rem] top-full mt-2 bg-white shadow-lg rounded-md p-6 z-50 transition-all duration-300 transform opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 translate-y-2" style={{ minWidth: "800px" }}>
+        <div className="absolute left-0 top-full mt-2 bg-white shadow-lg rounded-md p-6 z-50 transition-all duration-300 transform opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 translate-y-2" style={{ minWidth: "500px" }}>
           <div className="flex justify-between items-start space-x-8">
-            <div className="flex space-x-12">
-              <div>
-                <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Brands</h4>
-                <ul className="space-y-1.5 mt-2">
-                  {activeSmartphonesMenu.types.map((item) => (
-                    <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-emerald-600">{item.name}</Link></li>
-                  ))}
-                </ul>
+            <div className="flex-1">
+              <h4 className="font-semibold text-base mb-4 text-[#01364a]">Explore Smartphones</h4>
+              <div className="grid grid-cols-2 gap-4">
+                {activeSmartphonesMenu.images.map((image) => (
+                  <Link to={image.path} key={image.name} className="block text-center hover:opacity-90 transition-opacity group/item">
+                    <div className="w-full h-32 flex items-center justify-center rounded-md overflow-hidden bg-gray-50">
+                      <img src={image.src} alt={image.alt} className="w-full h-full object-cover group-hover/item:scale-105 transition-transform" />
+                    </div>
+                    <p className="text-sm font-medium text-gray-800 mt-2 group-hover/item:text-emerald-600">{image.name}</p>
+                  </Link>
+                ))}
               </div>
-              <div>
-                <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Condition</h4>
-                <ul className="space-y-1.5 mt-2">
-                  {activeSmartphonesMenu.conditions.map((item) => (
-                    <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-emerald-600">{item.name}</Link></li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <div className="flex space-x-6 pl-8 border-l border-gray-200">
-              {activeSmartphonesMenu.images.map((image) => (
-                <Link to={image.path} key={image.name} className="block text-center hover:opacity-90 transition-opacity">
-                  <div className="w-44 h-44 flex items-center justify-center rounded-md overflow-hidden">
-                    <img src={image.src} alt={image.alt} className="w-full h-full object-contain" />
-                  </div>
-                  <p className="text-sm font-medium text-gray-800 mt-2">{image.name}</p>
-                </Link>
-              ))}
+              <Link to="/products/smartphones" className="block mt-4 text-center text-sm font-medium text-emerald-600 hover:text-emerald-700">
+                View All Smartphones →
+              </Link>
             </div>
           </div>
         </div>
@@ -284,35 +272,23 @@ const Header = () => {
         <Link to="/products/laptops" className="text-sm font-medium transition-colors hover:text-emerald-600 text-[#01364a] flex items-center">
           Laptops <ChevronDown className="ml-1 h-3 w-3 relative top-[3px]" />
         </Link>
-        <div className="absolute left-[-6rem] top-full mt-2 bg-white shadow-lg rounded-md p-6 z-50 transition-all duration-300 transform opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 translate-y-2" style={{ minWidth: "800px" }}>
+        <div className="absolute left-0 top-full mt-2 bg-white shadow-lg rounded-md p-6 z-50 transition-all duration-300 transform opacity-0 invisible group-hover:opacity-100 group-hover:visible group-hover:translate-y-0 translate-y-2" style={{ minWidth: "500px" }}>
           <div className="flex justify-between items-start space-x-8">
-            <div className="flex space-x-12">
-              <div>
-                <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Brands</h4>
-                <ul className="space-y-1.5 mt-2">
-                  {activeLaptopsMenu.types.map((item) => (
-                    <li key={item.name}><Link to={item.path} className="block text-sm text-gray-600 hover:text-emerald-600">{item.name}</Link></li>
-                  ))}
-                </ul>
+            <div className="flex-1">
+              <h4 className="font-semibold text-base mb-4 text-[#01364a]">Explore Laptops</h4>
+              <div className="grid grid-cols-2 gap-4">
+                {activeLaptopsMenu.images.map((image) => (
+                  <Link to={image.path} key={image.name} className="block text-center hover:opacity-90 transition-opacity group/item">
+                    <div className="w-full h-32 flex items-center justify-center rounded-md overflow-hidden bg-gray-50">
+                      <img src={image.src} alt={image.alt} className="w-full h-full object-cover group-hover/item:scale-105 transition-transform" />
+                    </div>
+                    <p className="text-sm font-medium text-gray-800 mt-2 group-hover/item:text-emerald-600">{image.name}</p>
+                  </Link>
+                ))}
               </div>
-              <div>
-                <h4 className="font-semibold text-sm mb-2 text-[#01364a]">Condition</h4>
-                <ul className="space-y-1.5 mt-2">
-                  <li><Link to="/products/laptops?condition=Like+New" className="block text-sm text-gray-600 hover:text-emerald-600">Like New</Link></li>
-                  <li><Link to="/products/laptops?condition=Excellent" className="block text-sm text-gray-600 hover:text-emerald-600">Excellent</Link></li>
-                  <li><Link to="/products/laptops?condition=Good" className="block text-sm text-gray-600 hover:text-emerald-600">Good</Link></li>
-                </ul>
-              </div>
-            </div>
-            <div className="flex space-x-6 pl-8 border-l border-gray-200">
-              {activeLaptopsMenu.images.map((image) => (
-                <Link to={image.path} key={image.name} className="block text-center hover:opacity-90 transition-opacity">
-                  <div className="w-44 h-44 flex items-center justify-center rounded-md overflow-hidden">
-                    <img src={image.src} alt={image.alt} className="w-full h-full object-contain" />
-                  </div>
-                  <p className="text-sm font-medium text-[#01364a] mt-2">{image.name}</p>
-                </Link>
-              ))}
+              <Link to="/products/laptops" className="block mt-4 text-center text-sm font-medium text-emerald-600 hover:text-emerald-700">
+                View All Laptops →
+              </Link>
             </div>
           </div>
         </div>
