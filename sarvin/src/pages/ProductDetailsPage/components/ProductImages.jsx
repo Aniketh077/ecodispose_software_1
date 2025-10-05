@@ -29,14 +29,21 @@ const ProductImages = ({ product, activeImage, setActiveImage }) => {
         <img
           src={productImages[activeImage] || product.image}
           alt={product.name}
-          className="w-full h-full object-contain p-4"
+          className={`w-full h-full object-contain p-4 ${product.stock === 0 ? 'opacity-50' : ''}`}
         />
-        {product.discountPrice && (
+        {product.stock === 0 && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none z-20">
+            <div className="bg-red-600 text-white px-8 py-4 text-xl font-bold rounded-md transform -rotate-12 shadow-lg">
+              SOLD OUT
+            </div>
+          </div>
+        )}
+        {product.stock > 0 && product.discountPrice && product.discountPrice < product.price && (
           <div className="absolute left-4 top-4 z-10 bg-red-500 px-3 py-1 text-sm font-semibold text-white">
             {Math.round(((product.price - product.discountPrice) / product.price) * 100)}% OFF
           </div>
         )}
-        {product.newArrival && (
+        {product.stock > 0 && product.newArrival && (
           <div className="absolute right-4 top-4 z-10 bg-green-600 px-3 py-1 text-sm font-semibold text-white">
             NEW
           </div>
@@ -56,7 +63,7 @@ const ProductImages = ({ product, activeImage, setActiveImage }) => {
               <img
                 src={image}
                 alt={`${product.name} - view ${index + 1}`}
-                className="w-full h-full object-contain p-1"
+                className={`w-full h-full object-contain p-1 ${product.stock === 0 ? 'opacity-50' : ''}`}
               />
             </button>
           ))}
