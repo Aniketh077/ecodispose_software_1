@@ -140,6 +140,7 @@ const ProductsPage = () => {
   const [inStockOnly, setInStockOnly] = useState(false);
   const [selectedConditions, setSelectedConditions] = useState([]);
   const [selectedTypes, setSelectedTypes] = useState([]);
+  const [selectedCategories, setSelectedCategories] = useState([]);
   const [sortBy, setSortBy] = useState("featured");
 
   // Local component state
@@ -149,6 +150,7 @@ const ProductsPage = () => {
     price: true,
     availability: false,
     condition: true,
+    category: true,
     type: false,
   });
 
@@ -212,6 +214,9 @@ const ProductsPage = () => {
     const allTypes = new Set(typesFromURL.filter(Boolean));
     if (typeFromURL) allTypes.add(typeFromURL);
     setSelectedTypes(Array.from(allTypes));
+
+    const categoriesFromURL = params.get("categories")?.split(",") || [];
+    setSelectedCategories(categoriesFromURL);
   }, [searchParams]);
 
   // Fetch data based on URL params
@@ -250,6 +255,9 @@ const ProductsPage = () => {
     if (typesParam) typesParam.split(",").forEach((t) => typesSet.add(t));
     if (typeParam) typesSet.add(typeParam);
     if (typesSet.size > 0) filters.types = Array.from(typesSet).join(",");
+
+    const categoriesParam = params.get("categories");
+    if (categoriesParam) filters.categories = categoriesParam;
 
     dispatch(fetchProducts(filters));
   }, [dispatch, collectionName, searchParams]);
@@ -332,6 +340,7 @@ const ProductsPage = () => {
     if (params.has("inStock")) count++;
     if (params.has("condition")) count++;
     if (params.has("types") || params.has("type")) count++;
+    if (params.has("categories")) count++;
     return count;
   };
 
@@ -541,7 +550,38 @@ const ProductsPage = () => {
                 </FilterSection>
 
                 <FilterSection
-                  title="Type"
+                  title="Category"
+                  isOpen={openSections.category}
+                  onToggle={() => toggleSection("category")}
+                >
+                  <div className="space-y-3 max-h-60 overflow-y-auto">
+                    {collections
+                      .filter(col => col.isActive)
+                      .map((category) => {
+                        const productCount = products.filter(
+                          p => p.collection?.name === category.name || p.collection?._id === category._id
+                        ).length;
+                        return (
+                          <FilterCheckbox
+                            key={category.id || category._id}
+                            label={category.name}
+                            value={category.name}
+                            checked={selectedCategories.includes(category.name)}
+                            onChange={() =>
+                              handleCheckboxChange(
+                                category.name,
+                                selectedCategories,
+                                "categories"
+                              )
+                            }
+                          />
+                        );
+                      })}
+                  </div>
+                </FilterSection>
+
+                <FilterSection
+                  title="Brand"
                   isOpen={openSections.type}
                   onToggle={() => toggleSection("type")}
                 >

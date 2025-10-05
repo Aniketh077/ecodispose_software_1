@@ -21,6 +21,7 @@ const getProducts = async (req, res) => {
       minPrice,
       maxPrice,
       types,
+      categories,
       condition,
       inStock
     } = req.query;
@@ -89,6 +90,32 @@ const getProducts = async (req, res) => {
 
       if (typeIds.length > 0) {
         query.type = { $in: typeIds };
+      }
+    }
+
+    // Categories filter (multiple categories)
+    if (categories) {
+      const categoryNames = categories.split(',').map(cat => cat.trim());
+      const categoryDocs = await Collection.find({
+        name: { $in: categoryNames },
+        isActive: true
+      });
+      const categoryIds = categoryDocs.map(cat => cat._id);
+
+      if (categoryIds.length > 0) {
+        // If collection filter is already applied, use $or to combine
+        if (query.collection) {
+          query.$and = query.$and || [];
+          query.$and.push({
+            $or: [
+              { collection: query.collection },
+              { collection: { $in: categoryIds } }
+            ]
+          });
+          delete query.collection;
+        } else {
+          query.collection = { $in: categoryIds };
+        }
       }
     }
 
