@@ -113,7 +113,7 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
             </div>
           </div>
         )}
-        {product.stock > 0 && discountPercentage > 0 && (
+        {product.stock > 0 && discountPercentage > 0 && product.discountPrice && product.discountPrice < product.price && (
           <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-semibold rounded">
             {discountPercentage}% OFF
           </div>
