@@ -24,14 +24,21 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
     return (
       <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
         <div className="flex">
-          <div className="w-48 h-48 flex-shrink-0">
+          <div className="w-48 h-48 flex-shrink-0 relative">
             <Link to={`/product/${product._id}`}>
               <img
                 src={product.image}
                 alt={product.name}
-                className="w-full h-full object-contain p-4"
+                className={`w-full h-full object-contain p-4 ${product.stock === 0 ? 'opacity-50' : ''}`}
               />
             </Link>
+            {product.stock === 0 && (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <div className="bg-red-600 text-white px-4 py-2 text-sm font-bold rounded-md transform -rotate-12 shadow-lg">
+                  SOLD OUT
+                </div>
+              </div>
+            )}
           </div>
           <div className="flex-1 p-6">
             <Link to={`/product/${product._id}`}>
@@ -67,9 +74,16 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
                   </span>
                 )}
               </div>
-              <button className="bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-colors flex items-center">
+              <button
+                disabled={product.stock === 0}
+                className={`px-4 py-2 rounded-md transition-colors flex items-center ${
+                  product.stock === 0
+                    ? 'bg-gray-400 text-white cursor-not-allowed'
+                    : 'bg-green-600 text-white hover:bg-green-700'
+                }`}
+              >
                 <ShoppingCart className="h-4 w-4 mr-2" />
-                Add to Cart
+                {product.stock === 0 ? 'Sold Out' : 'Add to Cart'}
               </button>
             </div>
           </div>
@@ -86,16 +100,25 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
             <img
               src={product.image}
               alt={product.name}
-              className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+              className={`w-full h-full object-contain group-hover:scale-105 transition-transform duration-300 ${
+                product.stock === 0 ? 'opacity-50' : ''
+              }`}
             />
           </div>
         </Link>
-        {discountPercentage > 0 && (
+        {product.stock === 0 && (
+          <div className="absolute inset-0 flex items-center justify-center pointer-events-none">
+            <div className="bg-red-600 text-white px-6 py-3 text-base font-bold rounded-md transform -rotate-12 shadow-lg">
+              SOLD OUT
+            </div>
+          </div>
+        )}
+        {product.stock > 0 && discountPercentage > 0 && (
           <div className="absolute top-2 left-2 bg-red-500 text-white px-2 py-1 text-xs font-semibold rounded">
             {discountPercentage}% OFF
           </div>
         )}
-        {product.newArrival && (
+        {product.stock > 0 && product.newArrival && (
           <div className="absolute top-2 right-2 bg-green-600 text-white px-2 py-1 text-xs font-semibold rounded">
             CERTIFIED
           </div>
@@ -147,9 +170,16 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
           )}
         </div>
         
-        <button className="w-full bg-green-600 text-white py-2 rounded-md hover:bg-green-700 transition-colors flex items-center justify-center">
+        <button
+          disabled={product.stock === 0}
+          className={`w-full py-2 rounded-md transition-colors flex items-center justify-center ${
+            product.stock === 0
+              ? 'bg-gray-400 text-white cursor-not-allowed'
+              : 'bg-green-600 text-white hover:bg-green-700'
+          }`}
+        >
           <ShoppingCart className="h-4 w-4 mr-2" />
-          Add to Cart
+          {product.stock === 0 ? 'Sold Out' : 'Add to Cart'}
         </button>
       </div>
     </div>

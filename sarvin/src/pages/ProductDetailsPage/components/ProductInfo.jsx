@@ -101,25 +101,34 @@ const ProductInfo = ({
       <div className="mb-6">
         <div className="flex items-center">
           <div className={`h-3 w-3 rounded-full mr-2 ${
-            product.stock > 5 ? 'bg-green-500' : 
+            product.stock > 5 ? 'bg-green-500' :
             product.stock > 0 ? 'bg-yellow-500' : 'bg-red-500'
           }`}></div>
-          <span className="text-sm font-medium">
+          <span className={`text-sm font-medium ${product.stock === 0 ? 'text-red-600' : ''}`}>
             {product.stock > 5
               ? 'In Stock'
               : product.stock > 0
               ? `Low Stock (${product.stock} left)`
-              : 'Out of Stock'}
+              : 'Sold Out'}
           </span>
         </div>
+        {product.stock === 0 && (
+          <div className="mt-2 bg-red-50 border border-red-200 rounded-md p-3">
+            <p className="text-sm text-red-700 font-medium">
+              This item is currently out of stock. Please check back later or contact us for availability.
+            </p>
+          </div>
+        )}
       </div>
       
       {/* Quantity Selector and Add to Cart */}
       <div className="flex flex-col sm:flex-row space-y-4 sm:space-y-0 sm:space-x-4 mb-6">
-        <div className="flex items-center border border-gray-300 rounded-md w-36">
+        <div className={`flex items-center border border-gray-300 rounded-md w-36 ${
+          product.stock === 0 ? 'opacity-50' : ''
+        }`}>
           <button
             onClick={decrementQuantity}
-            disabled={quantity <= 1}
+            disabled={quantity <= 1 || product.stock === 0}
             className="h-10 w-10 flex items-center justify-center text-gray-600 hover:text-green-700 disabled:opacity-50"
           >
             <Minus className="h-4 w-4" />
@@ -136,10 +145,11 @@ const ProductInfo = ({
             className="h-10 w-16 border-0 text-center focus:ring-0"
             min="1"
             max={product.stock}
+            disabled={product.stock === 0}
           />
           <button
             onClick={incrementQuantity}
-            disabled={quantity >= product.stock}
+            disabled={quantity >= product.stock || product.stock === 0}
             className="h-10 w-10 flex items-center justify-center text-gray-600 hover:text-green-700 disabled:opacity-50"
           >
             <Plus className="h-4 w-4" />
@@ -152,9 +162,9 @@ const ProductInfo = ({
           onClick={handleAddToCart}
           disabled={product.stock === 0}
           fullWidth
-          className="flex-1"
+          className={`flex-1 ${product.stock === 0 ? 'bg-gray-400 cursor-not-allowed hover:bg-gray-400' : ''}`}
         >
-          Add to Cart
+          {product.stock === 0 ? 'Sold Out' : 'Add to Cart'}
         </Button>
         {/* <Button
           variant="outline"
