@@ -1,6 +1,6 @@
 const RecycleRequest = require('../models/RecycleRequest');
 
-exports.createRecycleRequest = async (req, res) => {
+const createRecycleRequest = async (req, res) => {
   try {
     const recycleRequest = new RecycleRequest(req.body);
     await recycleRequest.save();
@@ -49,7 +49,7 @@ exports.createRecycleRequest = async (req, res) => {
   }
 };
 
-exports.getAllRecycleRequests = async (req, res) => {
+const getAllRecycleRequests = async (req, res) => {
   try {
     const { status, userType, page = 1, limit = 10 } = req.query;
     const query = {};
@@ -79,7 +79,7 @@ exports.getAllRecycleRequests = async (req, res) => {
   }
 };
 
-exports.getRecycleRequestById = async (req, res) => {
+const getRecycleRequestById = async (req, res) => {
   try {
     const recycleRequest = await RecycleRequest.findById(req.params.id);
     if (!recycleRequest) {
@@ -101,7 +101,7 @@ exports.getRecycleRequestById = async (req, res) => {
   }
 };
 
-exports.updateRecycleRequest = async (req, res) => {
+const updateRecycleRequest = async (req, res) => {
   try {
     const recycleRequest = await RecycleRequest.findByIdAndUpdate(
       req.params.id,
@@ -130,7 +130,7 @@ exports.updateRecycleRequest = async (req, res) => {
   }
 };
 
-exports.deleteRecycleRequest = async (req, res) => {
+const deleteRecycleRequest = async (req, res) => {
   try {
     const recycleRequest = await RecycleRequest.findByIdAndDelete(req.params.id);
     if (!recycleRequest) {
@@ -150,4 +150,12 @@ exports.deleteRecycleRequest = async (req, res) => {
       error: error.message
     });
   }
+};
+
+module.exports = {
+  createRecycleRequest,
+  getAllRecycleRequests,
+  getRecycleRequestById,
+  updateRecycleRequest,
+  deleteRecycleRequest
 };

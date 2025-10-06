@@ -1,6 +1,6 @@
 const RepairRequest = require('../models/RepairRequest');
 
-exports.createRepairRequest = async (req, res) => {
+const createRepairRequest = async (req, res) => {
   try {
     const repairRequest = new RepairRequest(req.body);
     await repairRequest.save();
@@ -47,7 +47,7 @@ exports.createRepairRequest = async (req, res) => {
   }
 };
 
-exports.getAllRepairRequests = async (req, res) => {
+const getAllRepairRequests = async (req, res) => {
   try {
     const { status, page = 1, limit = 10 } = req.query;
     const query = status ? { status } : {};
@@ -75,7 +75,7 @@ exports.getAllRepairRequests = async (req, res) => {
   }
 };
 
-exports.getRepairRequestById = async (req, res) => {
+const getRepairRequestById = async (req, res) => {
   try {
     const repairRequest = await RepairRequest.findById(req.params.id);
     if (!repairRequest) {
@@ -97,7 +97,7 @@ exports.getRepairRequestById = async (req, res) => {
   }
 };
 
-exports.updateRepairRequest = async (req, res) => {
+const updateRepairRequest = async (req, res) => {
   try {
     const repairRequest = await RepairRequest.findByIdAndUpdate(
       req.params.id,
@@ -126,7 +126,7 @@ exports.updateRepairRequest = async (req, res) => {
   }
 };
 
-exports.deleteRepairRequest = async (req, res) => {
+const deleteRepairRequest = async (req, res) => {
   try {
     const repairRequest = await RepairRequest.findByIdAndDelete(req.params.id);
     if (!repairRequest) {
@@ -146,4 +146,12 @@ exports.deleteRepairRequest = async (req, res) => {
       error: error.message
     });
   }
+};
+
+module.exports = {
+  createRepairRequest,
+  getAllRepairRequests,
+  getRepairRequestById,
+  updateRepairRequest,
+  deleteRepairRequest
 };

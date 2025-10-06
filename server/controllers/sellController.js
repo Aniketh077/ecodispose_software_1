@@ -1,6 +1,6 @@
 const SellRequest = require('../models/SellRequest');
 
-exports.createSellRequest = async (req, res) => {
+const createSellRequest = async (req, res) => {
   try {
     const sellRequest = new SellRequest(req.body);
     await sellRequest.save();
@@ -45,7 +45,7 @@ exports.createSellRequest = async (req, res) => {
   }
 };
 
-exports.getAllSellRequests = async (req, res) => {
+const getAllSellRequests = async (req, res) => {
   try {
     const { status, page = 1, limit = 10 } = req.query;
     const query = status ? { status } : {};
@@ -73,7 +73,7 @@ exports.getAllSellRequests = async (req, res) => {
   }
 };
 
-exports.getSellRequestById = async (req, res) => {
+const getSellRequestById = async (req, res) => {
   try {
     const sellRequest = await SellRequest.findById(req.params.id);
     if (!sellRequest) {
@@ -95,7 +95,7 @@ exports.getSellRequestById = async (req, res) => {
   }
 };
 
-exports.updateSellRequest = async (req, res) => {
+const updateSellRequest = async (req, res) => {
   try {
     const sellRequest = await SellRequest.findByIdAndUpdate(
       req.params.id,
@@ -124,7 +124,7 @@ exports.updateSellRequest = async (req, res) => {
   }
 };
 
-exports.deleteSellRequest = async (req, res) => {
+const deleteSellRequest = async (req, res) => {
   try {
     const sellRequest = await SellRequest.findByIdAndDelete(req.params.id);
     if (!sellRequest) {
@@ -144,4 +144,12 @@ exports.deleteSellRequest = async (req, res) => {
       error: error.message
     });
   }
+};
+
+module.exports = {
+  createSellRequest,
+  getAllSellRequests,
+  getSellRequestById,
+  updateSellRequest,
+  deleteSellRequest
 };
