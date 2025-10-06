@@ -1,5 +1,5 @@
 import React from 'react';
-import { Gift, Target, Clock, CheckCircle } from 'lucide-react';
+import { Gift, Target, Clock, CircleCheck as CheckCircle } from 'lucide-react';
 import ProgressBar from './ProgressBar';
 
 const DailyChallenge = ({ challenge, onComplete }) => {
