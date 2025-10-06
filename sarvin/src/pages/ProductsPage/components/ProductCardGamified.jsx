@@ -260,7 +260,11 @@ const ProductCardGamified = ({ product, viewMode = 'grid', onView, userLevel = 1
         <div className="text-xs text-gray-500 mb-1">
           {(() => {
             if (product && product.type) {
-              return String(product.type);
+              if (typeof product.type === 'string' && product.type.trim()) {
+                return product.type.trim();
+              } else if (typeof product.type === 'object' && product.type.name) {
+                return String(product.type.name).trim();
+              }
             }
             return 'Certified Refurbished';
           })()}

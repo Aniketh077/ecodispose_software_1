@@ -10,8 +10,8 @@ import {
 import ProductCard from "../components/ui/ProductCard";
 import Button from "../components/ui/Button";
 import CustomSelect from "../components/ui/CustomSelect";
-import GamificationPanel from "./components/GamificationPanel";
-import ProductCardGamified from "./components/ProductCardGamified";
+import GamificationPanel from "./ProductsPage/components/GamificationPanel";
+import ProductCardGamified from "./ProductsPage/components/ProductCardGamified";
 
 // Helper component for collapsible filter sections
 const FilterSection = ({ title, children, isOpen, onToggle }) => (
