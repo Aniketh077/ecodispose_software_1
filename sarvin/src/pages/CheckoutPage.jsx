@@ -99,6 +99,15 @@ const CheckoutPage = () => {
     setPaymentError('');
 
     try {
+      // Validate cart and total
+      if (!cart.items || cart.items.length === 0) {
+        throw new Error('Your cart is empty. Please add items before checkout.');
+      }
+
+      if (total <= 0) {
+        throw new Error('Invalid order total. Please refresh and try again.');
+      }
+
       // Prepare order data
       const orderData = {
         items: cart.items.map(item => ({
@@ -111,6 +120,12 @@ const CheckoutPage = () => {
         paymentMethod: 'razorpay'
       };
 
+      console.log('Initiating payment for total:', total);
+      console.log('User details:', {
+        name: shippingAddress.fullName,
+        email: shippingAddress.email,
+        contact: shippingAddress.phone
+      });
       // Initiate Razorpay payment
       await initiateRazorpayPayment(
         total,
@@ -124,6 +139,8 @@ const CheckoutPage = () => {
             // Show processing overlay after Razorpay modal closes
             setShowProcessingOverlay(true);
             
+            console.log('Payment successful, verifying...', paymentResponse);
+
             // Verify payment and create order
             const verificationData = {
               ...orderData,
@@ -136,6 +153,8 @@ const CheckoutPage = () => {
 
             const order = await orderAPI.verifyPayment(verificationData, user.token);
 
+            console.log('Order created successfully:', order.orderId);
+
             clearCart();
             
             navigate('/order-success', {
@@ -147,20 +166,37 @@ const CheckoutPage = () => {
             });
           } catch (error) {
             console.error('Order verification failed:', error);
-            setPaymentError('Payment successful but order verification failed. Please contact support.');
+            setPaymentError(`Payment successful but order verification failed: ${error.message}. Please contact support with payment ID: ${paymentResponse.razorpay_payment_id}`);
             setShowProcessingOverlay(false);
             setIsProcessing(false);
           }
         },
         (error) => {
           console.error('Payment failed:', error);
-          setPaymentError(error || 'Payment failed. Please try again.');
+          // Provide more specific error messages
+          let errorMessage = 'Payment failed. Please try again.';
+          
+          if (error.includes('cancelled')) {
+            errorMessage = 'Payment was cancelled. You can try again when ready.';
+          } else if (error.includes('network')) {
+            errorMessage = 'Network error. Please check your internet connection and try again.';
+          } else if (error.includes('timeout')) {
+            errorMessage = 'Payment timed out. Please try again.';
+          } else if (error.includes('insufficient')) {
+            errorMessage = 'Insufficient funds. Please check your account balance.';
+          } else if (error.includes('declined')) {
+            errorMessage = 'Payment declined by bank. Please try a different payment method.';
+          } else if (error.includes('configuration')) {
+            errorMessage = 'Payment gateway not configured. Please contact support.';
+          }
+          
+          setPaymentError(errorMessage);
           setIsProcessing(false);
         }
       );
     } catch (error) {
       console.error('Payment initiation failed:', error);
-      setPaymentError('Failed to initiate payment. Please try again.');
+      setPaymentError(`Failed to initiate payment: ${error.message}`);
       setIsProcessing(false);
     }
   };

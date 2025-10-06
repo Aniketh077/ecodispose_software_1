@@ -18,6 +18,26 @@ export const initiateRazorpayPayment = async (amount, userDetails, onSuccess, on
   try {
     console.log('Initiating Razorpay payment for amount:', amount);
     
+    // Validate amount
+    if (!amount || amount <= 0) {
+      throw new Error('Invalid payment amount');
+    }
+
+    // Check minimum amount (₹1.00)
+    if (amount < 1) {
+      throw new Error('Minimum order amount is ₹1.00');
+    }
+
+    // Check maximum amount (₹15,000)
+    if (amount > 15000) {
+      throw new Error('Maximum order amount is ₹15,000.00');
+    }
+
+    // Validate Razorpay key
+    if (!import.meta.env.VITE_RAZORPAY_KEY_ID) {
+      throw new Error('Payment gateway not configured. Please contact support.');
+    }
+
     // Load Razorpay script
     const isLoaded = await loadRazorpay();
     if (!isLoaded) {
@@ -60,6 +80,17 @@ export const initiateRazorpayPayment = async (amount, userDetails, onSuccess, on
         const errorData = await response.json();
         errorMessage = errorData.message || errorMessage;
         console.error('Error response:', errorData);
+        
+        // Handle specific error types
+        if (errorData.type === 'RAZORPAY_NOT_CONFIGURED') {
+          throw new Error('Payment gateway not configured. Please contact administrator.');
+        }
+        if (errorData.type === 'CONFIGURATION_ERROR') {
+          throw new Error('Payment gateway configuration error. Please contact support.');
+        }
+        if (errorData.type === 'AMOUNT_ERROR') {
+          throw new Error(errorData.message || 'Invalid payment amount');
+        }
       } catch (e) {
         // If response is not JSON, use status text
         errorMessage = `${response.status}: ${response.statusText}`;
@@ -93,16 +124,30 @@ export const initiateRazorpayPayment = async (amount, userDetails, onSuccess, on
 
     console.log('Razorpay order created:', razorpayOrder.id);
 
+    // Validate user details
+    if (!userDetails.name || !userDetails.email || !userDetails.contact) {
+      throw new Error('Incomplete user details for payment');
+    }
+
+    // Clean phone number (remove spaces, dashes, etc.)
+    const cleanContact = userDetails.contact.replace(/\D/g, '');
+    if (cleanContact.length !== 10) {
+      throw new Error('Invalid phone number. Please provide a valid 10-digit number.');
+    }
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: razorpayOrder.amount,
       currency: razorpayOrder.currency,
-      name: 'Cashify',
-      description: 'Order Payment',
+      name: 'EcoTrade',
+      description: 'Certified Refurbished Electronics',
       order_id: razorpayOrder.id,
+      timeout: 300, // 5 minutes timeout
+      retry: {
+        enabled: true,
+        max_count: 3
+      },
       handler: function(response) {
         console.log('Payment success:', response);
-        // Payment success
         onSuccess({
           razorpay_payment_id: response.razorpay_payment_id,
           razorpay_order_id: response.razorpay_order_id,
@@ -112,12 +157,35 @@ export const initiateRazorpayPayment = async (amount, userDetails, onSuccess, on
       prefill: {
         name: userDetails.name,
         email: userDetails.email,
-        contact: userDetails.contact
+        contact: cleanContact
       },
       theme: {
-        color: '#16A34A'
+        color: '#16A34A',
+        backdrop_color: 'rgba(0, 0, 0, 0.6)'
+      },
+      config: {
+        display: {
+          blocks: {
+            banks: {
+              name: 'Pay via Bank Account',
+              instruments: [
+                {
+                  method: 'netbanking'
+                },
+                {
+                  method: 'upi'
+                }
+              ]
+            }
+          },
+          sequence: ['block.banks'],
+          preferences: {
+            show_default_blocks: true
+          }
+        }
       },
       modal: {
+        confirm_close: true,
         ondismiss: function() {
           console.log('Payment cancelled by user');
           onFailure('Payment cancelled by user');
@@ -131,7 +199,8 @@ export const initiateRazorpayPayment = async (amount, userDetails, onSuccess, on
     
     rzp.on('payment.failed', function(response) {
       console.error('Payment failed:', response);
-      onFailure(response.error.description || 'Payment failed');
+      const errorMsg = response.error?.description || response.error?.reason || 'Payment failed. Please try again.';
+      onFailure(errorMsg);
     });
     
     rzp.open();

@@ -2,13 +2,15 @@ const Razorpay = require('razorpay');
 
 // Validate environment variables
 if (!process.env.RAZORPAY_KEY_ID) {
-  console.error('RAZORPAY_KEY_ID is not set in environment variables');
-  process.exit(1);
+  console.warn('RAZORPAY_KEY_ID is not set in environment variables - Payment will not work');
+  module.exports = null;
+  return;
 }
 
 if (!process.env.RAZORPAY_KEY_SECRET) {
-  console.error('RAZORPAY_KEY_SECRET is not set in environment variables');
-  process.exit(1);
+  console.warn('RAZORPAY_KEY_SECRET is not set in environment variables - Payment will not work');
+  module.exports = null;
+  return;
 }
 
 const razorpay = new Razorpay({

@@ -60,6 +60,15 @@ app.use(cors(corsOptions));
 // Connect to database
 connectDB();
 
+// Check Razorpay configuration on startup
+const razorpay = require('./config/razorpay');
+if (!razorpay) {
+  console.warn('⚠️  Razorpay not configured - Payment functionality will not work');
+  console.warn('   Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in .env file');
+} else {
+  console.log('✅ Razorpay configured successfully');
+}
+
 // Initialize admin
 initializeAdmin();
 
