@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { Wrench, CircleCheck as CheckCircle } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
+import serviceRequestAPI from '../api/serviceRequestAPI';
+import { useToast } from '../contexts/ToastContext';
 
 const RepairPage = () => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
@@ -35,25 +38,20 @@ const RepairPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/repair`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(formData),
-      });
+      const result = await serviceRequestAPI.repair.create(formData);
 
-      if (!response.ok) {
-        throw new Error('Failed to submit repair request');
+      if (result.success) {
+        showToast('Repair request submitted successfully! We will contact you soon.', 'success');
+        setSubmitted(true);
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
+      } else {
+        throw new Error(result.message || 'Failed to submit repair request');
       }
-
-      setSubmitted(true);
-      setTimeout(() => {
-        navigate('/');
-      }, 3000);
     } catch (error) {
       console.error('Error submitting repair request:', error);
-      alert('Failed to submit request. Please try again.');
+      showToast(error.response?.data?.message || 'Failed to submit request. Please try again.', 'error');
     } finally {
       setLoading(false);
     }

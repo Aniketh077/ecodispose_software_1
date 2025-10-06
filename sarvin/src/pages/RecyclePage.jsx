@@ -3,9 +3,12 @@ import { useNavigate } from 'react-router-dom';
 import { Recycle, CircleCheck as CheckCircle, User, Building2 } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
+import serviceRequestAPI from '../api/serviceRequestAPI';
+import { useToast } from '../contexts/ToastContext';
 
 const RecyclePage = () => {
   const navigate = useNavigate();
+  const { showToast } = useToast();
   const [loading, setLoading] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [userType, setUserType] = useState('');
@@ -34,25 +37,20 @@ const RecyclePage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/recycle`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({ ...formData, userType }),
-      });
+      const result = await serviceRequestAPI.recycle.create({ ...formData, userType });
 
-      if (!response.ok) {
-        throw new Error('Failed to submit recycle request');
+      if (result.success) {
+        showToast('Recycle request submitted successfully! We will schedule a pickup soon.', 'success');
+        setSubmitted(true);
+        setTimeout(() => {
+          navigate('/');
+        }, 3000);
+      } else {
+        throw new Error(result.message || 'Failed to submit recycle request');
       }
-
-      setSubmitted(true);
-      setTimeout(() => {
-        navigate('/');
-      }, 3000);
     } catch (error) {
       console.error('Error submitting recycle request:', error);
-      alert('Failed to submit request. Please try again.');
+      showToast(error.response?.data?.message || 'Failed to submit request. Please try again.', 'error');
     } finally {
       setLoading(false);
     }

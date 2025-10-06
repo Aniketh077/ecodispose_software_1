@@ -1,8 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { DollarSign, Wrench, Recycle, Eye, CreditCard as Edit2, Trash2, ListFilter as Filter } from 'lucide-react';
 import Button from '../../components/ui/Button';
+import serviceRequestAPI from '../../api/serviceRequestAPI';
+import { useToast } from '../../contexts/ToastContext';
 
 const AdminServiceRequests = () => {
+  const { showToast } = useToast();
   const [activeTab, setActiveTab] = useState('sell');
   const [requests, setRequests] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -23,17 +26,12 @@ const AdminServiceRequests = () => {
   const fetchRequests = async () => {
     setLoading(true);
     try {
-      const token = localStorage.getItem('token');
-      const statusParam = filterStatus !== 'all' ? `?status=${filterStatus}` : '';
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/${activeTab}${statusParam}`, {
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
-      const data = await response.json();
-      setRequests(data.data || []);
+      const params = filterStatus !== 'all' ? { status: filterStatus } : {};
+      const result = await serviceRequestAPI[activeTab].getAll(params);
+      setRequests(result.data || []);
     } catch (error) {
       console.error('Error fetching requests:', error);
+      showToast('Failed to fetch requests', 'error');
     } finally {
       setLoading(false);
     }
@@ -41,23 +39,15 @@ const AdminServiceRequests = () => {
 
   const handleStatusUpdate = async (id, newStatus) => {
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/${activeTab}/${id}`, {
-        method: 'PUT',
-        headers: {
-          'Authorization': `Bearer ${token}`,
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({ status: newStatus })
-      });
+      const result = await serviceRequestAPI[activeTab].update(id, { status: newStatus });
 
-      if (response.ok) {
+      if (result.success) {
         fetchRequests();
-        alert('Status updated successfully');
+        showToast('Status updated successfully', 'success');
       }
     } catch (error) {
       console.error('Error updating status:', error);
-      alert('Failed to update status');
+      showToast('Failed to update status', 'error');
     }
   };
 
@@ -65,21 +55,15 @@ const AdminServiceRequests = () => {
     if (!confirm('Are you sure you want to delete this request?')) return;
 
     try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${import.meta.env.VITE_API_URL}/api/${activeTab}/${id}`, {
-        method: 'DELETE',
-        headers: {
-          'Authorization': `Bearer ${token}`
-        }
-      });
+      const result = await serviceRequestAPI[activeTab].delete(id);
 
-      if (response.ok) {
+      if (result.success) {
         fetchRequests();
-        alert('Request deleted successfully');
+        showToast('Request deleted successfully', 'success');
       }
     } catch (error) {
       console.error('Error deleting request:', error);
-      alert('Failed to delete request');
+      showToast('Failed to delete request', 'error');
     }
   };
 
