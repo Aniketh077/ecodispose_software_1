@@ -38,7 +38,8 @@ const ProductImages = ({ product, activeImage, setActiveImage }) => {
             </div>
           </div>
         )}
-        {product.stock > 0 && product.discountPrice && product.discountPrice < product.price && (
+        {product.stock > 0 && product.discountPrice && product.discountPrice < product.price &&
+         Math.round(((product.price - product.discountPrice) / product.price) * 100) > 0 && (
           <div className="absolute left-4 top-4 z-10 bg-red-500 px-3 py-1 text-sm font-semibold text-white">
             {Math.round(((product.price - product.discountPrice) / product.price) * 100)}% OFF
           </div>
