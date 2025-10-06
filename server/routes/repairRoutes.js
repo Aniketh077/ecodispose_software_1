@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const repairController = require('../controllers/repairController');
-const { verifyToken } = require('../middlewares/auth');
-const { isAdmin } = require('../middlewares/admin');
+const { protect, admin } = require('../middlewares/auth');
 
+// Public route for creating repair requests
 router.post('/', repairController.createRepairRequest);
 
-router.get('/', verifyToken, isAdmin, repairController.getAllRepairRequests);
-router.get('/:id', verifyToken, isAdmin, repairController.getRepairRequestById);
-router.put('/:id', verifyToken, isAdmin, repairController.updateRepairRequest);
-router.delete('/:id', verifyToken, isAdmin, repairController.deleteRepairRequest);
+// Admin routes (require authentication)
+router.get('/', protect, admin, repairController.getAllRepairRequests);
+router.get('/:id', protect, admin, repairController.getRepairRequestById);
+router.put('/:id', protect, admin, repairController.updateRepairRequest);
+router.delete('/:id', protect, admin, repairController.deleteRepairRequest);
 
 module.exports = router;

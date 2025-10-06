@@ -1,5 +1,4 @@
 const RecycleRequest = require('../models/RecycleRequest');
-const EmailService = require('../emailService/EmailService');
 
 exports.createRecycleRequest = async (req, res) => {
   try {
@@ -8,26 +7,32 @@ exports.createRecycleRequest = async (req, res) => {
 
     const userTypeLabel = recycleRequest.userType === 'corporate' ? 'Corporate' : 'Individual';
 
-    await EmailService.sendEmail({
-      to: recycleRequest.email,
-      subject: 'Recycle Request Received - EcoTrade',
-      html: `
-        <h2>Thank You for Choosing to Recycle!</h2>
-        <p>Dear ${recycleRequest.name},</p>
-        <p>We have received your ${userTypeLabel.toLowerCase()} recycling request.</p>
-        <p><strong>Request Details:</strong></p>
-        <ul>
-          <li>Type: ${userTypeLabel}</li>
-          ${recycleRequest.companyName ? `<li>Company: ${recycleRequest.companyName}</li>` : ''}
-          <li>Pickup Address: ${recycleRequest.pickupAddress}</li>
-          <li>Preferred Pickup Date: ${new Date(recycleRequest.pickupDate).toLocaleDateString()}</li>
-          <li>Items: ${recycleRequest.ewasteItems}</li>
-        </ul>
-        <p>Our team will contact you to schedule a convenient pickup time.</p>
-        <p>Thank you for contributing to a cleaner environment!</p>
-        <p>Best regards,<br>EcoTrade Team</p>
-      `
-    });
+    // Send confirmation email (if email service is configured)
+    try {
+      const emailService = require('../emailService/EmailService');
+      await emailService.sendEmail({
+        to: recycleRequest.email,
+        subject: 'Recycle Request Received - EcoTrade',
+        html: `
+          <h2>Thank You for Choosing to Recycle!</h2>
+          <p>Dear ${recycleRequest.name},</p>
+          <p>We have received your ${userTypeLabel.toLowerCase()} recycling request.</p>
+          <p><strong>Request Details:</strong></p>
+          <ul>
+            <li>Type: ${userTypeLabel}</li>
+            ${recycleRequest.companyName ? `<li>Company: ${recycleRequest.companyName}</li>` : ''}
+            <li>Pickup Address: ${recycleRequest.pickupAddress}</li>
+            <li>Preferred Pickup Date: ${new Date(recycleRequest.pickupDate).toLocaleDateString()}</li>
+            <li>Items: ${recycleRequest.ewasteItems}</li>
+          </ul>
+          <p>Our team will contact you to schedule a convenient pickup time.</p>
+          <p>Thank you for contributing to a cleaner environment!</p>
+          <p>Best regards,<br>EcoTrade Team</p>
+        `
+      });
+    } catch (emailError) {
+      console.log('Email service not configured or failed:', emailError.message);
+    }
 
     res.status(201).json({
       success: true,

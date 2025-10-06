@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DollarSign, Wrench, Recycle, Eye, CreditCard as Edit2, Trash2, ListFilter as Filter } from 'lucide-react';
+import { DollarSign, Wrench, Recycle, Eye, Trash2, ListFilter as Filter, RefreshCw } from 'lucide-react';
 import Button from '../../components/ui/Button';
 import serviceRequestAPI from '../../api/serviceRequestAPI';
 import { useToast } from '../../contexts/ToastContext';
@@ -32,6 +32,7 @@ const AdminServiceRequests = () => {
     } catch (error) {
       console.error('Error fetching requests:', error);
       showToast('Failed to fetch requests', 'error');
+      setRequests([]);
     } finally {
       setLoading(false);
     }
@@ -170,71 +171,79 @@ const AdminServiceRequests = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="max-w-7xl mx-auto px-4 py-8">
-        <h1 className="text-3xl font-bold text-gray-900 mb-6">Service Requests Management</h1>
+    <div className="p-6 max-w-7xl mx-auto">
+      <div className="flex justify-between items-center mb-6">
+        <h1 className="text-2xl font-bold text-gray-900">Service Requests Management</h1>
+        <Button onClick={fetchRequests} variant="outline" leftIcon={<RefreshCw className="h-4 w-4" />}>
+          Refresh
+        </Button>
+      </div>
 
-        <div className="bg-white rounded-lg shadow-md mb-6">
-          <div className="border-b border-gray-200">
-            <nav className="flex space-x-4 px-6" aria-label="Tabs">
-              {tabs.map((tab) => {
-                const Icon = tab.icon;
-                return (
-                  <button
-                    key={tab.id}
-                    onClick={() => {
-                      setActiveTab(tab.id);
-                      setFilterStatus('all');
-                    }}
-                    className={`flex items-center gap-2 py-4 px-3 border-b-2 font-medium text-sm transition-colors ${
-                      activeTab === tab.id
-                        ? 'border-green-500 text-green-600'
-                        : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
-                    }`}
-                  >
-                    <Icon className="h-5 w-5" />
-                    {tab.label}
-                  </button>
-                );
-              })}
-            </nav>
+      <div className="bg-white rounded-lg shadow-md mb-6">
+        <div className="border-b border-gray-200">
+          <nav className="flex space-x-4 px-6" aria-label="Tabs">
+            {tabs.map((tab) => {
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  onClick={() => {
+                    setActiveTab(tab.id);
+                    setFilterStatus('all');
+                  }}
+                  className={`flex items-center gap-2 py-4 px-3 border-b-2 font-medium text-sm transition-colors ${
+                    activeTab === tab.id
+                      ? 'border-green-500 text-green-600'
+                      : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                  }`}
+                >
+                  <Icon className="h-5 w-5" />
+                  {tab.label}
+                </button>
+              );
+            })}
+          </nav>
+        </div>
+
+        <div className="p-6">
+          <div className="flex items-center gap-4 mb-6">
+            <Filter className="h-5 w-5 text-gray-500" />
+            <select
+              value={filterStatus}
+              onChange={(e) => setFilterStatus(e.target.value)}
+              className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+            >
+              <option value="all">All Status</option>
+              {getStatusOptions().map(status => (
+                <option key={status} value={status}>{status}</option>
+              ))}
+            </select>
           </div>
 
-          <div className="p-6">
-            <div className="flex items-center gap-4 mb-6">
-              <Filter className="h-5 w-5 text-gray-500" />
-              <select
-                value={filterStatus}
-                onChange={(e) => setFilterStatus(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
-              >
-                <option value="all">All Status</option>
-                {getStatusOptions().map(status => (
-                  <option key={status} value={status}>{status}</option>
-                ))}
-              </select>
-              <Button onClick={fetchRequests} variant="outline" size="sm">
-                Refresh
-              </Button>
+          {loading ? (
+            <div className="text-center py-12">
+              <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
+              <p className="mt-4 text-gray-600">Loading requests...</p>
             </div>
-
-            {loading ? (
-              <div className="text-center py-12">
-                <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto"></div>
+          ) : requests.length === 0 ? (
+            <div className="text-center py-12 text-gray-500">
+              <div className="mb-4">
+                {activeTab === 'sell' && <DollarSign className="h-12 w-12 mx-auto text-gray-300" />}
+                {activeTab === 'repair' && <Wrench className="h-12 w-12 mx-auto text-gray-300" />}
+                {activeTab === 'recycle' && <Recycle className="h-12 w-12 mx-auto text-gray-300" />}
               </div>
-            ) : requests.length === 0 ? (
-              <div className="text-center py-12 text-gray-500">
-                No requests found
-              </div>
-            ) : (
-              <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                {requests.map(renderRequestCard)}
-              </div>
-            )}
-          </div>
+              <p className="text-lg font-medium">No {activeTab} requests found</p>
+              <p className="text-sm">Requests will appear here when customers submit them</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {requests.map(renderRequestCard)}
+            </div>
+          )}
         </div>
       </div>
 
+      {/* View Modal */}
       {isViewModalOpen && selectedRequest && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4 z-50">
           <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto p-6">
@@ -407,6 +416,13 @@ const AdminServiceRequests = () => {
                 <label className="block text-sm font-medium text-gray-700">Created At</label>
                 <p className="mt-1 text-sm text-gray-900">{new Date(selectedRequest.createdAt).toLocaleString()}</p>
               </div>
+
+              {selectedRequest.adminNotes && (
+                <div>
+                  <label className="block text-sm font-medium text-gray-700">Admin Notes</label>
+                  <p className="mt-1 text-sm text-gray-900">{selectedRequest.adminNotes}</p>
+                </div>
+              )}
             </div>
 
             <div className="mt-6 flex justify-end">

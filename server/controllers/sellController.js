@@ -1,29 +1,34 @@
 const SellRequest = require('../models/SellRequest');
-const EmailService = require('../emailService/EmailService');
 
 exports.createSellRequest = async (req, res) => {
   try {
     const sellRequest = new SellRequest(req.body);
     await sellRequest.save();
 
-    await EmailService.sendEmail({
-      to: sellRequest.email,
-      subject: 'Sell Request Received - EcoTrade',
-      html: `
-        <h2>Thank You for Your Sell Request!</h2>
-        <p>Dear ${sellRequest.name},</p>
-        <p>We have received your request to sell your ${sellRequest.brand} ${sellRequest.model}.</p>
-        <p><strong>Request Details:</strong></p>
-        <ul>
-          <li>Device: ${sellRequest.deviceType}</li>
-          <li>Brand: ${sellRequest.brand}</li>
-          <li>Model: ${sellRequest.model}</li>
-          <li>Condition: ${sellRequest.condition}</li>
-        </ul>
-        <p>Our team will review your device details and contact you within 24-48 hours with a quotation.</p>
-        <p>Best regards,<br>EcoTrade Team</p>
-      `
-    });
+    // Send confirmation email (if email service is configured)
+    try {
+      const emailService = require('../emailService/EmailService');
+      await emailService.sendEmail({
+        to: sellRequest.email,
+        subject: 'Sell Request Received - EcoTrade',
+        html: `
+          <h2>Thank You for Your Sell Request!</h2>
+          <p>Dear ${sellRequest.name},</p>
+          <p>We have received your request to sell your ${sellRequest.brand} ${sellRequest.model}.</p>
+          <p><strong>Request Details:</strong></p>
+          <ul>
+            <li>Device: ${sellRequest.deviceType}</li>
+            <li>Brand: ${sellRequest.brand}</li>
+            <li>Model: ${sellRequest.model}</li>
+            <li>Condition: ${sellRequest.condition}</li>
+          </ul>
+          <p>Our team will review your device details and contact you within 24-48 hours with a quotation.</p>
+          <p>Best regards,<br>EcoTrade Team</p>
+        `
+      });
+    } catch (emailError) {
+      console.log('Email service not configured or failed:', emailError.message);
+    }
 
     res.status(201).json({
       success: true,

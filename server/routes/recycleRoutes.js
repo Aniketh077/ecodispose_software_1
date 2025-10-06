@@ -1,14 +1,15 @@
 const express = require('express');
 const router = express.Router();
 const recycleController = require('../controllers/recycleController');
-const { verifyToken } = require('../middlewares/auth');
-const { isAdmin } = require('../middlewares/admin');
+const { protect, admin } = require('../middlewares/auth');
 
+// Public route for creating recycle requests
 router.post('/', recycleController.createRecycleRequest);
 
-router.get('/', verifyToken, isAdmin, recycleController.getAllRecycleRequests);
-router.get('/:id', verifyToken, isAdmin, recycleController.getRecycleRequestById);
-router.put('/:id', verifyToken, isAdmin, recycleController.updateRecycleRequest);
-router.delete('/:id', verifyToken, isAdmin, recycleController.deleteRecycleRequest);
+// Admin routes (require authentication)
+router.get('/', protect, admin, recycleController.getAllRecycleRequests);
+router.get('/:id', protect, admin, recycleController.getRecycleRequestById);
+router.put('/:id', protect, admin, recycleController.updateRecycleRequest);
+router.delete('/:id', protect, admin, recycleController.deleteRecycleRequest);
 
 module.exports = router;

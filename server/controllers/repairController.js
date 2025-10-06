@@ -1,31 +1,36 @@
 const RepairRequest = require('../models/RepairRequest');
-const EmailService = require('../emailService/EmailService');
 
 exports.createRepairRequest = async (req, res) => {
   try {
     const repairRequest = new RepairRequest(req.body);
     await repairRequest.save();
 
-    await EmailService.sendEmail({
-      to: repairRequest.email,
-      subject: 'Repair Request Received - EcoTrade',
-      html: `
-        <h2>Thank You for Your Repair Request!</h2>
-        <p>Dear ${repairRequest.name},</p>
-        <p>We have received your repair request for your ${repairRequest.brand} ${repairRequest.model}.</p>
-        <p><strong>Request Details:</strong></p>
-        <ul>
-          <li>Device: ${repairRequest.deviceType}</li>
-          <li>Brand: ${repairRequest.brand}</li>
-          <li>Model: ${repairRequest.model}</li>
-          <li>Urgency: ${repairRequest.urgency}</li>
-        </ul>
-        <p><strong>Problem Description:</strong></p>
-        <p>${repairRequest.problemDescription}</p>
-        <p>Our repair team will contact you within 24 hours to schedule a pickup or service appointment.</p>
-        <p>Best regards,<br>EcoTrade Team</p>
-      `
-    });
+    // Send confirmation email (if email service is configured)
+    try {
+      const emailService = require('../emailService/EmailService');
+      await emailService.sendEmail({
+        to: repairRequest.email,
+        subject: 'Repair Request Received - EcoTrade',
+        html: `
+          <h2>Thank You for Your Repair Request!</h2>
+          <p>Dear ${repairRequest.name},</p>
+          <p>We have received your repair request for your ${repairRequest.brand} ${repairRequest.model}.</p>
+          <p><strong>Request Details:</strong></p>
+          <ul>
+            <li>Device: ${repairRequest.deviceType}</li>
+            <li>Brand: ${repairRequest.brand}</li>
+            <li>Model: ${repairRequest.model}</li>
+            <li>Urgency: ${repairRequest.urgency}</li>
+          </ul>
+          <p><strong>Problem Description:</strong></p>
+          <p>${repairRequest.problemDescription}</p>
+          <p>Our repair team will contact you within 24 hours to schedule a pickup or service appointment.</p>
+          <p>Best regards,<br>EcoTrade Team</p>
+        `
+      });
+    } catch (emailError) {
+      console.log('Email service not configured or failed:', emailError.message);
+    }
 
     res.status(201).json({
       success: true,
