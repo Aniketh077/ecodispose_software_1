@@ -13,11 +13,15 @@ if (!process.env.RAZORPAY_KEY_SECRET) {
   return;
 }
 
-const razorpay = new Razorpay({
-  key_id: process.env.RAZORPAY_KEY_ID,
-  key_secret: process.env.RAZORPAY_KEY_SECRET,
-});
+try {
+  const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET,
+  });
 
-console.log('Razorpay initialized with Key ID:', process.env.RAZORPAY_KEY_ID);
-
-module.exports = razorpay;
+  console.log('✅ Razorpay initialized with Key ID:', process.env.RAZORPAY_KEY_ID);
+  module.exports = razorpay;
+} catch (error) {
+  console.error('❌ Failed to initialize Razorpay:', error.message);
+  module.exports = null;
+}

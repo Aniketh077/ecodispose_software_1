@@ -97,6 +97,7 @@ const CheckoutPage = () => {
 
     setIsProcessing(true);
     setPaymentError('');
+    setShowProcessingOverlay(false);
 
     try {
       // Validate cart and total
@@ -126,6 +127,7 @@ const CheckoutPage = () => {
         email: shippingAddress.email,
         contact: shippingAddress.phone
       });
+
       // Initiate Razorpay payment
       await initiateRazorpayPayment(
         total,
@@ -188,16 +190,22 @@ const CheckoutPage = () => {
             errorMessage = 'Payment declined by bank. Please try a different payment method.';
           } else if (error.includes('configuration')) {
             errorMessage = 'Payment gateway not configured. Please contact support.';
+          } else if (error.includes('Bad Request')) {
+            errorMessage = 'Payment request error. Please try again or contact support.';
+          } else if (error.includes('ERR_BLOCKED_BY_CLIENT')) {
+            errorMessage = 'Payment blocked by browser. Please disable ad blockers and try again.';
           }
           
           setPaymentError(errorMessage);
           setIsProcessing(false);
+          setShowProcessingOverlay(false);
         }
       );
     } catch (error) {
       console.error('Payment initiation failed:', error);
       setPaymentError(`Failed to initiate payment: ${error.message}`);
       setIsProcessing(false);
+      setShowProcessingOverlay(false);
     }
   };
 
@@ -244,6 +252,13 @@ const CheckoutPage = () => {
                 <div>
                   <h3 className="text-red-800 font-medium">Payment Error</h3>
                   <p className="text-red-700 text-sm mt-1">{paymentError}</p>
+                  {paymentError.includes('ad blocker') && (
+                    <div className="mt-2 text-xs text-red-600">
+                      <p>• Disable browser ad blockers</p>
+                      <p>• Try using incognito/private mode</p>
+                      <p>• Use a different browser</p>
+                    </div>
+                  )}
                 </div>
               </div>
             </div>
@@ -460,11 +475,14 @@ const CheckoutPage = () => {
                     disabled={isProcessing}
                     leftIcon={<CreditCard className="h-5 w-5" />}
                   >
-                    {isProcessing ? 'Processing...' : 'Pay with Razorpay'}
+                    {isProcessing ? 'Initializing Payment...' : 'Pay with Razorpay'}
                   </Button>
                   <p className="text-xs text-gray-500 mt-3 text-center">
                     Secure payment powered by Razorpay
                   </p>
+                  <div className="mt-2 text-xs text-gray-500 text-center">
+                    <p>💡 If payment fails, try disabling ad blockers</p>
+                  </div>
                 </div>
               </div>
             </div>

@@ -19,7 +19,7 @@ const createRazorpayOrder = async (req, res) => {
       console.error('Razorpay not configured - missing environment variables');
       return res.status(500).json({ 
         message: 'Payment gateway not configured. Please contact administrator.',
-        error: 'RAZORPAY_NOT_CONFIGURED'
+        type: 'RAZORPAY_NOT_CONFIGURED'
       });
     }
 
@@ -35,13 +35,12 @@ const createRazorpayOrder = async (req, res) => {
     const amountInPaise = Math.round(amount);
     console.log('Amount in paise:', amountInPaise);
 
-    // Check environment variables
-    console.log('Razorpay Key ID:', process.env.RAZORPAY_KEY_ID ? 'Present' : 'Missing');
-    console.log('Razorpay Secret:', process.env.RAZORPAY_KEY_SECRET ? 'Present' : 'Missing');
-
     if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
       console.error('Razorpay credentials missing');
-      return res.status(500).json({ message: 'Payment gateway credentials not configured' });
+      return res.status(500).json({ 
+        message: 'Payment gateway credentials not configured',
+        type: 'CONFIGURATION_ERROR'
+      });
     }
 
     // Validate amount range (Razorpay minimum is 100 paise = ₹1)
@@ -49,7 +48,7 @@ const createRazorpayOrder = async (req, res) => {
       console.error('Amount too small:', amountInPaise);
       return res.status(400).json({ 
         message: 'Minimum order amount is ₹1.00',
-        error: 'AMOUNT_TOO_SMALL'
+        type: 'AMOUNT_ERROR'
       });
     }
 
@@ -58,17 +57,19 @@ const createRazorpayOrder = async (req, res) => {
       console.error('Amount too large:', amountInPaise);
       return res.status(400).json({ 
         message: 'Maximum order amount is ₹15,000.00',
-        error: 'AMOUNT_TOO_LARGE'
+        type: 'AMOUNT_ERROR'
       });
     }
+
     const orderOptions = {
       amount: amountInPaise,
       currency: 'INR',
       receipt: `receipt_${Date.now()}`,
-      payment_capture: 1, // Auto capture payment
+      payment_capture: 1,
       notes: {
         userId: req.user._id.toString(),
-        timestamp: new Date().toISOString()
+        timestamp: new Date().toISOString(),
+        app: 'EcoTrade'
       }
     };
 
@@ -121,6 +122,7 @@ const createRazorpayOrder = async (req, res) => {
         type: 'AMOUNT_ERROR'
       });
     }
+
     res.status(500).json({ 
       message: 'Payment processing failed. Please try again or contact support.', 
       error: error.message,

@@ -61,7 +61,6 @@ export const initiateRazorpayPayment = async (amount, userDetails, onSuccess, on
 
     // Create order on backend first
     const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}/api/orders/create-razorpay-order`, {
-
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
@@ -134,6 +133,8 @@ export const initiateRazorpayPayment = async (amount, userDetails, onSuccess, on
     if (cleanContact.length !== 10) {
       throw new Error('Invalid phone number. Please provide a valid 10-digit number.');
     }
+
+    // Simplified Razorpay options to avoid configuration issues
     const options = {
       key: import.meta.env.VITE_RAZORPAY_KEY_ID,
       amount: razorpayOrder.amount,
@@ -142,10 +143,6 @@ export const initiateRazorpayPayment = async (amount, userDetails, onSuccess, on
       description: 'Certified Refurbished Electronics',
       order_id: razorpayOrder.id,
       timeout: 300, // 5 minutes timeout
-      retry: {
-        enabled: true,
-        max_count: 3
-      },
       handler: function(response) {
         console.log('Payment success:', response);
         onSuccess({
@@ -160,29 +157,7 @@ export const initiateRazorpayPayment = async (amount, userDetails, onSuccess, on
         contact: cleanContact
       },
       theme: {
-        color: '#16A34A',
-        backdrop_color: 'rgba(0, 0, 0, 0.6)'
-      },
-      config: {
-        display: {
-          blocks: {
-            banks: {
-              name: 'Pay via Bank Account',
-              instruments: [
-                {
-                  method: 'netbanking'
-                },
-                {
-                  method: 'upi'
-                }
-              ]
-            }
-          },
-          sequence: ['block.banks'],
-          preferences: {
-            show_default_blocks: true
-          }
-        }
+        color: '#16A34A'
       },
       modal: {
         confirm_close: true,
@@ -190,10 +165,15 @@ export const initiateRazorpayPayment = async (amount, userDetails, onSuccess, on
           console.log('Payment cancelled by user');
           onFailure('Payment cancelled by user');
         }
+      },
+      // Remove complex config that might cause issues
+      retry: {
+        enabled: true,
+        max_count: 2
       }
     };
 
-    console.log('Opening Razorpay with options:', options);
+    console.log('Opening Razorpay with simplified options');
 
     const rzp = new window.Razorpay(options);
     
