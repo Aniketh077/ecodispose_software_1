@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Recycle, CheckCircle, User, Building2 } from 'lucide-react';
+import { Recycle, CircleCheck as CheckCircle, User, Building2 } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { DollarSign, Wrench, Recycle, Eye, Edit2, Trash2, Filter } from 'lucide-react';
+import { DollarSign, Wrench, Recycle, Eye, CreditCard as Edit2, Trash2, ListFilter as Filter } from 'lucide-react';
 import Button from '../../components/ui/Button';
 
 const AdminServiceRequests = () => {

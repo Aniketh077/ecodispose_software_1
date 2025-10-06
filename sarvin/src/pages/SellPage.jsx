@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { DollarSign, Smartphone, CheckCircle } from 'lucide-react';
+import { DollarSign, Smartphone, CircleCheck as CheckCircle } from 'lucide-react';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
 
