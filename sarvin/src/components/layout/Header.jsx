@@ -354,7 +354,7 @@ const Header = () => {
            <div className="hidden lg:block text-right">
   <p className="text-sm font-semibold text-[#01364a] whitespace-nowrap">
     <a href="tel:8008030203" className="flex items-center justify-end hover:underline">
-      <Phone Width={3} className="h-3 w-3 mr-1 mt-1 " />
+      <Phone width={3} className="h-3 w-3 mr-1 mt-1 " />
       <span>8008030203</span>
     </a>
   </p>
