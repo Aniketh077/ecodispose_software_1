@@ -38,7 +38,7 @@ const HeroSlider = () => {
 
   return (
     <>
-      <section className="relative grid overflow-hidden">
+      <section className="relative grid overflow-hidden h-[50vh] md:h-[60vh]">
         {slides.map((slide, index) => (
           <div
             key={index}
@@ -54,7 +54,7 @@ const HeroSlider = () => {
               <img
                 src={slide.mobileImage}
                 alt={`Hero slide ${index + 1}`}
-                className="w-full h-auto"
+                className="w-full h-full object-cover"
                 style={{
                   transition: "transform 10s ease-out",
                   transform: activeSlide === index ? "scale(1)" : "scale(1.05)",

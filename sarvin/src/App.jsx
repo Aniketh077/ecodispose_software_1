@@ -27,12 +27,16 @@ import OrderDetailsPage from "./pages/OrderDetailsPage/OrderDetailsPage";
 import AboutPage from "./pages/AboutPage";
 import ContactPage from "./pages/ContactPage";
 import SearchPage from "./pages/SearchPage";
+import SellPage from "./pages/SellPage";
+import RepairPage from "./pages/RepairPage";
+import RecyclePage from "./pages/RecyclePage";
 import AdminDashboard from "./pages/admin/AdminDashboard";
 import AdminProducts from "./pages/admin/AdminProducts/AdminProducts";
 import AdminOrders from "./pages/admin/AdminOrders/AdminMainOrders";
 import AdminCustomers from "./pages/admin/AdminCustomers";
 import AdminCollections from "./pages/admin/AdminCollections";
 import AdminBrands from "./pages/admin/AdminBrands";
+import AdminServiceRequests from "./pages/admin/AdminServiceRequests";
 import ToastContainer from "./components/ui/ToastContainer";
 import { ToastProvider } from "./contexts/ToastContext";
 import ScrollToTop from "./components/ScrollToTop";
@@ -115,6 +119,9 @@ function App() {
                     path="/orders/:orderId"
                     element={<OrderDetailsPage />}
                   />
+                  <Route path="/sell" element={<SellPage />} />
+                  <Route path="/repair" element={<RepairPage />} />
+                  <Route path="/recycle" element={<RecyclePage />} />
 
                   {/* Admin Routes */}
                   <Route
@@ -162,6 +169,14 @@ function App() {
                     element={
                       <ProtectedAdminRoute>
                         <AdminBrands />
+                      </ProtectedAdminRoute>
+                    }
+                  />
+                  <Route
+                    path="/admin/service-requests"
+                    element={
+                      <ProtectedAdminRoute>
+                        <AdminServiceRequests />
                       </ProtectedAdminRoute>
                     }
                   />
