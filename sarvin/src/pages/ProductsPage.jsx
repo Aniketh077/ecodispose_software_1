@@ -1,7 +1,7 @@
 import React, { useState, useEffect, useMemo } from "react";
 import { useParams, useSearchParams, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { ListFilter as Filter, Grid2x2 as Grid, List, ChevronLeft, ChevronRight, ChevronDown, Check } from "lucide-react";
+import { ListFilter as Filter, Grid2x2 as Grid, List, ChevronLeft, ChevronRight, ChevronDown, Check, Zap, Trophy, Target, Gift, Star, Timer, Flame } from "lucide-react";
 import {
   fetchProducts,
   fetchTypes,
@@ -10,6 +10,8 @@ import {
 import ProductCard from "../components/ui/ProductCard";
 import Button from "../components/ui/Button";
 import CustomSelect from "../components/ui/CustomSelect";
+import GamificationPanel from "./components/GamificationPanel";
+import ProductCardGamified from "./components/ProductCardGamified";
 
 // Helper component for collapsible filter sections
 const FilterSection = ({ title, children, isOpen, onToggle }) => (
@@ -154,6 +156,19 @@ const ProductsPage = () => {
     type: false,
   });
 
+  // Gamification state
+  const [userProgress, setUserProgress] = useState({
+    viewedProducts: new Set(),
+    cartAdditions: 0,
+    timeSpent: 0,
+    streak: 0,
+    level: 1,
+    points: 0,
+    achievements: []
+  });
+  const [showAchievement, setShowAchievement] = useState(null);
+  const [isGamificationEnabled, setIsGamificationEnabled] = useState(true);
+
   const toggleSection = (key) => {
     setOpenSections((prev) => ({ ...prev, [key]: !prev[key] }));
   };
@@ -186,6 +201,93 @@ const ProductsPage = () => {
     { value: "name", label: "Name A-Z" },
   ];
 
+  // Gamification functions
+  const addPoints = (points, reason) => {
+    if (!isGamificationEnabled) return;
+    
+    setUserProgress(prev => {
+      const newPoints = prev.points + points;
+      const newLevel = Math.floor(newPoints / 100) + 1;
+      const leveledUp = newLevel > prev.level;
+      
+      if (leveledUp) {
+        triggerAchievement({
+          title: `Level ${newLevel} Reached!`,
+          description: `You've reached level ${newLevel}! Keep exploring for more rewards.`,
+          icon: Trophy,
+          color: 'text-yellow-500'
+        });
+      }
+      
+      return {
+        ...prev,
+        points: newPoints,
+        level: newLevel
+      };
+    });
+  };
+
+  const triggerAchievement = (achievement) => {
+    setShowAchievement(achievement);
+    setTimeout(() => setShowAchievement(null), 4000);
+  };
+
+  const handleProductView = (productId) => {
+    if (!isGamificationEnabled) return;
+    
+    setUserProgress(prev => {
+      if (!prev.viewedProducts.has(productId)) {
+        const newViewed = new Set(prev.viewedProducts);
+        newViewed.add(productId);
+        
+        addPoints(5, 'Product viewed');
+        
+        // Achievement for viewing multiple products
+        if (newViewed.size === 5) {
+          triggerAchievement({
+            title: 'Explorer Badge!',
+            description: 'You\'ve viewed 5 products! You\'re getting closer to finding the perfect device.',
+            icon: Target,
+            color: 'text-blue-500'
+          });
+        }
+        
+        return {
+          ...prev,
+          viewedProducts: newViewed
+        };
+      }
+      return prev;
+    });
+  };
+
+  // Track time spent on page
+  useEffect(() => {
+    if (!isGamificationEnabled) return;
+    
+    const startTime = Date.now();
+    const interval = setInterval(() => {
+      setUserProgress(prev => ({
+        ...prev,
+        timeSpent: Math.floor((Date.now() - startTime) / 1000)
+      }));
+    }, 1000);
+
+    return () => clearInterval(interval);
+  }, [isGamificationEnabled]);
+
+  // Achievement for time spent
+  useEffect(() => {
+    if (userProgress.timeSpent === 60 && isGamificationEnabled) { // 1 minute
+      triggerAchievement({
+        title: 'Dedicated Shopper!',
+        description: 'You\'ve spent a full minute exploring our products. Here\'s a bonus!',
+        icon: Timer,
+        color: 'text-green-500'
+      });
+      addPoints(20, 'Time spent shopping');
+    }
+  }, [userProgress.timeSpent, isGamificationEnabled]);
   useEffect(() => {
     dispatch(fetchTypes());
     dispatch(fetchCollections());
@@ -627,19 +729,48 @@ const ProductsPage = () => {
             ) : (
               <>
                 {viewMode === "grid" ? (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 relative">
                     {products.map((product) => (
-                      <ProductCard key={product._id} product={product} />
+                      isGamificationEnabled ? (
+                        <ProductCardGamified 
+                          key={product._id} 
+                          product={product} 
+                          onView={() => handleProductView(product._id)}
+                          userLevel={userProgress.level}
+                        />
+                      ) : (
+                        <ProductCard key={product._id} product={product} />
+                      )
                     ))}
+                    
+                    {/* Floating gamification elements */}
+                    {isGamificationEnabled && products.length > 0 && (
+                      <div className="absolute -top-4 -right-4 z-10">
+                        <div className="bg-gradient-to-r from-purple-500 to-pink-500 text-white px-4 py-2 rounded-full shadow-lg animate-bounce">
+                          <Flame className="h-4 w-4 inline mr-1" />
+                          <span className="text-sm font-bold">Hot Deals!</span>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 ) : (
                   <div className="space-y-6">
                     {products.map((product) => (
-                      <ProductCard
+                      isGamificationEnabled ? (
+                        <ProductCardGamified 
+                          key={product._id} 
+                          product={product} 
+                          viewMode="list"
+                          onView={() => handleProductView(product._id)}
+                          userLevel={userProgress.level}
+                        />
+                      ) : (
+                        <ProductCard
                         key={product._id}
                         product={product}
                         viewMode="list"
-                      />
+                        />
+                      )
                     ))}
                   </div>
                 )}
@@ -653,6 +784,45 @@ const ProductsPage = () => {
           </div>
         </div>
       </div>
+
+      {/* Gamification Panel */}
+      {isGamificationEnabled && (
+        <GamificationPanel 
+          userProgress={userProgress}
+          onToggle={() => setIsGamificationEnabled(!isGamificationEnabled)}
+        />
+      )}
+
+      {/* Achievement Notification */}
+      {showAchievement && (
+        <div className="fixed top-24 right-4 z-50 bg-white rounded-lg shadow-2xl border-2 border-yellow-400 p-6 max-w-sm animate-slide-in-right">
+          <div className="flex items-center mb-3">
+            <div className="w-12 h-12 bg-gradient-to-br from-yellow-400 to-orange-500 rounded-full flex items-center justify-center mr-3">
+              <showAchievement.icon className={`h-6 w-6 ${showAchievement.color}`} />
+            </div>
+            <div>
+              <h3 className="font-bold text-gray-900">{showAchievement.title}</h3>
+              <p className="text-sm text-gray-600">{showAchievement.description}</p>
+            </div>
+          </div>
+          <div className="bg-gradient-to-r from-yellow-100 to-orange-100 rounded-lg p-3">
+            <p className="text-xs text-yellow-800 font-medium">🎉 Achievement Unlocked!</p>
+          </div>
+        </div>
+      )}
+
+      {/* Gamification Toggle */}
+      <button
+        onClick={() => setIsGamificationEnabled(!isGamificationEnabled)}
+        className={`fixed bottom-4 left-4 z-40 p-3 rounded-full shadow-lg transition-all duration-300 ${
+          isGamificationEnabled 
+            ? 'bg-gradient-to-r from-purple-500 to-pink-500 text-white' 
+            : 'bg-gray-200 text-gray-600'
+        }`}
+        title={isGamificationEnabled ? 'Disable Gamification' : 'Enable Gamification'}
+      >
+        <Zap className="h-5 w-5" />
+      </button>
     </div>
   );
 };

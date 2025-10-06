@@ -1,12 +1,33 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Star, ShoppingCart } from 'lucide-react';
+import { Star, ShoppingCart, Zap, Crown, Flame } from 'lucide-react';
+import { useCart } from '../../contexts/CartContext';
+import { useToast } from '../../contexts/ToastContext';
 
-const ProductCard = ({ product, viewMode = 'grid' }) => {
+const ProductCard = ({ product, viewMode = 'grid', showGamification = false }) => {
+  const { addToCart } = useCart();
+  const { showToast } = useToast();
+  
   const discountPercentage = product.discountPrice 
     ? Math.round(((product.price - product.discountPrice) / product.price) * 100)
     : 0;
 
+  // Gamification features
+  const isHotDeal = discountPercentage > 30;
+  const isHighRated = product.rating >= 4.5;
+  const isLowStock = product.stock > 0 && product.stock <= 3;
+
+  const handleAddToCart = async (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    
+    try {
+      await addToCart(product, 1);
+      showToast('Added to cart successfully!', 'success');
+    } catch (error) {
+      showToast('Please login to add items to cart', 'error');
+    }
+  };
   const renderStars = (rating) => {
     return Array.from({ length: 5 }, (_, index) => (
       <Star
@@ -22,14 +43,32 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
 
   if (viewMode === 'list') {
     return (
-      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-shadow">
+      <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-lg transition-all duration-300 group">
         <div className="flex">
           <div className="w-48 h-48 flex-shrink-0 relative">
+            {/* Gamification Badges */}
+            {showGamification && (
+              <div className="absolute top-2 left-2 z-20 flex flex-col gap-1">
+                {isHotDeal && (
+                  <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center animate-pulse">
+                    <Flame className="h-3 w-3 mr-1" />
+                    HOT
+                  </div>
+                )}
+                {isHighRated && (
+                  <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center">
+                    <Crown className="h-3 w-3 mr-1" />
+                    TOP
+                  </div>
+                )}
+              </div>
+            )}
+            
             <Link to={`/product/${product._id}`}>
               <img
                 src={product.image}
                 alt={product.name}
-                className={`w-full h-full object-contain p-4 ${product.stock === 0 ? 'opacity-50' : ''}`}
+                className={`w-full h-full object-contain p-4 transition-transform duration-300 group-hover:scale-110 ${product.stock === 0 ? 'opacity-50' : ''}`}
               />
             </Link>
             {product.stock === 0 && (
@@ -76,10 +115,11 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
               </div>
               <button
                 disabled={product.stock === 0}
-                className={`px-4 py-2 rounded-md transition-colors flex items-center ${
+                onClick={handleAddToCart}
+                className={`px-4 py-2 rounded-md transition-all duration-300 flex items-center transform hover:scale-105 ${
                   product.stock === 0
                     ? 'bg-gray-400 text-white cursor-not-allowed'
-                    : 'bg-green-600 text-white hover:bg-green-700'
+                    : 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700 shadow-lg hover:shadow-xl'
                 }`}
               >
                 <ShoppingCart className="h-4 w-4 mr-2" />
@@ -93,7 +133,39 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
   }
 
   return (
-    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-md transition-all duration-300 group">
+    <div className="bg-white rounded-lg shadow-sm border border-gray-200 overflow-hidden hover:shadow-xl transition-all duration-300 group relative transform hover:scale-105">
+      {/* Gamification Badges */}
+      {showGamification && (
+        <>
+          <div className="absolute top-2 left-2 z-20 flex flex-col gap-1">
+            {isHotDeal && (
+              <div className="bg-gradient-to-r from-red-500 to-pink-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center animate-pulse shadow-lg">
+                <Flame className="h-3 w-3 mr-1" />
+                HOT
+              </div>
+            )}
+            {isHighRated && (
+              <div className="bg-gradient-to-r from-yellow-400 to-orange-500 text-white px-2 py-1 rounded-full text-xs font-bold flex items-center shadow-lg">
+                <Crown className="h-3 w-3 mr-1" />
+                TOP
+              </div>
+            )}
+            {isLowStock && (
+              <div className="bg-gradient-to-r from-orange-500 to-red-500 text-white px-2 py-1 rounded-full text-xs font-bold animate-pulse shadow-lg">
+                ONLY {product.stock} LEFT!
+              </div>
+            )}
+          </div>
+          
+          {/* Sparkle Effects */}
+          <div className="absolute inset-0 pointer-events-none opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+            <div className="absolute top-4 right-4 w-2 h-2 bg-yellow-400 rounded-full animate-ping"></div>
+            <div className="absolute bottom-4 left-4 w-1 h-1 bg-blue-400 rounded-full animate-ping" style={{ animationDelay: '0.5s' }}></div>
+            <div className="absolute top-1/2 left-1/2 w-1 h-1 bg-purple-400 rounded-full animate-ping" style={{ animationDelay: '1s' }}></div>
+          </div>
+        </>
+      )}
+
       <div className="relative">
         <Link to={`/product/${product._id}`}>
           <div className="aspect-square bg-gray-50 p-4">
@@ -172,14 +244,26 @@ const ProductCard = ({ product, viewMode = 'grid' }) => {
         
         <button
           disabled={product.stock === 0}
-          className={`w-full py-2 rounded-md transition-colors flex items-center justify-center ${
+          onClick={handleAddToCart}
+          className={`w-full py-2 rounded-md transition-all duration-300 flex items-center justify-center transform hover:scale-105 relative overflow-hidden ${
             product.stock === 0
               ? 'bg-gray-400 text-white cursor-not-allowed'
-              : 'bg-green-600 text-white hover:bg-green-700'
+              : 'bg-gradient-to-r from-green-600 to-emerald-600 text-white hover:from-green-700 hover:to-emerald-700 shadow-lg hover:shadow-xl'
           }`}
         >
+          {/* Button Shine Effect */}
+          {product.stock > 0 && (
+            <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/20 to-transparent transform -skew-x-12 group-hover:animate-pulse"></div>
+          )}
+          
           <ShoppingCart className="h-4 w-4 mr-2" />
-          {product.stock === 0 ? 'Sold Out' : 'Add to Cart'}
+          {product.stock === 0 ? 'Sold Out' : (
+            <>
+              Add to Cart
+              {showGamification && isHotDeal && <span className="ml-2">🔥</span>}
+              {showGamification && <span className="ml-2 text-xs opacity-75">+10 XP</span>}
+            </>
+          )}
         </button>
       </div>
     </div>
