@@ -37,10 +37,16 @@ const productSchema = new mongoose.Schema({
   specifications: { type: Map, of: String },
   stock: { type: Number, default: 0 },
   reviews:
-   [{user: {type: mongoose.Schema.Types.ObjectId,ref: 'User',required: true},
+   [{
+   // For logged-in users (legacy support)
+   user: {type: mongoose.Schema.Types.ObjectId,ref: 'User',required: false},
+   // For public reviews
+   reviewerName: {type: String,required: false},
+   reviewerEmail: {type: String,required: false},
+   isVerifiedPurchase: {type: Boolean,default: false},
    rating: {type: Number,required: true,min: 1,max: 5},
    comment: String,
-   orderId: {type: mongoose.Schema.Types.ObjectId,ref: 'Order',required: true},
+   orderId: {type: mongoose.Schema.Types.ObjectId,ref: 'Order',required: false},
    createdAt: {type: Date,default: Date.now}
    }],
   rating: { type: Number, default: 0,set: v => parseFloat(v.toFixed(1)) },

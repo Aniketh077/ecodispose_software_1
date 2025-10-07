@@ -166,10 +166,9 @@ export const deleteType = createAsyncThunk(
 
 export const rateProduct = createAsyncThunk(
   'products/rateProduct',
-  async ({ productId, ratingData }, { getState, rejectWithValue }) => {
+  async ({ productId, ratingData }, { rejectWithValue }) => {
     try {
-      const { auth } = getState();
-      const response = await productAPI.rateProduct(productId, ratingData, auth.user.token);
+      const response = await productAPI.rateProduct(productId, ratingData);
       return response;
     } catch (error) {
       return rejectWithValue(error.response?.data?.message || error.message);

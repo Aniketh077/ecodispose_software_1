@@ -40,7 +40,7 @@ router.route('/')
 
 router.get('/collections', getCollectionsWithTypes);
 
-router.post('/:id/rate', protect, rateProduct);
+router.post('/:id/rate', rateProduct); // Remove protect middleware to allow public reviews
 
 router.route('/:id')
   .get(getProductById)

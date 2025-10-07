@@ -415,28 +415,25 @@ const updateProduct = async (req, res) => {
 
 const rateProduct = async (req, res) => {
   try {
-    const { rating, comment, orderId } = req.body;
+    const { rating, comment, reviewerName, reviewerEmail } = req.body;
 
     if (!rating || rating < 1 || rating > 5) {
       return res.status(400).json({ message: 'Rating must be between 1 and 5' });
     }
 
-    const order = await Order.findById(orderId);
-    if (!order) {
-      return res.status(404).json({ message: 'Order not found' });
+    // Validate reviewer information for public reviews
+    if (!reviewerName || !reviewerName.trim()) {
+      return res.status(400).json({ message: 'Reviewer name is required' });
     }
-
-    if (order.user.toString() !== req.user._id.toString()) {
-      return res.status(403).json({ message: 'Not authorized to rate this order' });
+    
+    if (!reviewerEmail || !reviewerEmail.trim()) {
+      return res.status(400).json({ message: 'Reviewer email is required' });
     }
-
-    if (order.orderStatus !== 'delivered') {
-      return res.status(400).json({ message: 'Can only rate products from delivered orders' });
-    }
-
-    const orderItem = order.items.find(item => item.product.toString() === req.params.id);
-    if (!orderItem) {
-      return res.status(400).json({ message: 'Product not found in this order' });
+    
+    // Basic email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(reviewerEmail)) {
+      return res.status(400).json({ message: 'Please provide a valid email address' });
     }
 
     const product = await Product.findById(req.params.id);
@@ -444,20 +441,22 @@ const rateProduct = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' });
     }
 
+    // Check if this email has already reviewed this product
     const existingReview = product.reviews.find(
-      review => review.user.toString() === req.user._id.toString() &&
-        review.orderId.toString() === orderId
+      review => review.reviewerEmail && review.reviewerEmail.toLowerCase() === reviewerEmail.toLowerCase()
     );
 
     if (existingReview) {
-      return res.status(400).json({ message: 'You have already rated this product for this order' });
+      return res.status(400).json({ message: 'You have already reviewed this product' });
     }
 
     const review = {
-      user: req.user._id,
+      reviewerName: reviewerName.trim(),
+      reviewerEmail: reviewerEmail.toLowerCase().trim(),
       rating,
-      comment,
-      orderId
+      comment: comment ? comment.trim() : '',
+      isVerifiedPurchase: false, // Public reviews are not verified purchases
+      createdAt: new Date()
     };
 
     product.reviews.push(review);
@@ -469,7 +468,6 @@ const rateProduct = async (req, res) => {
     await product.save();
 
     const updatedProduct = await Product.findById(req.params.id)
-      .populate('reviews.user', 'name')
       .populate('type', 'name logo');
 
     res.json(updatedProduct);
