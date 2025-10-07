@@ -3,18 +3,7 @@ import { useDispatch } from "react-redux";
 import { useSelector } from "react-redux";
 import { rateProduct } from "../../../store/slices/productSlice";
 import { useToast } from "../../../contexts/ToastContext";
-import {
-  Star,
-  ChevronLeft,
-  ChevronRight,
-  ChevronDown,
-  ChevronUp,
-  Send,
-  User,
-  Mail,
-  Shield,
-  CheckCircle
-} from "lucide-react";
+import { Star, ChevronLeft, ChevronRight, ChevronDown, ChevronUp, Send, User, Mail, Shield, CircleCheck as CheckCircle } from "lucide-react";
 import Button from "../../../components/ui/Button";
 import Input from "../../../components/ui/Input";
 
@@ -465,23 +454,9 @@ const ProductReviews = ({
                 </>
               ) : (
                 <div className="text-center py-12 lg:py-16">
-                  <div className="w-16 h-16 bg-gray-100 rounded-full flex items-center justify-center mx-auto mb-4">
-                    <Star className="h-8 w-8 text-gray-400" />
-                  </div>
                   <h3 className="text-base lg:text-lg font-semibold text-gray-400 mb-2">
                     No reviews yet
                   </h3>
-                  <p className="text-sm text-gray-500 mb-4">
-                    Be the first to review this product and help other customers!
-                  </p>
-                  <Button
-                    variant="primary"
-                    size="sm"
-                    onClick={() => setShowReviewForm(true)}
-                    leftIcon={<Send className="h-4 w-4" />}
-                  >
-                    Write First Review
-                  </Button>
                 </div>
               )}
 
