@@ -1,12 +1,19 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { rateProduct } from "../../../store/slices/productSlice";
+import { useToast } from "../../../contexts/ToastContext";
 import {
   Star,
   ChevronLeft,
   ChevronRight,
   ChevronDown,
   ChevronUp,
+  Send,
+  User,
+  Mail
 } from "lucide-react";
 import Button from "../../../components/ui/Button";
+import Input from "../../../components/ui/Input";
 
 const ProductReviews = ({
   product,
@@ -14,8 +21,21 @@ const ProductReviews = ({
   setCurrentReviewPage,
   reviewsPerPage,
 }) => {
+  const dispatch = useDispatch();
+  const { showSuccess, showError } = useToast();
+  
   // State for expanded comments
   const [expandedComments, setExpandedComments] = useState({});
+  
+  // State for review form
+  const [showReviewForm, setShowReviewForm] = useState(false);
+  const [reviewForm, setReviewForm] = useState({
+    rating: 5,
+    comment: '',
+    reviewerName: '',
+    reviewerEmail: ''
+  });
+  const [submittingReview, setSubmittingReview] = useState(false);
 
   // Filter reviews to only include those with comments
   const validReviews =
@@ -63,6 +83,52 @@ const ProductReviews = ({
     return words.slice(0, limit).join(" ") + "...";
   };
 
+  const handleReviewSubmit = async (e) => {
+    e.preventDefault();
+    
+    if (!reviewForm.reviewerName.trim() || !reviewForm.reviewerEmail.trim()) {
+      showError('Please fill in your name and email');
+      return;
+    }
+    
+    if (!reviewForm.comment.trim()) {
+      showError('Please write a review comment');
+      return;
+    }
+    
+    setSubmittingReview(true);
+    
+    try {
+      await dispatch(rateProduct({
+        productId: product._id,
+        ratingData: {
+          rating: reviewForm.rating,
+          comment: reviewForm.comment.trim(),
+          reviewerName: reviewForm.reviewerName.trim(),
+          reviewerEmail: reviewForm.reviewerEmail.trim()
+        }
+      })).unwrap();
+      
+      showSuccess('Review submitted successfully!');
+      setShowReviewForm(false);
+      setReviewForm({
+        rating: 5,
+        comment: '',
+        reviewerName: '',
+        reviewerEmail: ''
+      });
+    } catch (error) {
+      showError(error.message || 'Failed to submit review');
+    } finally {
+      setSubmittingReview(false);
+    }
+  };
+  
+  const handleFormChange = (e) => {
+    const { name, value } = e.target;
+    setReviewForm(prev => ({ ...prev, [name]: value }));
+  };
+
   if (!product?.reviews || product.reviews.length === 0) {
     return null;
   }
@@ -70,9 +136,111 @@ const ProductReviews = ({
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden mt-4">
       <div className="p-4 lg:p-6">
-        <h2 className="text-xl lg:text-2xl font-bold mb-4 lg:mb-6">
+        <div className="flex justify-between items-center mb-4 lg:mb-6">
+          <h2 className="text-xl lg:text-2xl font-bold">
           Customer Reviews
-        </h2>
+          </h2>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => setShowReviewForm(!showReviewForm)}
+            leftIcon={<Send className="h-4 w-4" />}
+          >
+            Write Review
+          </Button>
+        </div>
+
+        {/* Review Form */}
+        {showReviewForm && (
+          <div className="mb-8 p-6 bg-gray-50 rounded-lg border border-gray-200">
+            <h3 className="text-lg font-semibold mb-4">Write a Review</h3>
+            <form onSubmit={handleReviewSubmit} className="space-y-4">
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <Input
+                  label="Your Name"
+                  name="reviewerName"
+                  value={reviewForm.reviewerName}
+                  onChange={handleFormChange}
+                  leftIcon={<User className="h-5 w-5" />}
+                  placeholder="Enter your name"
+                  required
+                  fullWidth
+                />
+                <Input
+                  label="Email Address"
+                  name="reviewerEmail"
+                  type="email"
+                  value={reviewForm.reviewerEmail}
+                  onChange={handleFormChange}
+                  leftIcon={<Mail className="h-5 w-5" />}
+                  placeholder="Enter your email"
+                  required
+                  fullWidth
+                />
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Rating
+                </label>
+                <div className="flex items-center space-x-1">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => setReviewForm(prev => ({ ...prev, rating: star }))}
+                      className="text-2xl hover:scale-110 transition-transform"
+                    >
+                      <Star
+                        className={`h-8 w-8 ${
+                          star <= reviewForm.rating
+                            ? "text-yellow-500 fill-yellow-500"
+                            : "text-gray-300"
+                        }`}
+                      />
+                    </button>
+                  ))}
+                  <span className="ml-3 text-sm text-gray-600">
+                    {reviewForm.rating} out of 5 stars
+                  </span>
+                </div>
+              </div>
+              
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Your Review
+                </label>
+                <textarea
+                  name="comment"
+                  value={reviewForm.comment}
+                  onChange={handleFormChange}
+                  rows={4}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-green-500"
+                  placeholder="Share your experience with this product..."
+                  required
+                />
+              </div>
+              
+              <div className="flex justify-end space-x-3">
+                <Button
+                  type="button"
+                  variant="outline"
+                  onClick={() => setShowReviewForm(false)}
+                >
+                  Cancel
+                </Button>
+                <Button
+                  type="submit"
+                  variant="primary"
+                  isLoading={submittingReview}
+                  leftIcon={<Send className="h-4 w-4" />}
+                >
+                  Submit Review
+                </Button>
+              </div>
+            </form>
+          </div>
+        )}
 
         {/* Two Column Layout */}
         <div className="flex flex-col lg:flex-row gap-6">
@@ -182,6 +350,10 @@ const ProductReviews = ({
                     {paginatedReviews.map((review) => {
                       const isExpanded = expandedComments[review._id];
                       const needsExpansion = needsTruncation(review.comment);
+                      
+                      // Get reviewer name - support both old and new format
+                      const reviewerName = review.reviewerName || review.user?.name || "Anonymous";
+                      const isVerifiedPurchase = review.isVerifiedPurchase || !!review.orderId;
 
                       return (
                         <div
@@ -191,7 +363,7 @@ const ProductReviews = ({
                           <div className="flex items-start justify-between mb-3 lg:mb-4">
                             <div className="flex items-center space-x-3">
                               <div className="w-10 h-10 lg:w-12 lg:h-12 bg-gradient-to-br from-green-600 to-[#3A5A7A] rounded-full flex items-center justify-center text-white font-semibold text-base lg:text-lg">
-                                {(review.user?.name || "A")
+                                {reviewerName
                                   .charAt(0)
                                   .toUpperCase()}
                               </div>
@@ -213,11 +385,15 @@ const ProductReviews = ({
                                 {/* Name + Verified Badge */}
                                 <div className="flex items-center space-x-2">
                                   <span className="font-semibold text-gray-900 text-sm lg:text-base">
-                                    {review.user?.name || "Anonymous"}
+                                    {reviewerName}
                                   </span>
-                                  {review.orderId && (
-                                    <span className="text-[10px] bg-[#587297] text-white  px-1 py-0.5 rounded-full font-medium">
+                                  {isVerifiedPurchase ? (
+                                    <span className="text-[10px] bg-green-600 text-white px-1 py-0.5 rounded-full font-medium">
                                       ✓ Verified Purchase
+                                    </span>
+                                  ) : (
+                                    <span className="text-[10px] bg-gray-500 text-white px-1 py-0.5 rounded-full font-medium">
+                                      Public Review
                                     </span>
                                   )}
                                 </div>
