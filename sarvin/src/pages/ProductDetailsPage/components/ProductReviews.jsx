@@ -129,6 +129,13 @@ const ProductReviews = ({
     setReviewForm(prev => ({ ...prev, [name]: value }));
   };
 
+  const handleStarClick = (rating) => {
+    setReviewForm(prev => ({ ...prev, rating }));
+  };
+
+  const handleStarHover = (rating) => {
+    // Optional: Add hover preview functionality
+  };
   if (!product?.reviews || product.reviews.length === 0) {
     return null;
   }
@@ -188,14 +195,15 @@ const ProductReviews = ({
                     <button
                       key={star}
                       type="button"
-                      onClick={() => setReviewForm(prev => ({ ...prev, rating: star }))}
-                      className="text-2xl hover:scale-110 transition-transform"
+                      onClick={() => handleStarClick(star)}
+                      onMouseEnter={() => handleStarHover(star)}
+                      className="text-2xl hover:scale-110 transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-green-500 rounded p-1"
                     >
                       <Star
-                        className={`h-8 w-8 ${
+                        className={`h-8 w-8 cursor-pointer transition-colors duration-200 ${
                           star <= reviewForm.rating
-                            ? "text-yellow-500 fill-yellow-500"
-                            : "text-gray-300"
+                            ? "text-yellow-400 fill-yellow-400 drop-shadow-sm"
+                            : "text-gray-300 hover:text-yellow-200"
                         }`}
                       />
                     </button>
@@ -204,6 +212,9 @@ const ProductReviews = ({
                     {reviewForm.rating} out of 5 stars
                   </span>
                 </div>
+                <p className="text-xs text-gray-500 mt-1">
+                  Click on a star to rate this product
+                </p>
               </div>
               
               <div>

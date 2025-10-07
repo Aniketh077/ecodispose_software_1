@@ -52,7 +52,7 @@ const ProductInfo = ({
                   className="absolute top-0 left-0 overflow-hidden"
                   style={{ width: `${fillPercent}%` }}
                 >
-                  <Star className="w-5 h-5 text-emerald-600" fill="#C87941" />
+                  <Star className="w-5 h-5 text-yellow-400" fill="#FCD34D" />
                 </div>
               </div>
             );

@@ -32,9 +32,9 @@ const ProductCard = ({ product, viewMode = 'grid', showGamification = false }) =
     return Array.from({ length: 5 }, (_, index) => (
       <Star
         key={index}
-        className={`h-4 w-4 ${
+        className={`h-4 w-4 transition-colors ${
           index < Math.floor(rating)
-            ? "text-yellow-500 fill-yellow-500"
+            ? "text-yellow-400 fill-yellow-400"
             : "text-gray-300"
         }`}
       />
