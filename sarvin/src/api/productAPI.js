@@ -82,9 +82,17 @@ export const deleteType = async (id, token) => {
   return response.data;
 };
 
-export const rateProduct = async (productId, ratingData) => {
-  // No authentication required for public reviews
-  const response = await axios.post(`${API_URL}/${productId}/rate`, ratingData);
+export const rateProduct = async (productId, ratingData, isAuthenticated = false) => {
+  const endpoint = isAuthenticated ? 'rate-authenticated' : 'rate';
+  const response = await axios.post(`${API_URL}/${productId}/${endpoint}`, ratingData);
+  return response.data;
+};
+
+export const rateProductAuthenticated = async (productId, ratingData, token) => {
+  const config = {
+    headers: { Authorization: `Bearer ${token}` }
+  };
+  const response = await axios.post(`${API_URL}/${productId}/rate-authenticated`, ratingData, config);
   return response.data;
 };
 
@@ -109,6 +117,7 @@ export const productAPI = {
   createProduct,
   updateProduct,
   rateProduct,
+  rateProductAuthenticated,
   deleteProduct,
   getTypes,
   createType,

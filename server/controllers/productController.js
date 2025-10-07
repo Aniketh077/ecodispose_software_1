@@ -415,25 +415,30 @@ const updateProduct = async (req, res) => {
 
 const rateProduct = async (req, res) => {
   try {
-    const { rating, comment, reviewerName, reviewerEmail } = req.body;
+    const { rating, comment, reviewerName, reviewerEmail, orderId } = req.body;
 
     if (!rating || rating < 1 || rating > 5) {
       return res.status(400).json({ message: 'Rating must be between 1 and 5' });
     }
 
-    // Validate reviewer information for public reviews
-    if (!reviewerName || !reviewerName.trim()) {
-      return res.status(400).json({ message: 'Reviewer name is required' });
-    }
+    // Check if this is an authenticated user review or public review
+    const isAuthenticatedReview = req.user && req.user._id;
     
-    if (!reviewerEmail || !reviewerEmail.trim()) {
-      return res.status(400).json({ message: 'Reviewer email is required' });
-    }
-    
-    // Basic email validation
-    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    if (!emailRegex.test(reviewerEmail)) {
-      return res.status(400).json({ message: 'Please provide a valid email address' });
+    if (!isAuthenticatedReview) {
+      // For public reviews, validate reviewer information
+      if (!reviewerName || !reviewerName.trim()) {
+        return res.status(400).json({ message: 'Reviewer name is required' });
+      }
+      
+      if (!reviewerEmail || !reviewerEmail.trim()) {
+        return res.status(400).json({ message: 'Reviewer email is required' });
+      }
+      
+      // Basic email validation
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(reviewerEmail)) {
+        return res.status(400).json({ message: 'Please provide a valid email address' });
+      }
     }
 
     const product = await Product.findById(req.params.id);
@@ -441,34 +446,71 @@ const rateProduct = async (req, res) => {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    // Check if this email has already reviewed this product
-    const existingReview = product.reviews.find(
-      review => review.reviewerEmail && review.reviewerEmail.toLowerCase() === reviewerEmail.toLowerCase()
-    );
-
-    if (existingReview) {
-      return res.status(400).json({ message: 'You have already reviewed this product' });
+    // Check for duplicate reviews
+    let existingReview = null;
+    
+    if (isAuthenticatedReview) {
+      // For authenticated users, check by user ID and optionally order ID
+      if (orderId) {
+        existingReview = product.reviews.find(
+          review => review.user && review.user.toString() === req.user._id.toString() && 
+                   review.orderId && review.orderId.toString() === orderId.toString()
+        );
+      } else {
+        existingReview = product.reviews.find(
+          review => review.user && review.user.toString() === req.user._id.toString()
+        );
+      }
+    } else {
+      // For public reviews, check by email
+      existingReview = product.reviews.find(
+        review => review.reviewerEmail && review.reviewerEmail.toLowerCase() === reviewerEmail.toLowerCase()
+      );
     }
 
+    if (existingReview) {
+      return res.status(400).json({ 
+        message: isAuthenticatedReview 
+          ? 'You have already reviewed this product' 
+          : 'This email has already been used to review this product' 
+      });
+    }
+
+    // Create review object
     const review = {
-      reviewerName: reviewerName.trim(),
-      reviewerEmail: reviewerEmail.toLowerCase().trim(),
       rating,
       comment: comment ? comment.trim() : '',
-      isVerifiedPurchase: false, // Public reviews are not verified purchases
       createdAt: new Date()
     };
 
+    if (isAuthenticatedReview) {
+      // Authenticated user review
+      review.user = req.user._id;
+      review.isVerifiedPurchase = !!orderId;
+      if (orderId) {
+        review.orderId = orderId;
+      }
+    } else {
+      // Public review
+      review.reviewerName = reviewerName.trim();
+      review.reviewerEmail = reviewerEmail.toLowerCase().trim();
+      review.isVerifiedPurchase = false;
+    }
+
     product.reviews.push(review);
 
+    // Recalculate rating and review count
     product.reviewCount = product.reviews.length;
     const avgRating = product.reviews.reduce((acc, review) => acc + review.rating, 0) / product.reviews.length;
     product.rating = Math.round(avgRating * 10) / 10;
 
     await product.save();
 
+    // Return updated product with populated reviews
     const updatedProduct = await Product.findById(req.params.id)
-      .populate('type', 'name logo');
+      .populate('type', 'name logo')
+      .populate('collection', 'name slug')
+      .populate('reviews.user', 'name');
 
     res.json(updatedProduct);
   } catch (error) {

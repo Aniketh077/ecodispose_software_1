@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { rateProduct } from "../../../store/slices/productSlice";
 import { useToast } from "../../../contexts/ToastContext";
 import {
@@ -10,7 +11,9 @@ import {
   ChevronUp,
   Send,
   User,
-  Mail
+  Mail,
+  Shield,
+  CheckCircle
 } from "lucide-react";
 import Button from "../../../components/ui/Button";
 import Input from "../../../components/ui/Input";
@@ -22,6 +25,7 @@ const ProductReviews = ({
   reviewsPerPage,
 }) => {
   const dispatch = useDispatch();
+  const { user, isAuthenticated } = useSelector((state) => state.auth);
   const { showSuccess, showError } = useToast();
   
   // State for expanded comments
@@ -386,7 +390,7 @@ const ProductReviews = ({
                                       key={star}
                                       className={`h-3 w-3 lg:h-4 lg:w-4 ${
                                         star <= review.rating
-                                          ? "text-emerald-600 fill-[#C87941]"
+                                          ? "text-yellow-400 fill-yellow-400"
                                           : "text-gray-300"
                                       }`}
                                     />
@@ -401,6 +405,10 @@ const ProductReviews = ({
                                   {isVerifiedPurchase ? (
                                     <span className="text-[10px] bg-green-600 text-white px-1 py-0.5 rounded-full font-medium">
                                       ✓ Verified Purchase
+                                    </span>
+                                  ) : review.user ? (
+                                    <span className="text-[10px] bg-blue-600 text-white px-1 py-0.5 rounded-full font-medium">
+                                      ✓ Verified User
                                     </span>
                                   ) : (
                                     <span className="text-[10px] bg-gray-500 text-white px-1 py-0.5 rounded-full font-medium">

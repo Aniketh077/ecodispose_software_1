@@ -302,6 +302,28 @@ const productSlice = createSlice({
       // Delete Type
       .addCase(deleteType.fulfilled, (state, action) => {
         state.types = state.types.filter(t => t.id !== action.payload);
+      })
+      
+      // Rate Product
+      .addCase(rateProduct.pending, (state) => {
+        state.loading = true;
+        state.error = null;
+      })
+      .addCase(rateProduct.fulfilled, (state, action) => {
+        state.loading = false;
+        // Update the current product if it matches
+        if (state.product && state.product._id === action.payload._id) {
+          state.product = action.payload;
+        }
+        // Update product in products array if it exists
+        const productIndex = state.products.findIndex(p => p._id === action.payload._id);
+        if (productIndex !== -1) {
+          state.products[productIndex] = action.payload;
+        }
+      })
+      .addCase(rateProduct.rejected, (state, action) => {
+        state.loading = false;
+        state.error = action.payload;
       });
   }
 });

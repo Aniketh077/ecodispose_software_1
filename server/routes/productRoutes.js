@@ -40,7 +40,11 @@ router.route('/')
 
 router.get('/collections', getCollectionsWithTypes);
 
-router.post('/:id/rate', rateProduct); // Remove protect middleware to allow public reviews
+// Public review route (no authentication required)
+router.post('/:id/rate', rateProduct);
+
+// Authenticated review route (for verified purchases)
+router.post('/:id/rate-authenticated', protect, rateProduct);
 
 router.route('/:id')
   .get(getProductById)
