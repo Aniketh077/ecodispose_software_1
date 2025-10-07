@@ -40,6 +40,19 @@ const OrderItems = ({ items, orderStatus, onWriteReview, orderId }) => {
     });
   };
 
+  const handleRateProduct = async (productId, ratingData) => {
+    try {
+      await dispatch(
+        rateProduct({
+          productId,
+          ratingData: {
+            ...ratingData,
+            orderId: order._id,
+          },
+          isAuthenticated: true
+        })
+      ).unwrap();
+
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden">
       <div className="px-6 py-4 border-b border-gray-100">
