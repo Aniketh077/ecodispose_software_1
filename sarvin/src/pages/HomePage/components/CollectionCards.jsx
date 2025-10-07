@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { ChevronRight, Shield, Package, Award } from "lucide-react";
+import { ChevronRight, Shield, Package, Award, ArrowRight } from "lucide-react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchCollections } from "../../../store/slices/collectionSlice";
 import { fetchCollections as fetchCollectionsWithTypes } from "../../../store/slices/productSlice";
@@ -15,15 +15,6 @@ const CollectionCards = () => {
     dispatch(fetchCollectionsWithTypes());
   }, [dispatch]);
 
-  const bgColors = [
-    "bg-green-600",
-    "bg-emerald-500",
-    "bg-[#2D5F5D]",
-    "bg-[#7C3AED]",
-    "bg-[#DC2626]",
-    "bg-[#059669]"
-  ];
-
   // Comprehensive safety checks to prevent React child errors
   if (!collections || !Array.isArray(collections) || collections.length === 0) {
     return null;
@@ -31,7 +22,7 @@ const CollectionCards = () => {
 
   // Safely process collections with extensive validation
   const displayCollections = collections
-    .slice(0, 6)
+    .slice(0, 8) // Show more collections in horizontal scroll
     .map((collection, index) => {
       // Ensure collection is a valid object with required properties
       if (!collection || typeof collection !== 'object') {
@@ -64,14 +55,11 @@ const CollectionCards = () => {
       // Safely extract types with validation - ensure only strings are used
       const types = [];
       if (collectionWithTypes && Array.isArray(collectionWithTypes.types)) {
-        collectionWithTypes.types.slice(0, 3).forEach(type => {
+        collectionWithTypes.types.slice(0, 2).forEach(type => {
           if (type && typeof type === 'object' && type.name) {
             const typeName = String(type.name);
             if (typeName) {
-              types.push({
-                name: typeName,
-                link: `/products?types=${encodeURIComponent(typeName)}`
-              });
+              types.push(typeName);
             }
           }
         });
@@ -83,7 +71,6 @@ const CollectionCards = () => {
       return {
         id: collectionId,
         title: collectionName,
-        bgColor: bgColors[index % bgColors.length],
         imageUrl: collectionImage,
         exploreUrl: `/products/${collectionSlug}`,
         types: types,
@@ -98,7 +85,7 @@ const CollectionCards = () => {
   }
 
   return (
-    <section className="py-16 bg-slate-50">
+    <section className="py-16 bg-gray-50">
       <div className="container mx-auto px-4">
         <div className="text-center mb-12">
           <h2 className="text-4xl font-bold mb-4">Shop by Category</h2>
@@ -106,83 +93,137 @@ const CollectionCards = () => {
             Discover our premium certified refurbished electronics across different categories
           </p>
 
-          {/* Trust Signals */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-4xl mx-auto mt-8">
-            <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-emerald-100 rounded-full flex items-center justify-center mb-3">
-                <Shield className="w-6 h-6 text-emerald-600" />
+          {/* Trust Signals - Compact Design */}
+          <div className="flex justify-center items-center gap-8 max-w-4xl mx-auto mt-8 mb-8">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-emerald-100 rounded-full flex items-center justify-center">
+                <Shield className="w-5 h-5 text-emerald-600" />
               </div>
-              <h4 className="font-semibold text-gray-900 mb-1">Warranty Protected</h4>
-              <p className="text-sm text-gray-600 text-center">Comprehensive warranty on all refurbished products</p>
+              <div className="text-left">
+                <h4 className="font-semibold text-gray-900 text-sm">Warranty Protected</h4>
+                <p className="text-xs text-gray-600">Comprehensive coverage</p>
+              </div>
             </div>
-            <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center mb-3">
-                <Award className="w-6 h-6 text-blue-600" />
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-blue-100 rounded-full flex items-center justify-center">
+                <Award className="w-5 h-5 text-blue-600" />
               </div>
-              <h4 className="font-semibold text-gray-900 mb-1">Quality Certified</h4>
-              <p className="text-sm text-gray-600 text-center">Thoroughly tested and certified by experts</p>
+              <div className="text-left">
+                <h4 className="font-semibold text-gray-900 text-sm">Quality Certified</h4>
+                <p className="text-xs text-gray-600">Expert tested</p>
+              </div>
             </div>
-            <div className="flex flex-col items-center p-4 bg-white rounded-lg shadow-sm">
-              <div className="w-12 h-12 bg-orange-100 rounded-full flex items-center justify-center mb-3">
-                <Package className="w-6 h-6 text-orange-600" />
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 bg-orange-100 rounded-full flex items-center justify-center">
+                <Package className="w-5 h-5 text-orange-600" />
               </div>
-              <h4 className="font-semibold text-gray-900 mb-1">Secure Packaging</h4>
-              <p className="text-sm text-gray-600 text-center">Safe delivery with protective packaging</p>
+              <div className="text-left">
+                <h4 className="font-semibold text-gray-900 text-sm">Secure Packaging</h4>
+                <p className="text-xs text-gray-600">Safe delivery</p>
+              </div>
             </div>
           </div>
         </div>
         
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-          {displayCollections.map((collection) => (
-            <div
-              key={collection.id}
-              className={`relative ${collection.bgColor} rounded-lg shadow-lg overflow-hidden flex flex-col lg:flex-row lg:h-[360px]`}
-            >
-              <div className="p-8 text-white w-full lg:w-1/2 flex flex-col justify-center z-10 order-2 lg:order-1">
-                <div className="flex items-center gap-2 mb-3">
-                  <Shield className="w-5 h-5" />
-                  <span className="text-sm font-medium uppercase tracking-wide">Certified Refurbished</span>
-                </div>
-                <h3 className="text-4xl font-bold mb-2">{collection.title}</h3>
-                {collection.productCount > 0 && (
-                  <p className="text-white/90 mb-4 text-sm">{collection.productCount} Products Available</p>
-                )}
-                {collection.types && Array.isArray(collection.types) && collection.types.length > 0 && (
-                  <ul className="space-y-2 mb-6">
-                    {collection.types.map((type, typeIndex) => (
-                      <li key={`${collection.id}-type-${typeIndex}`}>
-                        <Link
-                          to={type.link}
-                          className="hover:font-normal text-base font-normal hover:underline inline-flex items-center gap-1"
-                        >
-                          <ChevronRight size={16} />
-                          {type.name}
-                        </Link>
-                      </li>
-                    ))}
-                  </ul>
-                )}
-                <Link
-                  to={collection.exploreUrl}
-                  className="font-semibold text-lg flex items-center group whitespace-nowrap mt-auto"
+        {/* Horizontal Scrolling Collection Cards */}
+        <div className="relative">
+          {/* Scroll Container */}
+          <div className="overflow-x-auto scrollbar-hide pb-4">
+            <div className="flex gap-6 min-w-max px-2">
+              {displayCollections.map((collection, index) => (
+                <div
+                  key={collection.id}
+                  className="flex-shrink-0 w-80 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border border-gray-100 hover:border-green-200"
                 >
-                  Explore All {collection.title}
-                  <ChevronRight
-                    size={22}
-                    className="ml-1 transition-transform group-hover:translate-x-1"
-                  />
-                </Link>
-              </div>
-              
-              <div className="relative lg:absolute lg:right-[-90px] lg:top-0 h-[320px] lg:h-full w-full lg:w-[85%] flex items-center justify-center lg:justify-end order-1 lg:order-2">
-                <img
-                  src={collection.imageUrl}
-                  alt={collection.title}
-                  className="h-full w-full object-cover lg:h-auto lg:w-auto lg:max-h-[600px] lg:object-contain"
-                />
+                  {/* Image Section */}
+                  <div className="relative h-48 overflow-hidden bg-gradient-to-br from-gray-50 to-gray-100">
+                    <img
+                      src={collection.imageUrl}
+                      alt={collection.title}
+                      className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent"></div>
+                    
+                    {/* Certified Badge */}
+                    <div className="absolute top-3 left-3 flex items-center gap-1 bg-green-600 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                      <Shield className="w-3 h-3" />
+                      CERTIFIED
+                    </div>
+
+                    {/* Product Count */}
+                    {collection.productCount > 0 && (
+                      <div className="absolute top-3 right-3 bg-white/90 backdrop-blur-sm text-gray-800 px-3 py-1 rounded-full text-xs font-semibold">
+                        {collection.productCount} Products
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Content Section */}
+                  <div className="p-6">
+                    <h3 className="text-xl font-bold text-gray-900 mb-3 group-hover:text-green-700 transition-colors">
+                      {collection.title}
+                    </h3>
+                    
+                    {/* Top Brands */}
+                    {collection.types && Array.isArray(collection.types) && collection.types.length > 0 && (
+                      <div className="mb-4">
+                        <p className="text-xs text-gray-500 mb-2 font-medium uppercase tracking-wide">Top Brands</p>
+                        <div className="flex flex-wrap gap-2">
+                          {collection.types.map((type, typeIndex) => (
+                            <span
+                              key={`${collection.id}-type-${typeIndex}`}
+                              className="inline-flex items-center px-2 py-1 bg-gray-100 text-gray-700 rounded-md text-xs font-medium hover:bg-green-100 hover:text-green-700 transition-colors"
+                            >
+                              {type}
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Explore Button */}
+                    <Link
+                      to={collection.exploreUrl}
+                      className="inline-flex items-center justify-center w-full bg-gradient-to-r from-green-600 to-emerald-600 text-white px-4 py-3 rounded-lg font-semibold text-sm hover:from-green-700 hover:to-emerald-700 transition-all duration-200 group/btn"
+                    >
+                      Explore {collection.title}
+                      <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                    </Link>
+                  </div>
+                </div>
+              ))}
+
+              {/* View All Card */}
+              <div className="flex-shrink-0 w-80 bg-gradient-to-br from-green-600 to-emerald-700 rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 overflow-hidden group border border-green-500">
+                <div className="h-full flex flex-col justify-center items-center p-8 text-white text-center">
+                  <div className="w-16 h-16 bg-white/20 rounded-full flex items-center justify-center mb-4 group-hover:scale-110 transition-transform">
+                    <Package className="w-8 h-8 text-white" />
+                  </div>
+                  <h3 className="text-2xl font-bold mb-2">Explore All</h3>
+                  <p className="text-green-100 mb-6 text-sm">
+                    Browse our complete collection of certified refurbished electronics
+                  </p>
+                  <Link
+                    to="/products"
+                    className="inline-flex items-center bg-white text-green-700 px-6 py-3 rounded-lg font-semibold text-sm hover:bg-gray-100 transition-colors group/btn"
+                  >
+                    View All Products
+                    <ArrowRight className="w-4 h-4 ml-2 group-hover/btn:translate-x-1 transition-transform" />
+                  </Link>
+                </div>
               </div>
             </div>
-          ))}
+          </div>
+
+          {/* Scroll Indicators */}
+          <div className="flex justify-center mt-6">
+            <div className="flex items-center gap-2">
+              <div className="w-2 h-2 bg-green-600 rounded-full"></div>
+              <div className="w-8 h-1 bg-green-200 rounded-full"></div>
+              <div className="w-2 h-2 bg-green-300 rounded-full"></div>
+              <span className="text-xs text-gray-500 ml-3">Scroll to explore more →</span>
+            </div>
+          </div>
         </div>
       </div>
     </section>
