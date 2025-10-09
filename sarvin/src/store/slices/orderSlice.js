@@ -19,15 +19,10 @@ export const fetchOrderDetails = createAsyncThunk(
   'orders/fetchOrderDetails',
   async (orderId, { getState, rejectWithValue }) => {
     try {
-      console.log('fetchOrderDetails - orderId:', orderId);
       const { auth } = getState();
-      console.log('fetchOrderDetails - user token exists:', !!auth.user?.token);
       const response = await orderAPI.getOrderById(orderId, auth.user.token);
-      console.log('fetchOrderDetails - response:', response);
       return response;
     } catch (error) {
-      console.error('fetchOrderDetails - error:', error);
-      console.error('fetchOrderDetails - error response:', error.response?.data);
       return rejectWithValue(error.response?.data?.message || error.message);
     }
   }

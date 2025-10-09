@@ -27,7 +27,6 @@ const OrderDetailsPage = () => {
 
   useEffect(() => {
     if (user && orderId) {
-      console.log('Fetching order details for orderId:', orderId);
       dispatch(fetchOrderDetails(orderId));
     }
     return () => {
@@ -93,9 +92,6 @@ const OrderDetailsPage = () => {
     console.log("Download invoice for order:", order.orderId);
     showInfo("Downloading invoice...");
   };
-
-  // Add debug logging
-  console.log('OrderDetailsPage render:', { loading, error, order: !!order, user: !!user });
 
   // Loading state
   if (loading) {

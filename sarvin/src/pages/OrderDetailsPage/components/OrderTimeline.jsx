@@ -70,11 +70,6 @@ const OrderTimeline = ({ order }) => {
               <p className="text-sm text-gray-600 mt-1">
                 {formatDate(order.createdAt)}
               </p>
-              {statusItem.notes && (
-                <p className="text-xs text-gray-600 mt-1 italic">
-                  Note: {statusItem.notes}
-                </p>
-              )}
             </div>
           </div>
 
@@ -124,10 +119,15 @@ const OrderTimeline = ({ order }) => {
                       Updated by: {statusItem.updatedBy.name || 'Admin'}
                     </p>
                   )}
+                  {statusItem.notes && (
+                    <p className="text-xs text-gray-600 mt-1 italic">
+                      Note: {statusItem.notes}
+                    </p>
+                  )}
                   {!statusItem.customerNotified && statusItem.notificationSent === false && (
-                    <span className="text-xs text-red-600 bg-red-50 px-2 py-1 rounded-full flex items-center">
+                    <span className="text-xs text-red-600 bg-red-50 px-2 py-1 rounded-full flex items-center inline-flex mt-1">
                       <Mail className="h-3 w-3 mr-1" />
-                      Failed
+                      Notification Failed
                     </span>
                   )}
                 </div>

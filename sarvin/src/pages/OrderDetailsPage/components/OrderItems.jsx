@@ -27,31 +27,18 @@ const OrderItems = ({ items, orderStatus, onWriteReview, orderId }) => {
   // Helper function to get user's review for this product and order
   const getUserReview = (product) => {
     if (!product.reviews || !user || !orderId) return null;
-    
+
     // Convert both IDs to strings for comparison
     const orderIdStr = orderId.toString();
     const userIdStr = user._id.toString();
-    
+
     return product.reviews.find(review => {
       const reviewUserIdStr = review.user._id ? review.user._id.toString() : review.user.toString();
       const reviewOrderIdStr = review.orderId ? review.orderId.toString() : '';
-      
+
       return reviewUserIdStr === userIdStr && reviewOrderIdStr === orderIdStr;
     });
   };
-
-  const handleRateProduct = async (productId, ratingData) => {
-    try {
-      await dispatch(
-        rateProduct({
-          productId,
-          ratingData: {
-            ...ratingData,
-            orderId: order._id,
-          },
-          isAuthenticated: true
-        })
-      ).unwrap();
 
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden">
@@ -65,10 +52,7 @@ const OrderItems = ({ items, orderStatus, onWriteReview, orderId }) => {
         {items.map((item, index) => {
           const isReviewed = hasUserReviewed(item.product);
           const userReview = getUserReview(item.product);
-          
-          // Debug logging - remove in production
-          console.log('Product:', item.product.name, 'IsReviewed:', isReviewed, 'OrderId:', orderId, 'User:', user._id);
-          
+
           return (
             <div
               key={`${item.product._id || item.product}-${index}`}
