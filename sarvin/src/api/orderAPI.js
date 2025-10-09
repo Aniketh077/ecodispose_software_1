@@ -36,12 +36,16 @@ const verifyPayment = async (paymentData, token) => {
 };
 
 const getOrderById = async (id, token) => {
+  console.log('orderAPI.getOrderById - id:', id);
+  console.log('orderAPI.getOrderById - API_URL:', API_URL);
   const config = {
     headers: {
       Authorization: `Bearer ${token}`
     }
   };
+  console.log('orderAPI.getOrderById - making request to:', `${API_URL}/${id}`);
   const response = await axios.get(`${API_URL}/${id}`, config);
+  console.log('orderAPI.getOrderById - response data:', response.data);
   return response.data;
 };
 

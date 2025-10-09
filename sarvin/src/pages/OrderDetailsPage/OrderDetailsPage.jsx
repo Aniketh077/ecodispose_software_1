@@ -27,6 +27,7 @@ const OrderDetailsPage = () => {
 
   useEffect(() => {
     if (user && orderId) {
+      console.log('Fetching order details for orderId:', orderId);
       dispatch(fetchOrderDetails(orderId));
     }
     return () => {
@@ -93,6 +94,9 @@ const OrderDetailsPage = () => {
     showInfo("Downloading invoice...");
   };
 
+  // Add debug logging
+  console.log('OrderDetailsPage render:', { loading, error, order: !!order, user: !!user });
+
   // Loading state
   if (loading) {
     return (
@@ -118,7 +122,7 @@ const OrderDetailsPage = () => {
             <div className="bg-red-50 border border-red-200 rounded-lg p-6 text-center">
               <AlertCircle className="h-12 w-12 text-red-500 mx-auto mb-4" />
               <h2 className="text-xl font-semibold text-red-800 mb-2">
-                Order Not Found
+                Error Loading Order
               </h2>
               <p className="text-red-600 mb-4">{error}</p>
               <div className="flex justify-center space-x-4">
@@ -139,7 +143,7 @@ const OrderDetailsPage = () => {
     );
   }
 
-  if (!order) {
+  if (!order && !loading) {
     return (
       <div className="min-h-screen pt-20 pb-16">
         <div className="container mx-auto px-4">
@@ -149,9 +153,26 @@ const OrderDetailsPage = () => {
               <h2 className="text-xl font-semibold text-gray-800 mb-2">
                 No Order Found
               </h2>
+              <p className="text-gray-600 mb-4">Order ID: {orderId}</p>
               <Link to="/orders">
                 <Button variant="primary">Back to Orders</Button>
               </Link>
+            </div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // If still loading or no data, show loading
+  if (!order) {
+    return (
+      <div className="min-h-screen pt-20 pb-16">
+        <div className="container mx-auto px-4">
+          <div className="max-w-4xl mx-auto">
+            <div className="flex items-center justify-center py-16">
+              <Loader2 className="h-8 w-8 animate-spin text-green-700" />
+              <span className="ml-3 text-lg">Loading...</span>
             </div>
           </div>
         </div>

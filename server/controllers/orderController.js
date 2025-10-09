@@ -437,30 +437,50 @@ const createOrder = async (req, res) => {
 // @route   GET /api/orders/:id
 const getOrderById = async (req, res) => {
   try {
-    
-   let order;
-if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {
-  order = await Order.findById(req.params.id)
-    .populate('user', 'name email')
-    .populate('items.product', 'name image price')
-    .populate('statusHistory.updatedBy', 'name email');
-}
-if (!order) {
-  order = await Order.findOne({ orderId: req.params.id })
-    .populate('user', 'name email')
-    .populate('items.product', 'name image price')
-    .populate('statusHistory.updatedBy', 'name email');
-}
+    console.log('=== Get Order By ID ===');
+    console.log('Request params ID:', req.params.id);
+    console.log('User ID:', req.user._id);
 
-if (!order) {
-  return res.status(404).json({ message: 'Order not found' });
-}
+    let order;
 
-res.json(order);
-} catch (error) {
-  console.error('Get order by ID error:', error);
-  res.status(500).json({ message: 'Server error', error: error.message });
-}
+    // First try by MongoDB ObjectId
+    if (/^[0-9a-fA-F]{24}$/.test(req.params.id)) {
+      console.log('Searching by MongoDB _id');
+      order = await Order.findById(req.params.id)
+        .populate('user', 'name email')
+        .populate('items.product', 'name image price images')
+        .populate('statusHistory.updatedBy', 'name email');
+    }
+
+    // If not found, try by orderId field
+    if (!order) {
+      console.log('Searching by orderId field');
+      order = await Order.findOne({ orderId: req.params.id })
+        .populate('user', 'name email')
+        .populate('items.product', 'name image price images')
+        .populate('statusHistory.updatedBy', 'name email');
+    }
+
+    if (!order) {
+      console.log('Order not found');
+      return res.status(404).json({ message: 'Order not found' });
+    }
+
+    console.log('Order found:', order.orderId);
+    console.log('Order user:', order.user?._id);
+    console.log('Requesting user:', req.user._id);
+
+    // Security: Verify the order belongs to the user (unless admin)
+    if (order.user._id.toString() !== req.user._id.toString() && !req.user.isAdmin) {
+      console.log('Unauthorized access attempt');
+      return res.status(403).json({ message: 'Not authorized to view this order' });
+    }
+
+    res.json(order);
+  } catch (error) {
+    console.error('Get order by ID error:', error);
+    res.status(500).json({ message: 'Server error', error: error.message });
+  }
 };
 
 // @desc    Get logged in user orders
