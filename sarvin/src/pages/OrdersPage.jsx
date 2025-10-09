@@ -137,8 +137,7 @@ const OrdersPage = () => {
             <div className="space-y-6">
               {orders.map((order) => (
                 <div key={order._id}
-                onClick={() => navigate(`/orders/${order._id}`)}
-                 className="bg-white rounded-lg shadow-sm overflow-hidden cursor-pointer hover:shadow-lg transition-shadow duration-200">
+                 className="bg-white rounded-lg shadow-sm overflow-hidden hover:shadow-lg transition-shadow duration-200">
                   <div className="p-6 border-b border-gray-100">
                     <div className="flex flex-col sm:flex-row sm:items-center justify-between">
                       <div>
