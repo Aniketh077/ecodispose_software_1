@@ -285,7 +285,11 @@ const AdminServiceRequests = () => {
                 <>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Address</label>
-                    <p className="mt-1 text-sm text-gray-900">{selectedRequest.address}</p>
+                    <div className="mt-1 text-sm text-gray-900 bg-gray-50 p-3 rounded-lg">
+                      <p>{selectedRequest.addressLine1}</p>
+                      {selectedRequest.addressLine2 && <p>{selectedRequest.addressLine2}</p>}
+                      <p>{selectedRequest.city}, {selectedRequest.state} - {selectedRequest.pincode}</p>
+                    </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
@@ -331,8 +335,12 @@ const AdminServiceRequests = () => {
               {activeTab === 'repair' && (
                 <>
                   <div>
-                    <label className="block text-sm font-medium text-gray-700">Address</label>
-                    <p className="mt-1 text-sm text-gray-900">{selectedRequest.address}</p>
+                    <label className="block text-sm font-medium text-gray-700">Service Address</label>
+                    <div className="mt-1 text-sm text-gray-900 bg-gray-50 p-3 rounded-lg">
+                      <p>{selectedRequest.addressLine1}</p>
+                      {selectedRequest.addressLine2 && <p>{selectedRequest.addressLine2}</p>}
+                      <p>{selectedRequest.city}, {selectedRequest.state} - {selectedRequest.pincode}</p>
+                    </div>
                   </div>
                   <div className="grid grid-cols-2 gap-4">
                     <div>
@@ -403,7 +411,11 @@ const AdminServiceRequests = () => {
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">Pickup Address</label>
-                    <p className="mt-1 text-sm text-gray-900">{selectedRequest.pickupAddress}</p>
+                    <div className="mt-1 text-sm text-gray-900 bg-gray-50 p-3 rounded-lg">
+                      <p>{selectedRequest.addressLine1}</p>
+                      {selectedRequest.addressLine2 && <p>{selectedRequest.addressLine2}</p>}
+                      <p>{selectedRequest.city}, {selectedRequest.state} - {selectedRequest.pincode}</p>
+                    </div>
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700">E-Waste Items</label>
