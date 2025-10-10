@@ -18,7 +18,22 @@ const recycleRequestSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  pickupAddress: {
+  addressLine1: {
+    type: String,
+    required: true
+  },
+  addressLine2: {
+    type: String
+  },
+  city: {
+    type: String,
+    required: true
+  },
+  state: {
+    type: String,
+    required: true
+  },
+  pincode: {
     type: String,
     required: true
   },

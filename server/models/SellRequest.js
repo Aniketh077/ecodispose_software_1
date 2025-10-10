@@ -13,7 +13,22 @@ const sellRequestSchema = new mongoose.Schema({
     type: String,
     required: true
   },
-  address: {
+  addressLine1: {
+    type: String,
+    required: true
+  },
+  addressLine2: {
+    type: String
+  },
+  city: {
+    type: String,
+    required: true
+  },
+  state: {
+    type: String,
+    required: true
+  },
+  pincode: {
     type: String,
     required: true
   },

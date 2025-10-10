@@ -16,7 +16,11 @@ const RecyclePage = () => {
     name: '',
     email: '',
     phone: '',
-    pickupAddress: '',
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    state: '',
+    pincode: '',
     ewasteItems: '',
     pickupDate: '',
     companyName: '',
@@ -378,23 +382,72 @@ const RecyclePage = () => {
                   <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
                     2
                   </div>
-                  <h3 className="text-xl font-bold text-gray-900">Pickup Details</h3>
+                  <h3 className="text-xl font-bold text-gray-900">Pickup Address</h3>
                 </div>
-                <div className="space-y-6 pl-11">
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Pickup Address <span className="text-red-500">*</span>
-                    </label>
-                    <textarea
-                      name="pickupAddress"
-                      value={formData.pickupAddress}
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pl-11">
+                  <div className="md:col-span-2">
+                    <Input
+                      label="Address Line 1"
+                      name="addressLine1"
+                      value={formData.addressLine1}
                       onChange={handleChange}
                       required
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500 transition-all duration-200 resize-none"
-                      placeholder="Enter complete pickup address with landmark for easy location..."
-                    ></textarea>
+                      placeholder="House/Flat No., Building Name, Street"
+                      className="transition-all duration-200 focus:scale-105"
+                    />
                   </div>
+                  <div className="md:col-span-2">
+                    <Input
+                      label="Address Line 2"
+                      name="addressLine2"
+                      value={formData.addressLine2}
+                      onChange={handleChange}
+                      placeholder="Area, Landmark (Optional)"
+                      className="transition-all duration-200 focus:scale-105"
+                    />
+                  </div>
+                  <Input
+                    label="City"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter city"
+                    className="transition-all duration-200 focus:scale-105"
+                  />
+                  <Input
+                    label="State"
+                    name="state"
+                    value={formData.state}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter state"
+                    className="transition-all duration-200 focus:scale-105"
+                  />
+                  <Input
+                    label="Pincode"
+                    name="pincode"
+                    type="text"
+                    value={formData.pincode}
+                    onChange={handleChange}
+                    required
+                    placeholder="6-digit pincode"
+                    maxLength="6"
+                    pattern="[0-9]{6}"
+                    className="transition-all duration-200 focus:scale-105"
+                  />
+                </div>
+              </div>
+
+              {/* E-Waste Items Section */}
+              <div className="mb-10">
+                <div className="flex items-center mb-6">
+                  <div className="w-8 h-8 bg-purple-600 text-white rounded-full flex items-center justify-center text-sm font-bold mr-3">
+                    3
+                  </div>
+                  <h3 className="text-xl font-bold text-gray-900">E-Waste Items & Pickup Details</h3>
+                </div>
+                <div className="space-y-6 pl-11">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-2">
                       E-Waste Items Description <span className="text-red-500">*</span>

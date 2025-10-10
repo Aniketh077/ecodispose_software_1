@@ -15,7 +15,11 @@ const RepairPage = () => {
     name: '',
     email: '',
     phone: '',
-    address: '',
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+    state: '',
+    pincode: '',
     deviceType: '',
     brand: '',
     model: '',
@@ -188,20 +192,59 @@ const RepairPage = () => {
                     placeholder="+91 9876543210"
                     className="transition-all duration-200 focus:scale-105"
                   />
-                  <div>
-                    <label className="block text-sm font-medium text-gray-700 mb-2">
-                      Service Address <span className="text-red-500">*</span>
-                    </label>
-                    <textarea
-                      name="address"
-                      value={formData.address}
+                </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6 pl-11">
+                  <div className="md:col-span-2">
+                    <Input
+                      label="Address Line 1"
+                      name="addressLine1"
+                      value={formData.addressLine1}
                       onChange={handleChange}
                       required
-                      rows="3"
-                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-orange-500 focus:border-orange-500 transition-all duration-200 resize-none"
-                      placeholder="Enter complete address for pickup/delivery service"
-                    ></textarea>
+                      placeholder="House/Flat No., Building Name, Street"
+                      className="transition-all duration-200 focus:scale-105"
+                    />
                   </div>
+                  <div className="md:col-span-2">
+                    <Input
+                      label="Address Line 2"
+                      name="addressLine2"
+                      value={formData.addressLine2}
+                      onChange={handleChange}
+                      placeholder="Area, Landmark (Optional)"
+                      className="transition-all duration-200 focus:scale-105"
+                    />
+                  </div>
+                  <Input
+                    label="City"
+                    name="city"
+                    value={formData.city}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter city"
+                    className="transition-all duration-200 focus:scale-105"
+                  />
+                  <Input
+                    label="State"
+                    name="state"
+                    value={formData.state}
+                    onChange={handleChange}
+                    required
+                    placeholder="Enter state"
+                    className="transition-all duration-200 focus:scale-105"
+                  />
+                  <Input
+                    label="Pincode"
+                    name="pincode"
+                    type="text"
+                    value={formData.pincode}
+                    onChange={handleChange}
+                    required
+                    placeholder="6-digit pincode"
+                    maxLength="6"
+                    pattern="[0-9]{6}"
+                    className="transition-all duration-200 focus:scale-105"
+                  />
                 </div>
               </div>
 
