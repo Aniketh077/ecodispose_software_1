@@ -89,8 +89,126 @@ const OrderDetailsPage = () => {
   };
 
   const handleDownloadInvoice = () => {
-    console.log("Download invoice for order:", order.orderId);
-    showInfo("Downloading invoice...");
+    try {
+      // Create invoice HTML content
+      const invoiceContent = `
+        <!DOCTYPE html>
+        <html>
+        <head>
+          <meta charset="utf-8">
+          <title>Invoice - ${order.orderId}</title>
+          <style>
+            * { margin: 0; padding: 0; box-sizing: border-box; }
+            body { font-family: Arial, sans-serif; padding: 40px; color: #333; }
+            .invoice-header { text-align: center; margin-bottom: 30px; border-bottom: 2px solid #16a34a; padding-bottom: 20px; }
+            .invoice-header h1 { color: #16a34a; font-size: 32px; margin-bottom: 10px; }
+            .invoice-info { display: flex; justify-content: space-between; margin-bottom: 30px; }
+            .invoice-info div { flex: 1; }
+            .invoice-info h3 { color: #16a34a; margin-bottom: 10px; font-size: 14px; }
+            .invoice-info p { font-size: 12px; line-height: 1.6; }
+            table { width: 100%; border-collapse: collapse; margin-bottom: 30px; }
+            th { background-color: #16a34a; color: white; padding: 12px; text-align: left; font-size: 12px; }
+            td { padding: 12px; border-bottom: 1px solid #ddd; font-size: 12px; }
+            .text-right { text-align: right; }
+            .summary { margin-left: auto; width: 300px; }
+            .summary-row { display: flex; justify-content: space-between; padding: 8px 0; font-size: 12px; }
+            .summary-row.total { border-top: 2px solid #333; font-weight: bold; font-size: 14px; margin-top: 10px; padding-top: 10px; }
+            .footer { text-align: center; margin-top: 40px; padding-top: 20px; border-top: 1px solid #ddd; font-size: 11px; color: #666; }
+            .status-badge { display: inline-block; padding: 4px 12px; border-radius: 12px; font-size: 11px; font-weight: 600; }
+            .status-completed { background-color: #dcfce7; color: #16a34a; }
+            .status-processing { background-color: #fef3c7; color: #d97706; }
+            .status-shipped { background-color: #dbeafe; color: #2563eb; }
+          </style>
+        </head>
+        <body>
+          <div class="invoice-header">
+            <h1>INVOICE</h1>
+            <p style="font-size: 14px; color: #666;">Order #${order.orderId}</p>
+          </div>
+
+          <div class="invoice-info">
+            <div>
+              <h3>BILL TO:</h3>
+              <p><strong>${order.shippingAddress.fullName}</strong></p>
+              <p>${order.shippingAddress.address}</p>
+              <p>${order.shippingAddress.city}, ${order.shippingAddress.state} ${order.shippingAddress.zipCode}</p>
+              <p>${order.shippingAddress.country}</p>
+              ${order.shippingAddress.phone ? `<p>Phone: ${order.shippingAddress.phone}</p>` : ''}
+            </div>
+            <div style="text-align: right;">
+              <h3>ORDER DETAILS:</h3>
+              <p><strong>Date:</strong> ${new Date(order.createdAt).toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' })}</p>
+              <p><strong>Status:</strong> <span class="status-badge status-${order.orderStatus}">${order.orderStatus.toUpperCase()}</span></p>
+              <p><strong>Payment:</strong> ${order.paymentStatus.charAt(0).toUpperCase() + order.paymentStatus.slice(1)}</p>
+              <p><strong>Payment Method:</strong> ${order.paymentMethod.charAt(0).toUpperCase() + order.paymentMethod.slice(1)}</p>
+            </div>
+          </div>
+
+          <table>
+            <thead>
+              <tr>
+                <th style="width: 50%;">Product</th>
+                <th style="width: 15%;">Price</th>
+                <th style="width: 15%;">Quantity</th>
+                <th style="width: 20%;" class="text-right">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${order.items.map(item => `
+                <tr>
+                  <td>${item.product.name || 'Product'}</td>
+                  <td>₹${item.price.toFixed(2)}</td>
+                  <td>${item.quantity}</td>
+                  <td class="text-right">₹${(item.price * item.quantity).toFixed(2)}</td>
+                </tr>
+              `).join('')}
+            </tbody>
+          </table>
+
+          <div class="summary">
+            <div class="summary-row">
+              <span>Subtotal:</span>
+              <span>₹${order.items.reduce((sum, item) => sum + (item.price * item.quantity), 0).toFixed(2)}</span>
+            </div>
+            <div class="summary-row">
+              <span>Shipping:</span>
+              <span style="color: #16a34a; font-weight: 600;">FREE</span>
+            </div>
+            <div class="summary-row total">
+              <span>TOTAL:</span>
+              <span>₹${order.total.toFixed(2)}</span>
+            </div>
+          </div>
+
+          <div class="footer">
+            <p>Thank you for your business!</p>
+            <p>For any questions about this invoice, please contact our support team.</p>
+          </div>
+        </body>
+        </html>
+      `;
+
+      // Create a new window and print
+      const printWindow = window.open('', '_blank');
+      if (printWindow) {
+        printWindow.document.write(invoiceContent);
+        printWindow.document.close();
+
+        // Wait for content to load, then print
+        printWindow.onload = () => {
+          setTimeout(() => {
+            printWindow.print();
+          }, 250);
+        };
+
+        showSuccess("Invoice opened in new window. Use your browser's print dialog to save as PDF.");
+      } else {
+        showError("Please allow pop-ups to download the invoice.");
+      }
+    } catch (error) {
+      console.error("Error generating invoice:", error);
+      showError("Failed to generate invoice. Please try again.");
+    }
   };
 
   // Loading state
