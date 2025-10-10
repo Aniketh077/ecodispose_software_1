@@ -129,9 +129,6 @@ const ProductReviews = ({
   const handleStarHover = (rating) => {
     // Optional: Add hover preview functionality
   };
-  if (!product?.reviews || product.reviews.length === 0) {
-    return null;
-  }
 
   return (
     <div className="bg-white rounded-lg shadow-sm overflow-hidden mt-4">
@@ -247,6 +244,7 @@ const ProductReviews = ({
         )}
 
         {/* Two Column Layout */}
+        {product.reviews && product.reviews.length > 0 ? (
         <div className="flex flex-col lg:flex-row gap-6">
           {/* Left Column - 30% width */}
           <div className="w-full lg:w-[30%] space-y-6">
@@ -529,6 +527,28 @@ const ProductReviews = ({
             </div>
           </div>
         </div>
+        ) : (
+          <div className="text-center py-12 lg:py-16">
+            <div className="max-w-md mx-auto">
+              <div className="mb-6">
+                <Star className="h-16 w-16 mx-auto text-gray-300" />
+              </div>
+              <h3 className="text-xl font-semibold text-gray-700 mb-2">
+                No Reviews Yet
+              </h3>
+              <p className="text-gray-500 mb-6">
+                Be the first to share your experience with this product!
+              </p>
+              <Button
+                variant="primary"
+                onClick={() => setShowReviewForm(true)}
+                leftIcon={<Send className="h-4 w-4" />}
+              >
+                Write First Review
+              </Button>
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
