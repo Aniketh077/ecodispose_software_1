@@ -551,37 +551,6 @@ const ProductsPage = () => {
                 </FilterSection>
 
                 <FilterSection
-                  title="Collections"
-                  isOpen={openSections.category}
-                  onToggle={() => toggleSection("category")}
-                >
-                  <div className="space-y-3 max-h-60 overflow-y-auto">
-                    {collections
-                      .filter(col => col.isActive)
-                      .map((category) => {
-                        const productCount = products.filter(
-                          p => p.collection?.name === category.name || p.collection?._id === category._id
-                        ).length;
-                        return (
-                          <FilterCheckbox
-                            key={category.id || category._id}
-                            label={category.name}
-                            value={category.name}
-                            checked={selectedCategories.includes(category.name)}
-                            onChange={() =>
-                              handleCheckboxChange(
-                                category.name,
-                                selectedCategories,
-                                "categories"
-                              )
-                            }
-                          />
-                        );
-                      })}
-                  </div>
-                </FilterSection>
-
-                <FilterSection
                   title="Brand"
                   isOpen={openSections.type}
                   onToggle={() => toggleSection("type")}
