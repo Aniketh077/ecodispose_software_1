@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import Button from '../../components/ui/Button';
@@ -26,6 +26,13 @@ const ProductDetailPage = () => {
   const [sortType, setSortType] = useState('newest');
   const reviewsPerPage = 3;
   const { addToCart } = useCart();
+  const reviewsRef = useRef(null);
+
+  const scrollToReviews = () => {
+    if (reviewsRef.current) {
+      reviewsRef.current.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    }
+  };
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -135,6 +142,7 @@ const ProductDetailPage = () => {
               isDescriptionExpanded={isDescriptionExpanded}
               setIsDescriptionExpanded={setIsDescriptionExpanded}
               collectionName={collectionName}
+              scrollToReviews={scrollToReviews}
             />
           </div>
 
@@ -145,14 +153,16 @@ const ProductDetailPage = () => {
           />
         </div>
 
-        <ProductReviews
-          product={product}
-          currentReviewPage={currentReviewPage}
-          setCurrentReviewPage={setCurrentReviewPage}
-          reviewsPerPage={reviewsPerPage}
-          sortType={sortType}
-          setSortType={setSortType}
-        />
+        <div ref={reviewsRef}>
+          <ProductReviews
+            product={product}
+            currentReviewPage={currentReviewPage}
+            setCurrentReviewPage={setCurrentReviewPage}
+            reviewsPerPage={reviewsPerPage}
+            sortType={sortType}
+            setSortType={setSortType}
+          />
+        </div>
         
         {relatedProducts.length > 0 && (
           <RelatedProducts

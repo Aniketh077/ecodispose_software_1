@@ -2,16 +2,17 @@ import React from 'react';
 import { Minus, Plus, Check, ShoppingCart, Star, Truck as TruckIcon, ShieldCheck, Heart, Zap, TrendingDown, Percent, Calculator } from 'lucide-react';
 import Button from '../../../components/ui/Button';
 
-const ProductInfo = ({ 
-  product, 
-  quantity, 
-  incrementQuantity, 
-  decrementQuantity, 
-  setQuantity, 
-  handleAddToCart, 
-  isDescriptionExpanded, 
-  setIsDescriptionExpanded, 
-  collectionName
+const ProductInfo = ({
+  product,
+  quantity,
+  incrementQuantity,
+  decrementQuantity,
+  setQuantity,
+  handleAddToCart,
+  isDescriptionExpanded,
+  setIsDescriptionExpanded,
+  collectionName,
+  scrollToReviews
 }) => {
   // Safely extract type name as string with comprehensive validation
   let typeName = 'Refurbished Electronics';
@@ -60,7 +61,12 @@ const ProductInfo = ({
           <span className="ml-2 text-sm font-medium">{product.rating}</span>
         </div>
         <span className="mx-2 text-gray-300">|</span>
-        <span className="text-sm text-gray-500">{product.reviewCount} reviews</span>
+        <button
+          onClick={scrollToReviews}
+          className="text-sm text-gray-500 hover:text-green-700 hover:underline transition-colors duration-200 cursor-pointer"
+        >
+          {product.reviewCount} reviews
+        </button>
       </div>
       
       {/* Innovative Price Display */}
