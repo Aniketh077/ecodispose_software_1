@@ -93,43 +93,19 @@ const OrderTimeline = ({ order }) => {
                 <div className="ml-4 flex-1">
                   <div className="flex items-center justify-between">
                     <p className="text-sm font-semibold text-gray-900 capitalize">
-                      {statusItem.status === 'processing' ? 'Order Processing' : 
+                      {statusItem.status === 'processing' ? 'Order Processing' :
                        statusItem.status === 'shipped' ? 'Order Shipped' :
                        statusItem.status === 'delivered' ? 'Order Delivered' :
                        statusItem.status === 'cancelled' ? 'Order Cancelled' :
                        statusItem.status}
                     </p>
-                    <div className="flex items-center space-x-2">
-                      {statusItem.customerNotified && (
-                        <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full flex items-center">
-                          <Mail className="h-3 w-3 mr-1" />
-                          Notified
-                        </span>
-                      )}
-                      <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">
-                        {isCompleted ? 'Completed' : 'In Progress'}
-                      </span>
-                    </div>
+                    <span className="text-xs text-green-600 bg-green-50 px-2 py-1 rounded-full">
+                      Completed
+                    </span>
                   </div>
                   <p className="text-sm text-gray-600 mt-1">
                     {formatDate(statusItem.timestamp)}
                   </p>
-                  {statusItem.updatedBy && (
-                    <p className="text-xs text-gray-500 mt-1">
-                      Updated by: {statusItem.updatedBy.name || 'Admin'}
-                    </p>
-                  )}
-                  {statusItem.notes && (
-                    <p className="text-xs text-gray-600 mt-1 italic">
-                      Note: {statusItem.notes}
-                    </p>
-                  )}
-                  {!statusItem.customerNotified && statusItem.notificationSent === false && (
-                    <span className="text-xs text-red-600 bg-red-50 px-2 py-1 rounded-full flex items-center inline-flex mt-1">
-                      <Mail className="h-3 w-3 mr-1" />
-                      Notification Failed
-                    </span>
-                  )}
                 </div>
               </div>
             );
